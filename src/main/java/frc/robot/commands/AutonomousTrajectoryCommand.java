@@ -25,7 +25,8 @@ public class AutonomousTrajectoryCommand extends Command {
         requires(Robot.drivetrainSubsystem);
        
         AutonomousTrajectories trajectoryLibrary = new AutonomousTrajectories(Robot.drivetrainSubsystem.CONSTRAINTS);
-        autonomousTrajectory = trajectoryLibrary.getCargoSideMidToLoadingStationTrajectory(Side.LEFT);
+        //autonomousTrajectory = trajectoryLibrary.getCargoSideMidToLoadingStationTrajectory(Side.LEFT);
+        autonomousTrajectory = trajectoryLibrary.getHelloTrajectory();
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
