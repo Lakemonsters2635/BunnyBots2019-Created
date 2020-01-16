@@ -70,10 +70,13 @@ public class AutonomousTrajectories {
                 new PathLineSegment(
                         new Vector2(0.0, 0.0),
                         new Vector2(48.0, 0.0)
+
                 )
         );
         helloPath.subdivide(SUBDIVIDE_ITERATIONS);
         helloTrajectory = new Trajectory(helloPath, constraints);
+
+
 
         // <editor-fold desc="Hab to Cargo Ship Side Near">
         Path habToCargoSideNearPathLeft = new Path(CARGO_SHIP_SIDE_HATCH_ROTATION);
@@ -349,10 +352,12 @@ public class AutonomousTrajectories {
         rocketCargoToCargoSideNearTrajectoryRight = new Trajectory(rocketCargoToCargoSideNearPathRight, constraints);
         // </editor-fold>
     }
+
     
     public Trajectory getHelloTrajectory() {
         return helloTrajectory;
     }
+
 
     public Trajectory getHab1ToCargoSideNearTrajectory(Side side) {
         if (side == Side.LEFT) {
