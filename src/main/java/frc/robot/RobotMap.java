@@ -27,6 +27,7 @@ public class RobotMap {
   public static final int LEFT_JOYSTICK_CHANNEL = 0;
   public static final int RIGHT_JOYSTICK_CHANNEL = 1;
 
+  public static final int VISION_BUTTON_BUTTON = 7;
   public static final int REFERENCE_RESET_BUTTON = 8;
   public static final int TOGGLE_DRIVE_RECORD_BUTTON = 10;
 

@@ -35,6 +35,8 @@ import frc.robot.subsystems.*;
  * creating this project, you must also update the build.gradle file in the
  * project.
  */
+
+ //To deploy this, run (gradlew deploy -x test) in the command prompt
 public class Robot extends TimedRobot {
   //public static ExampleSubsystem m_subsystem = new ExampleSubsystem();
   public static OI oi;
@@ -43,6 +45,8 @@ public class Robot extends TimedRobot {
   public static DrivetrainSubsystem drivetrainSubsystem;
   public static IntakeSubsystem intakeSubsystem;
   public static BedSubsystem bedSubsystem;
+
+  public static Vision vision;
 
   Command m_autonomousCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -59,6 +63,8 @@ public class Robot extends TimedRobot {
   BedForwardCommand bedForwardCommand;
   BedReverseCommand bedReverseCommand;
 
+  VisionLightCommand visionLightCommand;
+
 
   /**
    * This function is run when the robot is first started up and should be
@@ -71,6 +77,7 @@ public class Robot extends TimedRobot {
     // chooser.addOption("My Auto", new MyAutoCommand());
     SmartDashboard.putData("Auto mode", m_chooser);
 
+    vision = new Vision();
     drivetrainSubsystem = new DrivetrainSubsystem();
     intakeSubsystem = new IntakeSubsystem();
     bedSubsystem = new BedSubsystem();
@@ -84,13 +91,16 @@ public class Robot extends TimedRobot {
     bedReverseCommand = new BedReverseCommand();
     zeroCommand = new ZeroFieldOrientedCommand(drivetrainSubsystem);
     driveCommand = new HolonomicDriveCommand(DrivetrainSubsystem.ControlMode.DualStick);
-    
+    visionLightCommand = new VisionLightCommand();
+
+
     oi.intakeButton.whileHeld(intakeCommand);
     oi.reverseIntakeButton.whileHeld(reverseIntakeCommand);
-    oi.bedForwardButton.toggleWhenPressed(bedForwardCommand);
+    //oi.bedForwardButton.toggleWhenPressed(bedForwardCommand);
     oi.toggleDriveRecordButton.toggleWhenPressed(recordCommand);
+    oi.visionButton.toggleWhenPressed(visionLightCommand);
 
-    oi.bedReverseButton.toggleWhenPressed(bedReverseCommand);
+    //oi.bedReverseButton.toggleWhenPressed(bedReverseCommand);
     oi.referenceResetButton.whenPressed(zeroCommand);
 
 

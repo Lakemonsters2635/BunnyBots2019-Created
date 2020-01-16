@@ -54,6 +54,7 @@ public class OI {
   Button reverseIntakeButton = new JoystickButton(leftStick, 2);
   Button toggleDriveRecordButton = new JoystickButton(leftStick, RobotMap.TOGGLE_DRIVE_RECORD_BUTTON);
 
+  Button visionButton = new JoystickButton(leftStick, RobotMap.VISION_BUTTON_BUTTON);
 
   Button bedForwardButton = new JoystickButton(leftStick, 5);
   Button bedReverseButton = new JoystickButton(leftStick, 4);
