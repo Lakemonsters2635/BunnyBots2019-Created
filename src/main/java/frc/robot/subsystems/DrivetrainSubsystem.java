@@ -53,9 +53,14 @@ public class DrivetrainSubsystem extends SwerveDrivetrain {
   private static final double WHEELBASE = 25.0;
 
   public static final ITrajectoryConstraint[] CONSTRAINTS = {
-          new MaxVelocityConstraint(12.0 * 12.0),
-          new MaxAccelerationConstraint(15.0 * 12.0),                                 
-          new CentripetalAccelerationConstraint(25.0 * 12.0)
+      //Original
+        //   new MaxVelocityConstraint(12.0 * 12.0),
+        //   new MaxAccelerationConstraint(15.0 * 12.0),                                 
+        //   new CentripetalAccelerationConstraint(25.0 * 12.0)
+
+        new MaxVelocityConstraint(12.0 * 3.0),
+          new MaxAccelerationConstraint(15.0 * 3.0),                                 
+          new CentripetalAccelerationConstraint(25.0 * 3.0)
   };    
 
   //Properties used by the "ToggleDriveRecordCommand" (Left Joystick Button 10)
@@ -71,12 +76,15 @@ public class DrivetrainSubsystem extends SwerveDrivetrain {
   //private val poseHistory = InterpolatingTreeMap<InterpolatingDouble, SwerveDrive.Pose>(75)
 
 
+//   FL -38.709162
+//   FR -331.565027
+//   BL -347.648226
+//   BR -284.570943
 
-
-  private static final double BACK_RIGHT_ANGLE_OFFSET_COMPETITION = Math.toRadians(-281); //272
-  private static final double BACK_LEFT_ANGLE_OFFSET_COMPETITION = Math.toRadians(-346); //346
-  private static final double FRONT_RIGHT_ANGLE_OFFSET_COMPETITION = Math.toRadians(-331); //331
-  private static final double FRONT_LEFT_ANGLE_OFFSET_COMPETITION = Math.toRadians(-37); //37
+  private static final double BACK_RIGHT_ANGLE_OFFSET_COMPETITION = Math.toRadians(-284.570943); //272   -281
+  private static final double BACK_LEFT_ANGLE_OFFSET_COMPETITION = Math.toRadians(-347.648226); //346   -346
+  private static final double FRONT_RIGHT_ANGLE_OFFSET_COMPETITION = Math.toRadians(-331.565027); //331   -331
+  private static final double FRONT_LEFT_ANGLE_OFFSET_COMPETITION = Math.toRadians(-38.709162); //37   -37
   private static final double FRONT_LEFT_ANGLE_OFFSET_PRACTICE = Math.toRadians(-56.53 + 180);
   private static final double FRONT_RIGHT_ANGLE_OFFSET_PRACTICE = Math.toRadians(-109.38 + 180);
   private static final double BACK_LEFT_ANGLE_OFFSET_PRACTICE = Math.toRadians(-4.21 + 180);

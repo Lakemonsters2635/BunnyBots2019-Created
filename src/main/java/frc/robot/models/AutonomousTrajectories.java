@@ -62,21 +62,55 @@ public class AutonomousTrajectories {
     private final Trajectory rocketCargoToCargoSideNearTrajectoryRight;
 
     private final Trajectory helloTrajectory;
+    private final Trajectory helloArcTrajectory;
 
     public AutonomousTrajectories(ITrajectoryConstraint... constraints) {
 
         Path helloPath = new Path(Rotation2.ZERO);
+        // helloPath.addSegment(
+        //         new PathLineSegment(
+        //                 new Vector2(0.0, 0.0),
+        //                 new Vector2(100.0, -100.0)
+        //         )
+        // );
+        // helloPath.addSegment(new PathLineSegment(new Vector2(100.0, -100.0), new Vector2(0.0, 0.0)));
         helloPath.addSegment(
                 new PathLineSegment(
                         new Vector2(0.0, 0.0),
-                        new Vector2(48.0, 0.0)
-
+                        new Vector2(100, 0.0)
+                )
+        );
+        helloPath.addSegment(
+                new PathLineSegment(
+                        new Vector2(100, 0.0),
+                        new Vector2(100, -100.0)
+                )
+        );
+        helloPath.addSegment(
+                new PathLineSegment(
+                        new Vector2(100.0, -100.0),
+                        new Vector2(0.0, -100.0)
+                )
+        );helloPath.addSegment(
+                new PathLineSegment(
+                        new Vector2(0, -100.0),
+                        new Vector2(0.0, 0.0)
                 )
         );
         helloPath.subdivide(SUBDIVIDE_ITERATIONS);
         helloTrajectory = new Trajectory(helloPath, constraints);
 
 
+        Path helloArcPath = new Path(Rotation2.ZERO);
+        helloArcPath.addSegment(
+                new PathArcSegment(
+                        new Vector2(0.0, 0.0),
+                        new Vector2(48, 0.0), //19.28
+                        new Vector2(24, 0)
+                ),
+                Rotation2.fromDegrees(0.0)
+        );
+        helloArcTrajectory = new Trajectory(helloArcPath, constraints);
 
         // <editor-fold desc="Hab to Cargo Ship Side Near">
         Path habToCargoSideNearPathLeft = new Path(CARGO_SHIP_SIDE_HATCH_ROTATION);
@@ -356,6 +390,10 @@ public class AutonomousTrajectories {
     
     public Trajectory getHelloTrajectory() {
         return helloTrajectory;
+    }
+
+    public Trajectory getHelloArcTrajectory() {
+        return helloArcTrajectory;
     }
 
 

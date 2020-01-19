@@ -199,7 +199,9 @@ public abstract class SwerveModule {
      */
     public void updateSensors() {
         synchronized (sensorMutex) {
-            currentAngle = readAngle();
+            //readAngle();
+            //comment out 204-205 for angle tests
+           currentAngle = readAngle();
             currentDistance = readDistance();
         }
     }
