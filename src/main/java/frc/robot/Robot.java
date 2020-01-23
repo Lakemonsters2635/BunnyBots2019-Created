@@ -125,8 +125,12 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void disabledInit() {
+    Robot.drivetrainSubsystem.getFollower().cancel();
+
+    Robot.drivetrainSubsystem.holonomicDrive(Vector2.ZERO, 0.0, true);
+
     subsystemManager.disableKinematicLoop();
- 
+    
 
     
   }
@@ -188,6 +192,8 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+    
+    Robot.drivetrainSubsystem.getFollower().cancel();
 
     subsystemManager.enableKinematicLoop(UPDATE_DT);
     zeroCommand.start();

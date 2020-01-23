@@ -13,6 +13,8 @@ package frc.robot;
 
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.IdleMode;
+
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.Notifier;
 import edu.wpi.first.wpilibj.RobotController;
@@ -81,6 +83,7 @@ public class Mk2SwerveModule extends SwerveModule {
         this.driveMotor = driveMotor;
         this.driveEncoder = new CANEncoder(driveMotor);
 
+        driveMotor.setIdleMode(IdleMode.kBrake);
         driveMotor.setSmartCurrentLimit(60);
 
         angleController.setInputRange(0.0, 2.0 * Math.PI);

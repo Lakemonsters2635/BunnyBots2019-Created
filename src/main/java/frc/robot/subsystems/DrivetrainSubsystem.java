@@ -379,6 +379,17 @@ public static ArrayList<HolonomicDriveSignal> readDriveRecording(String fileName
           }
       }
 
+    //   SmartDashboard.putNumber("lastSegment translation x", follower.getLastSegment().translation.x);
+    //   SmartDashboard.putNumber("lastSegment translation y", follower.getLastSegment().translation.y);
+    //   SmartDashboard.putNumber("lastSegment rotation", follower.getLastSegment().rotation.toDegrees());
+
+
+
+      SmartDashboard.putNumber("Translation x", localSignal.getTranslation().x);
+      SmartDashboard.putNumber("Translation y", localSignal.getTranslation().y);
+      SmartDashboard.putNumber("Rotation", localSignal.getRotation());
+
+
       if (Math.abs(localSignal.getRotation()) < 0.1 && Double.isFinite(localSnapRotation)) {
           snapRotationController.setSetpoint(localSnapRotation);
 

@@ -61,10 +61,23 @@ public class AutonomousTrajectories {
     private final Trajectory rocketCargoToCargoSideNearTrajectoryLeft;
     private final Trajectory rocketCargoToCargoSideNearTrajectoryRight;
 
+    private final Trajectory turnTrajectory;
+
     private final Trajectory helloTrajectory;
     private final Trajectory helloArcTrajectory;
 
     public AutonomousTrajectories(ITrajectoryConstraint... constraints) {
+        Path turnPath = new Path(Rotation2.ZERO);
+        
+        turnPath.addSegment(
+                new PathLineSegment(
+                        new Vector2(0,0),
+                        new Vector2(100,0)
+                ),
+                Rotation2.fromDegrees(90)
+        );
+        turnPath.subdivide(SUBDIVIDE_ITERATIONS);
+        turnTrajectory = new Trajectory(turnPath, constraints);
 
         Path helloPath = new Path(Rotation2.ZERO);
         // helloPath.addSegment(
@@ -78,7 +91,8 @@ public class AutonomousTrajectories {
                 new PathLineSegment(
                         new Vector2(0.0, 0.0),
                         new Vector2(100, 0.0)
-                )
+                ),
+                Rotation2.fromDegrees(90)
         );
         helloPath.addSegment(
                 new PathLineSegment(
@@ -105,10 +119,10 @@ public class AutonomousTrajectories {
         helloArcPath.addSegment(
                 new PathArcSegment(
                         new Vector2(0.0, 0.0),
-                        new Vector2(48, 0.0), //19.28
-                        new Vector2(24, 0)
+                        new Vector2(50, 50), //19.28
+                        new Vector2(50, 0)
                 ),
-                Rotation2.fromDegrees(0.0)
+                Rotation2.fromDegrees(90)
         );
         helloArcTrajectory = new Trajectory(helloArcPath, constraints);
 
@@ -387,7 +401,10 @@ public class AutonomousTrajectories {
         // </editor-fold>
     }
 
-    
+    public Trajectory getTurnTrajectory() {
+        return turnTrajectory;
+    }
+
     public Trajectory getHelloTrajectory() {
         return helloTrajectory;
     }
