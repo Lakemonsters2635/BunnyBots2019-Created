@@ -37,7 +37,7 @@ public class Vision extends Subsystem {
 		if (pipeline != null)
 		{
 			System.out.println("pipeline:" + pipeline) ;
-			//pipeline.setNumber(0);
+			pipeline.setNumber(0);
 		}
 		
 		
@@ -93,6 +93,11 @@ public class Vision extends Subsystem {
 	public double getArea() {
 		System.out.println(area);
 		return area;
+	}
+	public double printXAngle() {
+		double angle = getXAngle();
+		SmartDashboard.putNumber("Xangle:", angle);
+		return angle;
 	}
 	public void printArea() {
 		SmartDashboard.putNumber("Area:", getArea());

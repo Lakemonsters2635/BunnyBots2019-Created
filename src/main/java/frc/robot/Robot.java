@@ -64,7 +64,7 @@ public class Robot extends TimedRobot {
   BedReverseCommand bedReverseCommand;
 
   VisionLightCommand visionLightCommand;
-
+  VisionRotationDriveCommand visionRotationDriveCommand;
 
   /**
    * This function is run when the robot is first started up and should be
@@ -92,13 +92,14 @@ public class Robot extends TimedRobot {
     zeroCommand = new ZeroFieldOrientedCommand(drivetrainSubsystem);
     driveCommand = new HolonomicDriveCommand(DrivetrainSubsystem.ControlMode.DualStick);
     visionLightCommand = new VisionLightCommand();
+    visionRotationDriveCommand = new VisionRotationDriveCommand();
 
 
     oi.intakeButton.whileHeld(intakeCommand);
     oi.reverseIntakeButton.whileHeld(reverseIntakeCommand);
     //oi.bedForwardButton.toggleWhenPressed(bedForwardCommand);
     oi.toggleDriveRecordButton.toggleWhenPressed(recordCommand);
-    oi.visionButton.toggleWhenPressed(visionLightCommand);
+    oi.visionButton.whileHeld(visionRotationDriveCommand);
 
     //oi.bedReverseButton.toggleWhenPressed(bedReverseCommand);
     oi.referenceResetButton.whenPressed(zeroCommand);
