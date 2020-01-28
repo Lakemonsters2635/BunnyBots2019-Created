@@ -49,4 +49,7 @@ public class RobotMap {
 
   public static final int INTAKE_MOTOR_CHANNEL = 11;
   public static final int BED_MOTOR_CHANNEL = 10;
+
+  public static final double TARGET_HEIGHT = 90.7+15.2; //height to center target - camera height
+  public static final double CAMERA_ANGLE = -1*Math.atan(TARGET_HEIGHT/183);
 }
