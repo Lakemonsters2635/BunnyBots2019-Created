@@ -11,6 +11,7 @@ import org.frcteam2910.common.math.Vector2;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.controller.PIDController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.DrivetrainSubsystem.ControlMode;
@@ -18,7 +19,6 @@ import frc.robot.subsystems.DrivetrainSubsystem.ControlMode;
 public class VisionRotationDriveCommand extends Command {
 
   PIDController angleController;
-  long lastTime;
 
   public VisionRotationDriveCommand() {
     requires(Robot.drivetrainSubsystem);
@@ -28,7 +28,6 @@ public class VisionRotationDriveCommand extends Command {
 
   @Override
   protected void initialize() {
-    lastTime = System.currentTimeMillis();
   }
 
   @Override
@@ -49,19 +48,14 @@ public class VisionRotationDriveCommand extends Command {
       angleController.setSetpoint(angle);
 
       System.out.println("Found target  Angle: " + angle);
-      // if (Math.abs(angle)>5) {
-      //   if (angle>0){
-      //     rotation = 0.2;
-      //   } 
-      //   else if (angle<0){
-      //     rotation = -0.2;
-      //   }
-      // }
-
+      Robot.vision.printArea();
+      SmartDashboard.putNumber("Gyro angle", Robot.drivetrainSubsystem.getGyroscope().getAngle().toDegrees());
+      SmartDashboard.putNumber("Y offset", Robot.vision.getYAngle());
       rotation = angleController.calculate(0);
     }
     else {
       System.out.println("No target");
+      rotation = Robot.oi.rightStick.getRawAxis(0);
     }
 
     final double deadzone = 0.1;

@@ -65,7 +65,8 @@ public class Robot extends TimedRobot {
 
   VisionLightCommand visionLightCommand;
   VisionRotationDriveCommand visionRotationDriveCommand;
-
+  LoadingBayToShootingCommand loadingBayToShootingCommand;
+  HelloArcCommand helloArcCommand;
   /**
    * This function is run when the robot is first started up and should be
    * used for any initialization code.
@@ -93,18 +94,23 @@ public class Robot extends TimedRobot {
     driveCommand = new HolonomicDriveCommand(DrivetrainSubsystem.ControlMode.DualStick);
     visionLightCommand = new VisionLightCommand();
     visionRotationDriveCommand = new VisionRotationDriveCommand();
+    loadingBayToShootingCommand = new LoadingBayToShootingCommand(99);
 
-
+    helloArcCommand = new HelloArcCommand();
+    
     oi.intakeButton.whileHeld(intakeCommand);
     oi.reverseIntakeButton.whileHeld(reverseIntakeCommand);
     //oi.bedForwardButton.toggleWhenPressed(bedForwardCommand);
     oi.toggleDriveRecordButton.toggleWhenPressed(recordCommand);
     oi.visionButton.whileHeld(visionRotationDriveCommand);
 
+
+    oi.helloArcButton.whileHeld(helloArcCommand);
+
     //oi.bedReverseButton.toggleWhenPressed(bedReverseCommand);
     oi.referenceResetButton.whenPressed(zeroCommand);
 
-
+    vision.ledOff();
   }
 
   /**
@@ -131,6 +137,7 @@ public class Robot extends TimedRobot {
     Robot.drivetrainSubsystem.holonomicDrive(Vector2.ZERO, 0.0, true);
 
     subsystemManager.disableKinematicLoop();
+    vision.ledOff();
     
 
     
@@ -182,6 +189,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousPeriodic() {
     Scheduler.getInstance().run();
+    //System.out.println(drivetrainSubsystem.getGyroscope().getRate());
   }
 
   @Override

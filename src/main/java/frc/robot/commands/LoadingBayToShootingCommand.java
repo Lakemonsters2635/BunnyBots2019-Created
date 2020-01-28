@@ -1,6 +1,5 @@
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import frc.robot.models.AutonomousTrajectories;
@@ -17,26 +16,26 @@ import org.frcteam2910.common.util.Side;
 /**
  *
  */
-public class AutonomousTrajectoryCommand extends Command {
+public class LoadingBayToShootingCommand extends Command {
 
     Trajectory autonomousTrajectory;
   
-    public AutonomousTrajectoryCommand( double timeout) {
+    public LoadingBayToShootingCommand( double timeout) {
         super(timeout);
         requires(Robot.drivetrainSubsystem);
        
         AutonomousTrajectories trajectoryLibrary = new AutonomousTrajectories(Robot.drivetrainSubsystem.CONSTRAINTS);
         //autonomousTrajectory = trajectoryLibrary.getCargoSideMidToLoadingStationTrajectory(Side.LEFT);
-        autonomousTrajectory = trajectoryLibrary.getHelloTrajectory();
+        autonomousTrajectory = trajectoryLibrary.getLoadingBayToShootingTrajectory();
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
 	
     // Called just before this Command runs the first time
     protected void initialize() {
-        //Robot.drivetrainSubsystem.getGyroscope().setAdjustmentAngle(Robot.drivetrainSubsystem.getGyroscope().getUnadjustedAngle());
+        Robot.drivetrainSubsystem.getGyroscope().setAdjustmentAngle(Robot.drivetrainSubsystem.getGyroscope().getUnadjustedAngle());
         Vector2 position = new Vector2(0, 0);
-        Robot.drivetrainSubsystem.resetKinematics(position, Timer.getFPGATimestamp());
+        Robot.drivetrainSubsystem.resetKinematics(position, 0);
 
 
         Robot.drivetrainSubsystem.getFollower().follow(autonomousTrajectory);
@@ -55,7 +54,8 @@ public class AutonomousTrajectoryCommand extends Command {
 
     // Called once after timeout
     protected void end() {
-        Robot.drivetrainSubsystem.holonomicDrive(Vector2.ZERO, 0.0, true);
+        Robot.drivetrainSubsystem.getFollower().cancel();
+        System.out.println("end");
     }
 
     // Called when another command which requires one or more of the same

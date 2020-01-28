@@ -23,7 +23,7 @@ public class DriveCommand extends Command {
       this.rotation = rotation;
       this.fieldOriented = fieldOriented;
 
-      //requires(DrivetrainSubsystem.getInstance());
+      requires(Robot.drivetrainSubsystem);
   }
 
   @Override

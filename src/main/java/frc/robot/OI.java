@@ -60,4 +60,6 @@ public class OI {
   Button bedForwardButton = new JoystickButton(leftStick, 5);
   Button bedReverseButton = new JoystickButton(leftStick, 4);
 
+  Button helloArcButton = new JoystickButton(rightStick, 7);
+
 }

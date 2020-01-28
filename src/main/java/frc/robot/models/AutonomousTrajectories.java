@@ -5,6 +5,8 @@ import org.frcteam2910.common.math.Rotation2;
 import org.frcteam2910.common.math.Vector2;
 import org.frcteam2910.common.util.Side;
 
+import edu.wpi.first.wpilibj.drive.Vector2d;
+
 public class AutonomousTrajectories {
     private static final double LOADING_STATION_ENDING_VELOCITY = 7.5 * 12.0;
     private static final double PLACEMENT_ENDING_VELOCITY = 3.0 * 12.0;
@@ -65,6 +67,11 @@ public class AutonomousTrajectories {
 
     private final Trajectory helloTrajectory;
     private final Trajectory helloArcTrajectory;
+    private final Trajectory helloArcReverseTrajectory;
+
+    private final Trajectory loadingBayToShootingTrajectory;
+
+    private final Trajectory sixthTrajectory;
 
     public AutonomousTrajectories(ITrajectoryConstraint... constraints) {
         Path turnPath = new Path(Rotation2.ZERO);
@@ -91,27 +98,26 @@ public class AutonomousTrajectories {
                 new PathLineSegment(
                         new Vector2(0.0, 0.0),
                         new Vector2(100, 0.0)
-                ),
-                Rotation2.fromDegrees(90)
+                ), Rotation2.fromDegrees(90)
         );
-        helloPath.addSegment(
-                new PathLineSegment(
-                        new Vector2(100, 0.0),
-                        new Vector2(100, -100.0)
-                )
-        );
-        helloPath.addSegment(
-                new PathLineSegment(
-                        new Vector2(100.0, -100.0),
-                        new Vector2(0.0, -100.0)
-                )
-        );helloPath.addSegment(
-                new PathLineSegment(
-                        new Vector2(0, -100.0),
-                        new Vector2(0.0, 0.0)
-                )
-        );
-        helloPath.subdivide(SUBDIVIDE_ITERATIONS);
+        // helloPath.addSegment(
+        //         new PathLineSegment(
+        //                 new Vector2(100, 0.0),
+        //                 new Vector2(100, -100.0)
+        //         )
+        // );
+        // helloPath.addSegment(
+        //         new PathLineSegment(
+        //                 new Vector2(100.0, -100.0),
+        //                 new Vector2(0.0, -100.0)
+        //         )
+        // );helloPath.addSegment(
+        //         new PathLineSegment(
+        //                 new Vector2(0, -100.0),
+        //                 new Vector2(0.0, 0.0)
+        //         )
+        // );
+        // helloPath.subdivide(SUBDIVIDE_ITERATIONS);
         helloTrajectory = new Trajectory(helloPath, constraints);
 
 
@@ -119,12 +125,43 @@ public class AutonomousTrajectories {
         helloArcPath.addSegment(
                 new PathArcSegment(
                         new Vector2(0.0, 0.0),
-                        new Vector2(50, 50), //19.28
+                        new Vector2(50, 50), 
                         new Vector2(50, 0)
+                )
+        );
+        helloArcTrajectory = new Trajectory(helloArcPath, constraints);
+
+        Path helloArcReversePath = new Path(Rotation2.ZERO);
+        helloArcReversePath.addSegment(
+                new PathArcSegment(
+                        new Vector2(50, 50),
+                        new Vector2(0, 0),
+                        new Vector2(50,0)
+                )
+        );
+        helloArcReverseTrajectory = new Trajectory(helloArcPath, constraints);
+
+        Path sixthPath = new Path(Rotation2.ZERO);
+        sixthPath.addSegment(
+                new PathArcSegment(
+                        new Vector2(0,0),
+                        new Vector2(43.4,25),
+                        new Vector2(50,0)
+                )
+        );
+        sixthTrajectory = new Trajectory(sixthPath, constraints);
+
+        Path loadingBayToShootingPath = new Path(Rotation2.ZERO);
+        loadingBayToShootingPath.addSegment(
+                new PathArcSegment(
+                        new Vector2(0, 0),//0,0
+                        new Vector2(70, 70),//-50, -86.6
+                        new Vector2(70, 0)//50, -100+13.4
                 ),
                 Rotation2.fromDegrees(90)
         );
-        helloArcTrajectory = new Trajectory(helloArcPath, constraints);
+        loadingBayToShootingTrajectory = new Trajectory(loadingBayToShootingPath, constraints);
+
 
         // <editor-fold desc="Hab to Cargo Ship Side Near">
         Path habToCargoSideNearPathLeft = new Path(CARGO_SHIP_SIDE_HATCH_ROTATION);
@@ -411,6 +448,18 @@ public class AutonomousTrajectories {
 
     public Trajectory getHelloArcTrajectory() {
         return helloArcTrajectory;
+    }
+
+    public Trajectory getHelloArcReverseTrajectory() {
+            return helloArcReverseTrajectory;
+    }
+
+    public Trajectory getLoadingBayToShootingTrajectory() {
+        return loadingBayToShootingTrajectory;
+    }
+
+    public Trajectory getSixthTrajectory() {
+            return sixthTrajectory;
     }
 
 
