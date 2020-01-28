@@ -5,6 +5,7 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.RobotMap;
 
 /**
  *
@@ -90,6 +91,11 @@ public class Vision extends Subsystem {
 		return y;
 	}
 	
+	public double getXDistance() {
+		double angle = getYAngle();
+		return RobotMap.TARGET_HEIGHT/Math.tan(angle+RobotMap.CAMERA_ANGLE);
+	}
+
 	public double getArea() {
 		System.out.println(area);
 		return area;
