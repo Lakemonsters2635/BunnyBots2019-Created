@@ -158,7 +158,7 @@ public class AutonomousTrajectories {
                         new Vector2(70, 70),//-50, -86.6
                         new Vector2(70, 0)//50, -100+13.4
                 ),
-                Rotation2.fromDegrees(90)
+                Rotation2.fromDegrees(0)
         );
         loadingBayToShootingTrajectory = new Trajectory(loadingBayToShootingPath, constraints);
 

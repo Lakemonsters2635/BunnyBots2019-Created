@@ -21,18 +21,18 @@ public class HelloArcCommand extends Command {
     requires(Robot.drivetrainSubsystem);
 
     AutonomousTrajectories trajectoryLibrary = new AutonomousTrajectories(Robot.drivetrainSubsystem.CONSTRAINTS);
-    trajectory = trajectoryLibrary.getLoadingBayToShootingTrajectory();
+    trajectory = trajectoryLibrary.getHelloTrajectory();
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-        Robot.drivetrainSubsystem.getGyroscope().setAdjustmentAngle(Robot.drivetrainSubsystem.getGyroscope().getUnadjustedAngle());
-        Vector2 position = new Vector2(0, 0);
-        Robot.drivetrainSubsystem.resetKinematics(position, 0);
+    Robot.drivetrainSubsystem.getGyroscope().setAdjustmentAngle(Robot.drivetrainSubsystem.getGyroscope().getUnadjustedAngle());
+    Vector2 position = new Vector2(0, 0);
+    Robot.drivetrainSubsystem.resetKinematics(position, 0);
 
 
-        Robot.drivetrainSubsystem.getFollower().follow(trajectory);
+    Robot.drivetrainSubsystem.getFollower().follow(trajectory);
   }
 
   // Called repeatedly when this Command is scheduled to run

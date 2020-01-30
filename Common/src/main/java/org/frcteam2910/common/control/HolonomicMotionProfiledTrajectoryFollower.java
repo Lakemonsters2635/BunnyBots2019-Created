@@ -27,7 +27,7 @@ public class HolonomicMotionProfiledTrajectoryFollower extends TrajectoryFollowe
 
         this.feedforward = feedforward;
     }
-
+    RigidTransform2 pose;
     @Override
     protected HolonomicDriveSignal calculateDriveSignal(RigidTransform2 currentPose, Vector2 velocity,
                                                double rotationalVelocity, Trajectory trajectory, double time,
@@ -36,6 +36,8 @@ public class HolonomicMotionProfiledTrajectoryFollower extends TrajectoryFollowe
             finished = true;
             return new HolonomicDriveSignal(Vector2.ZERO, 0.0, false);
         }
+
+        pose = currentPose;
 
         lastSegment = trajectory.calculateSegment(time);
 
@@ -48,10 +50,15 @@ public class HolonomicMotionProfiledTrajectoryFollower extends TrajectoryFollowe
         strafeController.setSetpoint(lastSegment.translation.y);
         rotationController.setSetpoint(lastSegment.rotation.toRadians());
 
+        // System.out.println("Forward Setpoint: " + forwardController.getSetpoint());
+        // System.out.println("Strafe Setpoint: " + strafeController.getSetpoint());
+        // System.out.println("Rotation Setpoint: " + Math.toDegrees(rotationController.getSetpoint()));
+
+
         return new HolonomicDriveSignal(
                 new Vector2(
                         forwardController.calculate(currentPose.translation.x, dt) + feedforwardVector.x,
-                        strafeController.calculate(currentPose.translation.y, dt) + feedforwardVector.y
+                        strafeController.calculate(currentPose.translation.y, dt) + feedforwardVector.y 
                 ),
                 rotationController.calculate(currentPose.rotation.toRadians(), dt),
                 true
@@ -62,6 +69,10 @@ public class HolonomicMotionProfiledTrajectoryFollower extends TrajectoryFollowe
         return lastSegment;
     }
 
+    public RigidTransform2 getCurrentPose() {
+        return pose;
+    }
+    
     @Override
     protected boolean isFinished() {
         return finished;

@@ -37,6 +37,8 @@ public class VisionRotationDriveCommand extends Command {
     double strafe = 0;
     double rotation = 0;
 
+    final double deadzone = 0.1;
+
     double angle = Robot.vision.getXAngle();
     // boolean ignoreScalars =
     // Robot.oi.primaryController.getforwardBumperButton().get();
@@ -56,13 +58,14 @@ public class VisionRotationDriveCommand extends Command {
     else {
       System.out.println("No target");
       rotation = Robot.oi.rightStick.getRawAxis(0);
+      rotation = deadZoneAdjust(rotation, deadzone);
     }
 
-    final double deadzone = 0.1;
+    
 
     forward = deadZoneAdjust(forward, deadzone);
     strafe = deadZoneAdjust(strafe, deadzone);
-    //rotation = deadZoneAdjust(rotation, deadzone);
+    //
     if(rotation > 1){
       rotation = 1;
     }else if(rotation < -1){
@@ -71,6 +74,8 @@ public class VisionRotationDriveCommand extends Command {
 
     final boolean robotOriented = false;
     final boolean reverseRobotOriented = false;
+
+    SmartDashboard.putNumber("Distance to Target", Robot.vision.getXDistance());
 
     final Vector2 translation = new Vector2(forward, strafe);
 

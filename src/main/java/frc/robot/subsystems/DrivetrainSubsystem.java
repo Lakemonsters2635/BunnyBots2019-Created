@@ -380,15 +380,22 @@ public static ArrayList<HolonomicDriveSignal> readDriveRecording(String fileName
           }
       }
 
-    //   SmartDashboard.putNumber("lastSegment translation x", follower.getLastSegment().translation.x);
-    //   SmartDashboard.putNumber("lastSegment translation y", follower.getLastSegment().translation.y);
-    //   SmartDashboard.putNumber("lastSegment rotation", follower.getLastSegment().rotation.toDegrees());
+      SmartDashboard.putNumber("Signal Forward", localSignal.getTranslation().x);
+      SmartDashboard.putNumber("Signal Strafe", localSignal.getTranslation().y);
+      SmartDashboard.putNumber("Signal Rotation",localSignal.getRotation());
 
+    //   if(follower.getCurrentPose() != null) {
+    //     SmartDashboard.putNumber("Pose X", follower.getCurrentPose().translation.x);
+    //     SmartDashboard.putNumber("Pose Y", follower.getCurrentPose().translation.y);
+    //     SmartDashboard.putNumber("Pose Rotation", follower.getCurrentPose().rotation.toDegrees());
+    //   }
 
-
-      SmartDashboard.putNumber("Translation x", localSignal.getTranslation().x);
-      SmartDashboard.putNumber("Translation y", localSignal.getTranslation().y);
-      SmartDashboard.putNumber("Rotation", localSignal.getRotation());
+      if(follower.getLastSegment() != null) {
+        SmartDashboard.putNumber("lastSegment translation x", follower.getLastSegment().translation.x);
+        SmartDashboard.putNumber("lastSegment translation y", follower.getLastSegment().translation.y);
+        SmartDashboard.putNumber("lastSegment rotation", follower.getLastSegment().rotation.toDegrees());
+      }
+      
 
 
       if (Math.abs(localSignal.getRotation()) < 0.1 && Double.isFinite(localSnapRotation)) {
