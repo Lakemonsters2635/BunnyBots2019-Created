@@ -114,7 +114,7 @@ public class DrivetrainSubsystem extends SwerveDrivetrain {
   private PidController snapRotationController = new PidController(SNAP_ROTATION_CONSTANTS);
   private double snapRotation = Double.NaN;
 
-  private double lastTimestamp = 0;
+  public double lastTimestamp = 0;
 
   private final Object lock = new Object();
   private HolonomicDriveSignal signal = new HolonomicDriveSignal(Vector2.ZERO, 0.0, false);
@@ -355,6 +355,7 @@ public static ArrayList<HolonomicDriveSignal> readDriveRecording(String fileName
       double gyroRate = getGyroscope().getRate();
       Vector2 kinematicVelocity = getKinematicVelocity();
       Rotation2 gyroAngle = getGyroscope().getAngle();
+      //Rotation2 gyroAngle = new Rotation2(1, 0, false);
       Vector2 kinematicPosition = getKinematicPosition();
       RigidTransform2 rigidTransform = new RigidTransform2(kinematicPosition,  gyroAngle);
       

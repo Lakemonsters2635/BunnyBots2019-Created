@@ -148,6 +148,8 @@ public class Robot extends TimedRobot {
   @Override
   public void disabledPeriodic() {
     Scheduler.getInstance().run();
+    if(vision.getLed() != 1)
+    vision.ledOff();
   }
 
   /**
@@ -214,6 +216,9 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
+    Vector2 vec = drivetrainSubsystem.getKinematicPosition();
+    SmartDashboard.putNumber("Current Pose X", vec.x);
+    SmartDashboard.putNumber("Current Pose Y", vec.y);
   }
 
   /**

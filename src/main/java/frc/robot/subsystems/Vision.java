@@ -60,6 +60,10 @@ public class Vision extends Subsystem {
 	public void ledOn(){
 		ledMode.setDouble(0);
 	}
+
+	public double getLed(){
+		return ledMode.getDouble(0);
+	}
 	
 	public void data() {
 		//Set cam mode to vision processing

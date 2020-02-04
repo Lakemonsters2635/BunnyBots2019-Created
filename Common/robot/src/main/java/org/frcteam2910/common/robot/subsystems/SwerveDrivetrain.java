@@ -13,6 +13,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import javax.xml.crypto.dsig.Transform;
+
 public abstract class SwerveDrivetrain extends HolonomicDrivetrain {
     private Vector2 kinematicPosition = Vector2.ZERO;
     private Vector2 kinematicVelocity = Vector2.ZERO;
@@ -69,8 +71,23 @@ public abstract class SwerveDrivetrain extends HolonomicDrivetrain {
         kinematicPosition = averageCenter;
 
         for (SwerveModule module : swerveModules) {
-            module.resetKinematics(new RigidTransform2(kinematicPosition, Rotation2.fromRadians(robotRotation))
-                    .transformBy(new RigidTransform2(module.getModulePosition(), Rotation2.ZERO)).translation);
+            
+            // module.resetKinematics(new RigidTransform2(kinematicPosition, Rotation2.fromRadians(robotRotation))
+            
+            //         .transformBy(new RigidTransform2(module.getModulePosition(), Rotation2.ZERO)).translation);
+
+            Vector2 modulePosition = module.getModulePosition();
+
+            RigidTransform2 transform = new RigidTransform2(modulePosition, Rotation2.ZERO);
+
+            Rotation2 radianRobotRotation = Rotation2.fromRadians(robotRotation);
+            
+            RigidTransform2 bigString = new RigidTransform2(kinematicPosition, radianRobotRotation).transformBy(transform);
+
+            Vector2 bigStringTranslation = bigString.translation;
+
+            module.resetKinematics(bigStringTranslation);
+            
             module.updateState(dt);
         }
     }
