@@ -57,11 +57,16 @@ public abstract class SwerveDrivetrain extends HolonomicDrivetrain {
             Vector2 estimatedCenter = new RigidTransform2(module.getCurrentPosition(),
                     Rotation2.fromRadians(robotRotation))
                     .transformBy(new RigidTransform2(module.getModulePosition().inverse(), Rotation2.ZERO)).translation;
+            //System.out.println("estimated center x: " + estimatedCenter.x);
+           // System.out.println("estimated center y: " + estimatedCenter.y);
 
-            averageCenter = averageCenter.add(estimatedCenter);
+             = averageCenter.add(estimatedCenter);
         }
         averageCenter = averageCenter.scale(1.0 / swerveModules.length);
-
+        //System.out.println("average center: " + averageCenter);
+        SmartDashboard.putNumber("Average Center X", averageCenter.x);
+        SmartDashboard.putNumber("Average Center Y", averageCenter.y);
+        //SmartDashboard.putNumber("Average center", averageCenter);
         positionSamples.put(new InterpolatingDouble(timestamp), averageCenter);
 
         {

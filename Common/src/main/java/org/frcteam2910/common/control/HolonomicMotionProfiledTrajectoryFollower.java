@@ -51,8 +51,9 @@ public class HolonomicMotionProfiledTrajectoryFollower extends TrajectoryFollowe
         rotationController.setSetpoint(lastSegment.rotation.toRadians());
 
         // System.out.println("Forward Setpoint: " + forwardController.getSetpoint());
-        // System.out.println("Strafe Setpoint: " + strafeController.getSetpoint());
-        // System.out.println("Rotation Setpoint: " + Math.toDegrees(rotationController.getSetpoint()));
+        //System.out.println("Strafe Setpoint: " + strafeController.getSetpoint());
+        //System.out.println("curentpose Strafe: " + currentPose.translation.y);
+        //System.out.println("Rotation Setpoint: " + Math.toDegrees(rotationController.getSetpoint()));
 
 
         return new HolonomicDriveSignal(

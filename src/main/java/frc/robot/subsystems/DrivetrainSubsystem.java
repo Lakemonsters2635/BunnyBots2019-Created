@@ -91,7 +91,7 @@ public class DrivetrainSubsystem extends SwerveDrivetrain {
   private static final double BACK_RIGHT_ANGLE_OFFSET_PRACTICE = Math.toRadians(-332.17);
 
   private static final PidConstants FOLLOWER_TRANSLATION_CONSTANTS = new PidConstants(0.05, 0.01, 0.0);
-  private static final PidConstants FOLLOWER_ROTATION_CONSTANTS = new PidConstants(0.2, 0.01, 0.0);
+  private static final PidConstants FOLLOWER_ROTATION_CONSTANTS = new PidConstants(0.3, 0.01, 0.0);
   private static final HolonomicFeedforward FOLLOWER_FEEDFORWARD_CONSTANTS = new HolonomicFeedforward(
           new DrivetrainFeedforwardConstants(1.0 / (14.0 * 12.0), 0.0, 0.0)
   );
@@ -355,6 +355,7 @@ public static ArrayList<HolonomicDriveSignal> readDriveRecording(String fileName
       double gyroRate = getGyroscope().getRate();
       Vector2 kinematicVelocity = getKinematicVelocity();
       Rotation2 gyroAngle = getGyroscope().getAngle();
+      SmartDashboard.putNumber("gryoAngle", gyroAngle.toDegrees());
       //Rotation2 gyroAngle = new Rotation2(1, 0, false);
       Vector2 kinematicPosition = getKinematicPosition();
       RigidTransform2 rigidTransform = new RigidTransform2(kinematicPosition,  gyroAngle);
