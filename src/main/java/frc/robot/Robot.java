@@ -43,10 +43,11 @@ public class Robot extends TimedRobot {
   private static final double UPDATE_DT = 5e-3; // 5 ms
 
   public static DrivetrainSubsystem drivetrainSubsystem;
-  public static IntakeSubsystem intakeSubsystem;
-  public static BedSubsystem bedSubsystem;
 
   public static Vision vision;
+
+  public static ElevatorSubsystem elevatorSubsystem;
+  public static IntakeSubsystem intakeSubsystem;
 
   Command m_autonomousCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -56,17 +57,17 @@ public class Robot extends TimedRobot {
   public HolonomicDriveCommand driveCommand;
   ZeroFieldOrientedCommand zeroCommand;
 
-  IntakeCommand intakeCommand;
-  ReverseIntakeCommand reverseIntakeCommand;
+
   ToggleDriveRecordCommand recordCommand;
 
-  BedForwardCommand bedForwardCommand;
-  BedReverseCommand bedReverseCommand;
+  
 
   VisionLightCommand visionLightCommand;
   VisionRotationDriveCommand visionRotationDriveCommand;
   LoadingBayToShootingCommand loadingBayToShootingCommand;
   HelloArcCommand helloArcCommand;
+
+  IntakeCommandGroup intakeCommandGroup;
   /**
    * This function is run when the robot is first started up and should be
    * used for any initialization code.
@@ -80,16 +81,12 @@ public class Robot extends TimedRobot {
 
     vision = new Vision();
     drivetrainSubsystem = new DrivetrainSubsystem();
-    intakeSubsystem = new IntakeSubsystem();
-    bedSubsystem = new BedSubsystem();
+    elevatorSubsystem = new ElevatorSubsystem();
 
     subsystemManager = new SubsystemManager(drivetrainSubsystem);
+    intakeSubsystem = new IntakeSubsystem();
 
-    intakeCommand = new IntakeCommand();
-    reverseIntakeCommand = new ReverseIntakeCommand();
     recordCommand = new ToggleDriveRecordCommand();
-    bedForwardCommand = new BedForwardCommand();
-    bedReverseCommand = new BedReverseCommand();
     zeroCommand = new ZeroFieldOrientedCommand(drivetrainSubsystem);
     driveCommand = new HolonomicDriveCommand(DrivetrainSubsystem.ControlMode.DualStick);
     visionLightCommand = new VisionLightCommand();
@@ -97,14 +94,15 @@ public class Robot extends TimedRobot {
     loadingBayToShootingCommand = new LoadingBayToShootingCommand(99);
 
     helloArcCommand = new HelloArcCommand();
+
+    intakeCommandGroup = new IntakeCommandGroup();
     
-    oi.intakeButton.whileHeld(intakeCommand);
-    oi.reverseIntakeButton.whileHeld(reverseIntakeCommand);
     //oi.bedForwardButton.toggleWhenPressed(bedForwardCommand);
     oi.toggleDriveRecordButton.toggleWhenPressed(recordCommand);
     oi.visionButton.whileHeld(visionRotationDriveCommand);
-
-
+    
+    oi.intakeButton.whileHeld(intakeCommandGroup);
+    
     oi.helloArcButton.whileHeld(helloArcCommand);
 
     //oi.bedReverseButton.toggleWhenPressed(bedReverseCommand);

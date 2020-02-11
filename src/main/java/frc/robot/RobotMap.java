@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import frc.robot.models.Gains;
+
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
  * to a variable name. This provides flexibility changing wiring, makes checking
@@ -54,4 +56,57 @@ public class RobotMap {
   //public static final double CAMERA_ANGLE = -1*Math.atan(TARGET_HEIGHT/183);
   public static final double CAMERA_ANGLE = Math.toRadians(21.2);
 
+  /**
+	 * Which PID slot to pull gains from. Starting 2018, you can choose from
+	 * 0,1,2 or 3. Only the first two (0,1) are visible in web-based
+	 * configuration.
+	 */
+	public static final int kSlotIdx = 0;
+
+	/**
+	 * Talon SRX/ Victor SPX will supported multiple (cascaded) PID loops. For
+	 * now we just want the primary one.
+	 */
+	public static final int kPIDLoopIdx = 0;
+
+	/**
+	 * Set to zero to skip waiting for confirmation, set to nonzero to wait and
+	 * report to DS if action fails.
+	 */
+    public static final int kTimeoutMs = 30;
+
+	/**
+	 * PID Gains may have to be adjusted based on the responsiveness of control loop.
+     * kF: 1023 represents output value to Talon at 100%, 7200 represents Velocity units at 100% output
+     * 
+	 * 	                                    			  kP   kI   kD   kF          Iz    PeakOut */
+ 	//public final static Gains kGains_Velocit = new Gains( 0.25, 0.001, 20, 1023.0/7200.0,  300,  1.00);
+	 static final double kP = 0.25; 		// 0.3735
+	 static final double kI = 0.54*0.83/200; 	// 0.002241
+	 static final double kD = 0.003; 	// 0.22636364
+	 static final double kF = 0.047; 			//
+	 //public final static Gains kGains_Velocit = new Gains( kP, kI, kD, kF,  0,  1.00);
+	 public final static Gains kGains_Velocit = new Gains(kP, 0.0, 0.0, kF,  0,  1.00);
+
+	 public final static double SHOOTER_MOTOR_1_DEFAULT_SPEED = 1500;
+	 public final static double SHOOTER_MOTOR_2_DEFAULT_SPEED = 1500;
+   
+   public static final int[] LEFT_DRIVE_CAN = {1, 2, 3};
+    public static final int[] RIGHT_DRIVE_CAN = {4, 5, 6};
+    public static final int INTAKE_CAN = 7;
+    public static final int[] SHOOTER_CAN = {8, 9};
+    public static final int[] INDEXER_CAN = {10,11};
+    public static final int FEED_CAN = 12;
+    public static final int[] CLIMBER_CAN = {13,14};
+    public static final int BALANCE_CAN = 15;
+    public static final int COLOR_CAN = 16;
+
+    public static final int TOF_FIRST_CAN = 17;
+    public static final int TOF_SECOND_CAN = 18;
+
+    //PCM IDs
+
+
+    //MOTORS
+    public static final int COLOR_SPINNER_MOTOR = 1;
 }

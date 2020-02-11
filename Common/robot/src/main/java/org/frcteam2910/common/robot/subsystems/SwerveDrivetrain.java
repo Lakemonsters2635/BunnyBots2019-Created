@@ -60,7 +60,7 @@ public abstract class SwerveDrivetrain extends HolonomicDrivetrain {
             //System.out.println("estimated center x: " + estimatedCenter.x);
            // System.out.println("estimated center y: " + estimatedCenter.y);
 
-             = averageCenter.add(estimatedCenter);
+            averageCenter = averageCenter.add(estimatedCenter);
         }
         averageCenter = averageCenter.scale(1.0 / swerveModules.length);
         //System.out.println("average center: " + averageCenter);

@@ -10,42 +10,38 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class BedReverseCommand extends Command {
-  public BedReverseCommand() {
+public class ElevatorAdvanceCommand extends Command {
+  public ElevatorAdvanceCommand() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(Robot.bedSubsystem);
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    Robot.bedSubsystem.reverse();
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.bedSubsystem.reverse();
-
+    Robot.elevatorSubsystem.setBeltMotor(1);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    return !Robot.elevatorSubsystem.isBlocked();
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.bedSubsystem.stop();
+    Robot.elevatorSubsystem.setBeltMotor(0);
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    end();
   }
 }

@@ -10,22 +10,49 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
  * Add your docs here.
  */
-public class IntakeSubsystem extends Subsystem {
+public class ElevatorSubsystem extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
-  CANSparkMax intakeMotor;
+  CANSparkMax beltMotor;
+  CANSparkMax bottomKickerMotor;
+  CANSparkMax topKickerMotor;
+  
+  DigitalInput bottomSensor;
 
-  public IntakeSubsystem() {
-    intakeMotor = new CANSparkMax(0, MotorType.kBrushless);
+  public ElevatorSubsystem() {
+    beltMotor = new CANSparkMax(0, MotorType.kBrushless);
+    bottomKickerMotor = new CANSparkMax(0, MotorType.kBrushless);
+    topKickerMotor = new CANSparkMax(0, MotorType.kBrushless);
+
+    bottomSensor = new DigitalInput(0);
   }
 
-  public void setIntakeMotor(double input) {
-    intakeMotor.set(input);
+  public void setBeltMotor(double input) {
+    beltMotor.set(input);
+  }
+  
+  public void setBottomKickerMotor(double input) {
+    bottomKickerMotor.set(input);
+  }
+
+  public void setTopKickerMotor(double input) {
+    topKickerMotor.set(input);
+  }
+
+  public boolean isBlocked() {
+    return bottomSensor.get();
+  }
+  
+  public void shooterLoad() {
+    beltMotor.set(1);
+    topKickerMotor.set(1);
   }
   @Override
   public void initDefaultCommand() {
