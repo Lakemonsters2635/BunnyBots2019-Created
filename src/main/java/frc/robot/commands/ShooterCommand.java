@@ -42,18 +42,22 @@ public class ShooterCommand extends Command {
     double motor1Speed = RobotMap.SHOOTER_MOTOR_1_DEFAULT_SPEED;
     double motor2Speed = RobotMap.SHOOTER_MOTOR_2_DEFAULT_SPEED;
 
-    //QUESTION: WHAT IF THE DRIVER WANTS TO SHOOT WITHOUT THE CAMERA?
-    //HOW WOULD WE FIX THIS?
-    Robot.vision.data();
-    boolean visionTargetFound = Robot.vision.targetExists();
-    if (visionTargetFound) {
-      //FHE:TODO: DETERMINE MOTOR SPEED BASED ON DISTANCE
+    if (Robot.vision.isLightOn()) {
 
-      targetDistance = Robot.vision.getXDistance();
-      System.out.println("target distance: " + targetDistance);
-      motor1Speed = computeShooterSpeedFromTargetDistance(targetDistance);
-      motor2Speed = motor1Speed/2; //FOR TOP SPIN
+      Robot.vision.data();
+      boolean visionTargetFound = Robot.vision.targetExists();
+      if (visionTargetFound) {
+          targetDistance = Robot.vision.getXDistance();
+          System.out.println("target distance: " + targetDistance);
+          motor1Speed = computeShooterSpeedFromTargetDistance(targetDistance);
+          motor2Speed = motor1Speed/2; //FOR TOP SPIN
+          System.out.println("Adjusted motor1 speed: " + motor1Speed);
+      } else {
+          System.out.println("target not found");
+      }
     }
+
+
 
 
     
@@ -82,8 +86,8 @@ public class ShooterCommand extends Command {
     // 146 9/16	2100    	1050
     // 186	    2250    	1125
     // 211.25	  2300    	1150
-
-    return RobotMap.SHOOTER_MOTOR_1_DEFAULT_SPEED;
+    double adjustedMotorSpeed = 1.441875 * targetDistance + 1943.063021;
+    return adjustedMotorSpeed;
   }
 
   // Called once the command ends or is interrupted.

@@ -130,7 +130,7 @@ public class ColorMatcher {
 
 
     if (match == null || match.confidence < 0.955) {
-      System.out.println("Unknown");
+      //System.out.println("Unknown");
     } else if ( match != null) { 
        //System.out.println(colorString + "  \tconfidence: " + match.confidence) ;
        SmartDashboard.putNumber("Confidence", match.confidence);
