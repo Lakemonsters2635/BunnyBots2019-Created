@@ -57,10 +57,16 @@ public class OI {
   Button visionButton = new JoystickButton(leftStick, RobotMap.VISION_BUTTON_BUTTON);
   
 
-  Button bedForwardButton = new JoystickButton(leftStick, 5);
-  Button bedReverseButton = new JoystickButton(leftStick, 4);
+  Button elevatorUpButton = new JoystickButton(rightStick, 5);
+  Button elevatorDownButton = new JoystickButton(rightStick, 4);
+
+  Button intakeInButton = new JoystickButton(rightStick, 10);
+  Button intakeOutButton = new JoystickButton(rightStick, 11);
+
 
   Button helloArcButton = new JoystickButton(rightStick, 7);
 
+  Button climberExtendButton  = new JoystickButton(rightStick, 8);
+  Button climbButton = new JoystickButton(rightStick, 9);
 
 }

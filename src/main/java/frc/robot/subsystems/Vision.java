@@ -101,21 +101,21 @@ public class Vision extends Subsystem {
 	
 	public double getXDistance() {
 		double angle = getYAngle();
-		SmartDashboard.putNumber("y angle", angle);
+		//SmartDashboard.putNumber("y angle", angle);
 		return RobotMap.TARGET_HEIGHT/Math.tan(Math.toRadians(angle)+RobotMap.CAMERA_ANGLE);
 	}
 
 	public double getArea() {
-		System.out.println(area);
+		//System.out.println(area);
 		return area;
 	}
 	public double printXAngle() {
 		double angle = getXAngle();
-		SmartDashboard.putNumber("Xangle:", angle);
+		//SmartDashboard.putNumber("Xangle:", angle);
 		return angle;
 	}
 	public void printArea() {
-		SmartDashboard.putNumber("Area:", getArea());
+		//SmartDashboard.putNumber("Area:", getArea());
 	}
 
     public void initDefaultCommand() {

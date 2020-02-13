@@ -49,14 +49,14 @@ public class VisionRotationDriveCommand extends Command {
 
       angleController.setSetpoint(angle);
 
-      System.out.println("Found target  Angle: " + angle);
+      //System.out.println("Found target  Angle: " + angle);
       Robot.vision.printArea();
-      SmartDashboard.putNumber("Gyro angle", Robot.drivetrainSubsystem.getGyroscope().getAngle().toDegrees());
-      SmartDashboard.putNumber("Y offset", Robot.vision.getYAngle());
+      //SmartDashboard.putNumber("Gyro angle", Robot.drivetrainSubsystem.getGyroscope().getAngle().toDegrees());
+      //SmartDashboard.putNumber("Y offset", Robot.vision.getYAngle());
       rotation = angleController.calculate(0);
     }
     else {
-      System.out.println("No target");
+      //System.out.println("No target");
       rotation = Robot.oi.rightStick.getRawAxis(0);
       rotation = deadZoneAdjust(rotation, deadzone);
     }
@@ -75,7 +75,7 @@ public class VisionRotationDriveCommand extends Command {
     final boolean robotOriented = false;
     final boolean reverseRobotOriented = false;
 
-    SmartDashboard.putNumber("Distance to Target", Robot.vision.getXDistance());
+    //SmartDashboard.putNumber("Distance to Target", Robot.vision.getXDistance());
 
     final Vector2 translation = new Vector2(forward, strafe);
 

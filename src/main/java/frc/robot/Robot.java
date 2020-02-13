@@ -49,6 +49,8 @@ public class Robot extends TimedRobot {
   public static ElevatorSubsystem elevatorSubsystem;
   public static IntakeSubsystem intakeSubsystem;
 
+  public static ClimberSubsystem climberSubsystem;
+
   Command m_autonomousCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
 
@@ -60,12 +62,20 @@ public class Robot extends TimedRobot {
 
   ToggleDriveRecordCommand recordCommand;
 
-  
+  ElevatorUpCommand elevatorUpCommand;
+  ElevatorDownCommand elevatorDownCommand;
+
+  IntakeInCommand  intakeInCommand;
+  IntakeOutCommand intakeOutCommand;
+
 
   VisionLightCommand visionLightCommand;
   VisionRotationDriveCommand visionRotationDriveCommand;
   LoadingBayToShootingCommand loadingBayToShootingCommand;
   HelloArcCommand helloArcCommand;
+
+  ExtendClimberCommand extendClimberCommand;
+  ClimbCommand climbCommand;
 
   IntakeCommandGroup intakeCommandGroup;
   /**
@@ -86,6 +96,8 @@ public class Robot extends TimedRobot {
     subsystemManager = new SubsystemManager(drivetrainSubsystem);
     intakeSubsystem = new IntakeSubsystem();
 
+    climberSubsystem = new ClimberSubsystem();
+
     recordCommand = new ToggleDriveRecordCommand();
     zeroCommand = new ZeroFieldOrientedCommand(drivetrainSubsystem);
     driveCommand = new HolonomicDriveCommand(DrivetrainSubsystem.ControlMode.DualStick);
@@ -93,16 +105,33 @@ public class Robot extends TimedRobot {
     visionRotationDriveCommand = new VisionRotationDriveCommand();
     loadingBayToShootingCommand = new LoadingBayToShootingCommand(99);
 
+    elevatorUpCommand = new ElevatorUpCommand();
+    elevatorDownCommand = new ElevatorDownCommand();
+
+    intakeInCommand = new IntakeInCommand();
+    intakeOutCommand = new IntakeOutCommand();
+
     helloArcCommand = new HelloArcCommand();
 
     intakeCommandGroup = new IntakeCommandGroup();
+
+    climbCommand = new ClimbCommand();
+    extendClimberCommand = new ExtendClimberCommand();
     
     //oi.bedForwardButton.toggleWhenPressed(bedForwardCommand);
     oi.toggleDriveRecordButton.toggleWhenPressed(recordCommand);
     oi.visionButton.whileHeld(visionRotationDriveCommand);
     
-    oi.intakeButton.whileHeld(intakeCommandGroup);
-    
+    //oi.intakeButton.whileHeld(intakeCommandGroup);
+    oi.elevatorUpButton.whileHeld(elevatorUpCommand);
+    oi.elevatorDownButton.whileHeld(elevatorDownCommand);
+
+    oi.intakeInButton.whileHeld(intakeInCommand);
+    oi.intakeOutButton.whileHeld(intakeOutCommand);
+
+    oi.climberExtendButton.whenPressed(extendClimberCommand);
+    oi.climbButton.whileHeld(climbCommand);
+
     oi.helloArcButton.whileHeld(helloArcCommand);
 
     //oi.bedReverseButton.toggleWhenPressed(bedReverseCommand);
@@ -213,10 +242,14 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
+
     Scheduler.getInstance().run();
+    
     Vector2 vec = drivetrainSubsystem.getKinematicPosition();
-    SmartDashboard.putNumber("Current Pose X", vec.x);
-    SmartDashboard.putNumber("Current Pose Y", vec.y);
+    //SmartDashboard.putNumber("Current Pose X", vec.x);
+    //SmartDashboard.putNumber("Current Pose Y", vec.y);
+
+    drivetrainSubsystem.outputToSmartDashboard();
   }
 
   /**

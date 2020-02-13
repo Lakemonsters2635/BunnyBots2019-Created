@@ -29,18 +29,18 @@ public class ToggleDriveRecordCommand extends Command {
   @Override
   protected void execute() {
     if(Robot.drivetrainSubsystem.isRecordingDrive) {
-        System.out.println("saving recording");
+        //System.out.println("saving recording");
         try{
             Robot.drivetrainSubsystem.writeDriveLog();
         }
         catch(Exception err){
-            System.out.println("Error writing log files:" + err.getMessage());
+            //System.out.println("Error writing log files:" + err.getMessage());
 
         }
         Robot.drivetrainSubsystem.isRecordingDrive = false;
         hasExecuted = true;
       } else {
-        System.out.println("starting recording");
+        //System.out.println("starting recording");
         Robot.drivetrainSubsystem.translationLog.clear();
         Robot.drivetrainSubsystem.rotationLog.clear();
         Robot.drivetrainSubsystem.isRecordingDrive = true;

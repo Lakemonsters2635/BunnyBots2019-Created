@@ -355,16 +355,16 @@ public static ArrayList<HolonomicDriveSignal> readDriveRecording(String fileName
       double gyroRate = getGyroscope().getRate();
       Vector2 kinematicVelocity = getKinematicVelocity();
       Rotation2 gyroAngle = getGyroscope().getAngle();
-      SmartDashboard.putNumber("gryoAngle", gyroAngle.toDegrees());
+      //SmartDashboard.putNumber("gryoAngle", gyroAngle.toDegrees());
       //Rotation2 gyroAngle = new Rotation2(1, 0, false);
       Vector2 kinematicPosition = getKinematicPosition();
       RigidTransform2 rigidTransform = new RigidTransform2(kinematicPosition,  gyroAngle);
       
-      SmartDashboard.putNumber("Gyro Rate: ", gyroRate);
-      SmartDashboard.putNumber("Kinematic Velocity: ", kinematicVelocity.x);
-      SmartDashboard.putNumber("Gyro Angle: ", gyroAngle.toDegrees());
-      SmartDashboard.putNumber("Kinematic Position: ", kinematicPosition.length);
-      //SmartDashboard.putNumber("Rigid Transform: ", rigidTransform.);
+    //   SmartDashboard.putNumber("Gyro Rate: ", gyroRate);
+    //   SmartDashboard.putNumber("Kinematic Velocity: ", kinematicVelocity.x);
+    //   SmartDashboard.putNumber("Gyro Angle: ", gyroAngle.toDegrees());
+    //   SmartDashboard.putNumber("Kinematic Position: ", kinematicPosition.length);
+    //   //SmartDashboard.putNumber("Rigid Transform: ", rigidTransform.);
 
       Optional<HolonomicDriveSignal> optSignal = follower.update(rigidTransform, kinematicVelocity, gyroRate, timestamp, dt);
       HolonomicDriveSignal localSignal;
@@ -382,9 +382,9 @@ public static ArrayList<HolonomicDriveSignal> readDriveRecording(String fileName
           }
       }
 
-      SmartDashboard.putNumber("Signal Forward", localSignal.getTranslation().x);
-      SmartDashboard.putNumber("Signal Strafe", localSignal.getTranslation().y);
-      SmartDashboard.putNumber("Signal Rotation",localSignal.getRotation());
+    //   SmartDashboard.putNumber("Signal Forward", localSignal.getTranslation().x);
+    //   SmartDashboard.putNumber("Signal Strafe", localSignal.getTranslation().y);
+    //   SmartDashboard.putNumber("Signal Rotation",localSignal.getRotation());
 
     //   if(follower.getCurrentPose() != null) {
     //     SmartDashboard.putNumber("Pose X", follower.getCurrentPose().translation.x);
@@ -393,9 +393,9 @@ public static ArrayList<HolonomicDriveSignal> readDriveRecording(String fileName
     //   }
 
       if(follower.getLastSegment() != null) {
-        SmartDashboard.putNumber("lastSegment translation x", follower.getLastSegment().translation.x);
-        SmartDashboard.putNumber("lastSegment translation y", follower.getLastSegment().translation.y);
-        SmartDashboard.putNumber("lastSegment rotation", follower.getLastSegment().rotation.toDegrees());
+        // SmartDashboard.putNumber("lastSegment translation x", follower.getLastSegment().translation.x);
+        // SmartDashboard.putNumber("lastSegment translation y", follower.getLastSegment().translation.y);
+        // SmartDashboard.putNumber("lastSegment rotation", follower.getLastSegment().rotation.toDegrees());
       }
       
 
@@ -428,19 +428,19 @@ public static ArrayList<HolonomicDriveSignal> readDriveRecording(String fileName
           localSegment = segment;
       }
 
-      SmartDashboard.putNumber("Drivetrain Follower Forwards", localSignal.getTranslation().x);
-      SmartDashboard.putNumber("Drivetrain Follower Strafe", localSignal.getTranslation().y);
-      SmartDashboard.putNumber("Drivetrain Follower Rotation", localSignal.getRotation());
-      SmartDashboard.putBoolean("Drivetrain Follower Field Oriented", localSignal.isFieldOriented());
+    //   SmartDashboard.putNumber("Drivetrain Follower Forwards", localSignal.getTranslation().x);
+    //   SmartDashboard.putNumber("Drivetrain Follower Strafe", localSignal.getTranslation().y);
+    //   SmartDashboard.putNumber("Drivetrain Follower Rotation", localSignal.getRotation());
+    //   SmartDashboard.putBoolean("Drivetrain Follower Field Oriented", localSignal.isFieldOriented());
 
       if (follower.getCurrentTrajectory().isPresent() && localSegment != null) {
-          SmartDashboard.putNumber("Drivetrain Follower Target Angle", localSegment.rotation.toDegrees());
+          //SmartDashboard.putNumber("Drivetrain Follower Target Angle", localSegment.rotation.toDegrees());
 
           Vector2 position = getKinematicPosition();
 
-          SmartDashboard.putNumber("Drivetrain Follower X Error", localSegment.translation.x - position.x);
-          SmartDashboard.putNumber("Drivetrain Follower Y Error", localSegment.translation.y - position.y);
-          SmartDashboard.putNumber("Drivetrain Follower Angle Error", localSegment.rotation.toDegrees() - getGyroscope().getAngle().toDegrees());
+        //   SmartDashboard.putNumber("Drivetrain Follower X Error", localSegment.translation.x - position.x);
+        //   SmartDashboard.putNumber("Drivetrain Follower Y Error", localSegment.translation.y - position.y);
+        //   SmartDashboard.putNumber("Drivetrain Follower Angle Error", localSegment.rotation.toDegrees() - getGyroscope().getAngle().toDegrees());
       }
   }
 

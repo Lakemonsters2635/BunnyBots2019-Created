@@ -48,12 +48,12 @@ public class ShooterCommand extends Command {
       boolean visionTargetFound = Robot.vision.targetExists();
       if (visionTargetFound) {
           targetDistance = Robot.vision.getXDistance();
-          System.out.println("target distance: " + targetDistance);
+          //System.out.println("target distance: " + targetDistance);
           motor1Speed = computeShooterSpeedFromTargetDistance(targetDistance);
           motor2Speed = motor1Speed/2; //FOR TOP SPIN
-          System.out.println("Adjusted motor1 speed: " + motor1Speed);
+          //System.out.println("Adjusted motor1 speed: " + motor1Speed);
       } else {
-          System.out.println("target not found");
+          //System.out.println("target not found");
       }
     }
 
