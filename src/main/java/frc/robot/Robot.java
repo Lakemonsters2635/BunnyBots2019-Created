@@ -72,12 +72,13 @@ public class Robot extends TimedRobot {
   VisionLightCommand visionLightCommand;
   VisionRotationDriveCommand visionRotationDriveCommand;
   LoadingBayToShootingCommand loadingBayToShootingCommand;
-  HelloArcCommand helloArcCommand;
+  public HelloArcCommand helloArcCommand;
+  public static boolean arcCommandIsRunning = false;
 
   ExtendClimberCommand extendClimberCommand;
   ClimbCommand climbCommand;
 
-  IntakeCommandGroup intakeCommandGroup;
+  // IntakeCommandGroup intakeCommandGroup;
   /**
    * This function is run when the robot is first started up and should be
    * used for any initialization code.
@@ -91,46 +92,46 @@ public class Robot extends TimedRobot {
 
     vision = new Vision();
     drivetrainSubsystem = new DrivetrainSubsystem();
-    elevatorSubsystem = new ElevatorSubsystem();
+    // elevatorSubsystem = new ElevatorSubsystem();
 
     subsystemManager = new SubsystemManager(drivetrainSubsystem);
-    intakeSubsystem = new IntakeSubsystem();
+    // intakeSubsystem = new IntakeSubsystem();
 
-    climberSubsystem = new ClimberSubsystem();
+    // climberSubsystem = new ClimberSubsystem();
 
-    recordCommand = new ToggleDriveRecordCommand();
+    // recordCommand = new ToggleDriveRecordCommand();
     zeroCommand = new ZeroFieldOrientedCommand(drivetrainSubsystem);
     driveCommand = new HolonomicDriveCommand(DrivetrainSubsystem.ControlMode.DualStick);
     visionLightCommand = new VisionLightCommand();
     visionRotationDriveCommand = new VisionRotationDriveCommand();
     loadingBayToShootingCommand = new LoadingBayToShootingCommand(99);
 
-    elevatorUpCommand = new ElevatorUpCommand();
-    elevatorDownCommand = new ElevatorDownCommand();
+    // elevatorUpCommand = new ElevatorUpCommand();
+    // elevatorDownCommand = new ElevatorDownCommand();
 
-    intakeInCommand = new IntakeInCommand();
-    intakeOutCommand = new IntakeOutCommand();
+    // intakeInCommand = new IntakeInCommand();
+    // intakeOutCommand = new IntakeOutCommand();
 
     helloArcCommand = new HelloArcCommand();
 
-    intakeCommandGroup = new IntakeCommandGroup();
+    // intakeCommandGroup = new IntakeCommandGroup();
 
-    climbCommand = new ClimbCommand();
-    extendClimberCommand = new ExtendClimberCommand();
+    // climbCommand = new ClimbCommand();
+    // extendClimberCommand = new ExtendClimberCommand();
     
     //oi.bedForwardButton.toggleWhenPressed(bedForwardCommand);
-    oi.toggleDriveRecordButton.toggleWhenPressed(recordCommand);
+    // oi.toggleDriveRecordButton.toggleWhenPressed(recordCommand);
     oi.visionButton.whileHeld(visionRotationDriveCommand);
     
     //oi.intakeButton.whileHeld(intakeCommandGroup);
-    oi.elevatorUpButton.whileHeld(elevatorUpCommand);
-    oi.elevatorDownButton.whileHeld(elevatorDownCommand);
+    // oi.elevatorUpButton.whileHeld(elevatorUpCommand);
+    // oi.elevatorDownButton.whileHeld(elevatorDownCommand);
 
-    oi.intakeInButton.whileHeld(intakeInCommand);
-    oi.intakeOutButton.whileHeld(intakeOutCommand);
+    // oi.intakeInButton.whileHeld(intakeInCommand);
+    // oi.intakeOutButton.whileHeld(intakeOutCommand);
 
-    oi.climberExtendButton.whenPressed(extendClimberCommand);
-    oi.climbButton.whileHeld(climbCommand);
+    // oi.climberExtendButton.whenPressed(extendClimberCommand);
+    // oi.climbButton.whileHeld(climbCommand);
 
     oi.helloArcButton.whileHeld(helloArcCommand);
 
@@ -150,6 +151,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
+    arcCommandIsRunning = helloArcCommand.isRunning();
   }
 
   /**
@@ -248,6 +250,7 @@ public class Robot extends TimedRobot {
     Vector2 vec = drivetrainSubsystem.getKinematicPosition();
     //SmartDashboard.putNumber("Current Pose X", vec.x);
     //SmartDashboard.putNumber("Current Pose Y", vec.y);
+   
 
     drivetrainSubsystem.outputToSmartDashboard();
   }

@@ -26,6 +26,7 @@ import org.frcteam2910.common.util.HolonomicDriveSignal;
 import org.frcteam2910.common.util.HolonomicFeedforward;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -35,6 +36,7 @@ import java.util.Optional;
 
 //import frc.lib.motion_profiling.Path2D;
 import frc.robot.Mk2SwerveModule;
+import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.commands.HolonomicDriveCommand;
 
@@ -339,13 +341,15 @@ public static ArrayList<HolonomicDriveSignal> readDriveRecording(String fileName
 //     // shut it down
 //     holonomicDrive(Vector2.ZERO, 0.0, true);
 // }
-
+  
   @Override
   public synchronized void updateKinematics(double timestamp) {
-      super.updateKinematics(timestamp);
+    
+      super.updateKinematics(timestamp, Robot.arcCommandIsRunning);
         //System.out.println("Sybsystem.updateKinematics");
       double dt = timestamp - lastTimestamp;
       lastTimestamp = timestamp;
+      
 
       double localSnapRotation;
       synchronized (lock) {
@@ -417,31 +421,167 @@ public static ArrayList<HolonomicDriveSignal> readDriveRecording(String fileName
       super.holonomicDrive(localSignal.getTranslation(), localSignal.getRotation(), localSignal.isFieldOriented());
   }
 
+  public boolean save(){
+    File f;
+    FileWriter fw;
+    BufferedWriter bw;
+    try {
+      f = new File("/home/lvuser/FrontLeftOutput.txt");
+      if(!f.exists()){
+        f.createNewFile();
+      }
+    fw = new FileWriter(f);
+  } catch (IOException e) {
+    // TODO Auto-generated catch block
+    e.printStackTrace();
+    return false;
+  }
+  bw = new BufferedWriter(fw);
+
+
+  try {
+    for(int i = 0; i < motorsPos[0].size(); i++){
+      bw.write(motorsPos[0].get(i));
+    }
+    bw.close();
+    fw.close();
+  } catch (IOException e) {
+    // TODO Auto-generated catch block
+    e.printStackTrace();
+  }
+
+  //SECOND #########################
+
+  try {
+    f = new File("/home/lvuser/FrontRightOutput.txt");
+    if(!f.exists()){
+      f.createNewFile();
+    }
+  fw = new FileWriter(f);
+} catch (IOException e) {
+  // TODO Auto-generated catch block
+  e.printStackTrace();
+  return false;
+}
+bw = new BufferedWriter(fw);
+
+
+try {
+  for(int i = 0; i < motorsPos[1].size(); i++){
+    bw.write(motorsPos[1].get(i));
+  }  bw.close();
+  fw.close();
+} catch (IOException e) {
+  // TODO Auto-generated catch block
+  e.printStackTrace();
+}
+
+//THIRD ########################
+
+try {
+  f = new File("/home/lvuser/BackLeftOutput.txt");
+  if(!f.exists()){
+    f.createNewFile();
+  }
+fw = new FileWriter(f);
+} catch (IOException e) {
+// TODO Auto-generated catch block
+e.printStackTrace();
+return false;
+}
+bw = new BufferedWriter(fw);
+
+
+try {
+  for(int i = 0; i < motorsPos[2].size(); i++){
+    bw.write(motorsPos[2].get(i));
+  }bw.close();
+fw.close();
+} catch (IOException e) {
+// TODO Auto-generated catch block
+e.printStackTrace();
+}
+
+//FOURTH #################
+
+try {
+  f = new File("/home/lvuser/BackRightOutput.txt");
+  if(!f.exists()){
+    f.createNewFile();
+  }
+  fw = new FileWriter(f);
+} catch (IOException e) {
+// TODO Auto-generated catch block
+e.printStackTrace();
+return false;
+}
+bw = new BufferedWriter(fw);
+
+
+try {
+  for(int i = 0; i < motorsPos[3].size(); i++){
+    bw.write(motorsPos[3].get(i));
+  }bw.close();
+fw.close();
+} catch (IOException e) {
+// TODO Auto-generated catch block
+e.printStackTrace();
+}
+
+//AVERAGE ###############################
+try {
+  f = new File("/home/lvuser/AverageOutput.txt");
+  if(!f.exists()){
+    f.createNewFile();
+  }
+fw = new FileWriter(f);
+} catch (IOException e) {
+// TODO Auto-generated catch block
+e.printStackTrace();
+return false;
+}
+bw = new BufferedWriter(fw);
+
+
+try {
+  for(int i = 0; i < avgPos.size(); i++){
+    bw.write(avgPos.get(i));
+  }bw.close();
+fw.close();
+} catch (IOException e) {
+// TODO Auto-generated catch block
+e.printStackTrace();
+}
+    
+return true;
+    
+  }
+
   @Override
   public void outputToSmartDashboard() {
       super.outputToSmartDashboard();
 
-      HolonomicDriveSignal localSignal;
-      Trajectory.Segment localSegment;
-      synchronized (lock) {
-          localSignal = signal;
-          localSegment = segment;
-      }
+      // HolonomicDriveSignal localSignal;
+      // Trajectory.Segment localSegment;
+      // synchronized (lock) {
+      //     localSignal = signal;
+      //     localSegment = segment;
+      // }
 
     //   SmartDashboard.putNumber("Drivetrain Follower Forwards", localSignal.getTranslation().x);
     //   SmartDashboard.putNumber("Drivetrain Follower Strafe", localSignal.getTranslation().y);
     //   SmartDashboard.putNumber("Drivetrain Follower Rotation", localSignal.getRotation());
     //   SmartDashboard.putBoolean("Drivetrain Follower Field Oriented", localSignal.isFieldOriented());
 
-      if (follower.getCurrentTrajectory().isPresent() && localSegment != null) {
-          //SmartDashboard.putNumber("Drivetrain Follower Target Angle", localSegment.rotation.toDegrees());
+      // if (follower.getCurrentTrajectory().isPresent() && localSegment != null) {
+      //     //SmartDashboard.putNumber("Drivetrain Follower Target Angle", localSegment.rotation.toDegrees());
 
-          Vector2 position = getKinematicPosition();
+      //    // Vector2 position = getKinematicPosition();
 
-        //   SmartDashboard.putNumber("Drivetrain Follower X Error", localSegment.translation.x - position.x);
-        //   SmartDashboard.putNumber("Drivetrain Follower Y Error", localSegment.translation.y - position.y);
-        //   SmartDashboard.putNumber("Drivetrain Follower Angle Error", localSegment.rotation.toDegrees() - getGyroscope().getAngle().toDegrees());
-      }
+      //   //   SmartDashboard.putNumber("Drivetrain Follower X Error", localSegment.translation.x - position.x);
+      //   //   SmartDashboard.putNumber("Drivetrain Follower Y Error", localSegment.translation.y - position.y);
+      //   //   SmartDashboard.putNumber("Drivetrain Follower Angle Error", localSegment.rotation.toDegrees() - getGyroscope().getAngle().toDegrees());
+      // }
   }
 
 //   public static DrivetrainSubsystem getInstance() {
