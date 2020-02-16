@@ -98,8 +98,9 @@ public class AutonomousTrajectories {
                 new PathLineSegment(
                         new Vector2(0.0, 0.0),
                         new Vector2(48, 0.0)
-                ), Rotation2.fromDegrees(90)
+                ), Rotation2.fromDegrees(90.0)
         );
+        helloPath.subdivide(SUBDIVIDE_ITERATIONS);
         // helloPath.addSegment(
         //         new PathLineSegment(
         //                 new Vector2(100, 0.0),
