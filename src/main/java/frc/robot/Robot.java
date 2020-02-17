@@ -78,6 +78,7 @@ public class Robot extends TimedRobot {
   ExtendClimberCommand extendClimberCommand;
   ClimbCommand climbCommand;
 
+  RobotRotateCommand robotRotateCommand;
   // IntakeCommandGroup intakeCommandGroup;
   /**
    * This function is run when the robot is first started up and should be
@@ -106,6 +107,7 @@ public class Robot extends TimedRobot {
     visionRotationDriveCommand = new VisionRotationDriveCommand();
     loadingBayToShootingCommand = new LoadingBayToShootingCommand(99);
 
+    robotRotateCommand = new RobotRotateCommand(90);
     // elevatorUpCommand = new ElevatorUpCommand();
     // elevatorDownCommand = new ElevatorDownCommand();
 
@@ -133,7 +135,7 @@ public class Robot extends TimedRobot {
     // oi.climberExtendButton.whenPressed(extendClimberCommand);
     // oi.climbButton.whileHeld(climbCommand);
 
-    oi.helloArcButton.whileHeld(helloArcCommand);
+    oi.helloArcButton.whileHeld(robotRotateCommand);
 
     //oi.bedReverseButton.toggleWhenPressed(bedReverseCommand);
     oi.referenceResetButton.whenPressed(zeroCommand);
