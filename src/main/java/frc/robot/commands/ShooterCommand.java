@@ -15,15 +15,16 @@ import frc.robot.subsystems.ShooterSubsystem;
 public class ShooterCommand extends Command {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final ShooterSubsystem m_Shooter;
+  private boolean useCamera = false;
   private double targetDistance = 0;
   /**
    * Creates a new ExampleCommand.
    *
    * @param subsystem The subsystem used by this command.
    */
-  public ShooterCommand(ShooterSubsystem subsystem) {
+  public ShooterCommand(ShooterSubsystem subsystem, boolean useCamera) {
     m_Shooter = subsystem;
- 
+    this.useCamera = useCamera;
     // Use addRequirements() here to declare subsystem dependencies.
     //addRequirements(subsystem);
   }
@@ -32,7 +33,7 @@ public class ShooterCommand extends Command {
   @Override
   public void initialize() {    
    // m_colorSpinner.determineTargetColor();
-      System.out.println("shooter command initalized");
+      System.out.println("shooter command initalized. Use-Vision:" + useCamera);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -42,7 +43,7 @@ public class ShooterCommand extends Command {
     double motor1Speed = RobotMap.SHOOTER_MOTOR_1_DEFAULT_SPEED;
     double motor2Speed = RobotMap.SHOOTER_MOTOR_2_DEFAULT_SPEED;
 
-    if (Robot.vision.isLightOn()) {
+    if (useCamera) {
 
       Robot.vision.data();
       boolean visionTargetFound = Robot.vision.targetExists();
@@ -93,7 +94,10 @@ public class ShooterCommand extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end() {
-  m_Shooter.stop();
+    m_Shooter.stop();
+    if (useCamera) {
+      Robot.vision.ledOff();
+    }
   }
 
   // Returns true when the command should end.

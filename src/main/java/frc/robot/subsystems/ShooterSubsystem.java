@@ -25,10 +25,10 @@ public class ShooterSubsystem extends Subsystem {
   TalonFX motor2;
   DoubleSolenoid solenoid;
   public ShooterSubsystem(){
-    motor1 = new TalonFX(5);
-    motor2 = new TalonFX(6);
+    motor1 = new TalonFX(RobotMap.SHOOTER_TOP_CAN);
+    motor2 = new TalonFX(RobotMap.SHOOTER_BOTTOM_CAN);
 
-    solenoid = new DoubleSolenoid(0,0);
+    //solenoid = new DoubleSolenoid(0,0);
 
     configureMotors();  
   }

@@ -49,6 +49,8 @@ public class OI {
 
   public Button referenceResetButton = new JoystickButton(leftStick, 8);
 
+  Button shooterVisionButton = new JoystickButton(leftStick, RobotMap.SHOOTER_WITHVISION_BUTTON);
+  Button shooterNoVisionButton = new JoystickButton(rightStick, RobotMap.SHOOTER_NOVISION_BUTTON);
 
   Button intakeButton = new JoystickButton(leftStick, 1);
   Button reverseIntakeButton = new JoystickButton(leftStick, 2);

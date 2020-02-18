@@ -24,13 +24,7 @@ public abstract class SwerveDrivetrain extends HolonomicDrivetrain {
     private InterpolatingTreeMap<InterpolatingDouble, Vector2> positionSamples = new InterpolatingTreeMap<>(5);
 
     
-    public ArrayList<String>[] motorsPos =new ArrayList[4];
-    public ArrayList<String> avgPos = new ArrayList<String>();
-    public SwerveDrivetrain(){
-        for (int i = 0; i < 4; i++) { 
-            motorsPos[i] = new ArrayList<String>(); 
-        } 
-    }
+
 
     public void holonomicDrive(Vector2 translation, double rotation, boolean fieldOriented) {
         if (fieldOriented) {
@@ -53,7 +47,7 @@ public abstract class SwerveDrivetrain extends HolonomicDrivetrain {
 
 
     
-    public synchronized void updateKinematics(double timestamp, boolean doSave) {
+    public synchronized void updateKinematics(double timestamp) {
         double robotRotation = getGyroscope().getAngle().toRadians();
         double dt = timestamp - lastKinematicTimestamp;
         lastKinematicTimestamp = timestamp;
@@ -65,10 +59,7 @@ public abstract class SwerveDrivetrain extends HolonomicDrivetrain {
         for (SwerveModule module : swerveModules) {
             module.updateSensors();
             module.updateKinematics(robotRotation);
-            if (doSave)
-            motorsPos[i].add("(" + module.getCurrentPosition().y + ", " + module.getCurrentPosition().x + ")\n");
-
-            Vector2 estimatedCenter = new RigidTransform2(module.getCurrentPosition(),
+              Vector2 estimatedCenter = new RigidTransform2(module.getCurrentPosition(),
                     Rotation2.fromRadians(robotRotation))
                     .transformBy(new RigidTransform2(module.getModulePosition().inverse(), Rotation2.ZERO)).translation;
             //System.out.println("estimated center x: " + estimatedCenter.x);
@@ -91,10 +82,6 @@ public abstract class SwerveDrivetrain extends HolonomicDrivetrain {
             kinematicVelocity = averageCenter.subtract(lastPosition.getValue()).scale(1 / (timestamp - lastPosition.getKey().value));
         }
         kinematicPosition = averageCenter;
-
-        if(doSave){
-            avgPos.add("(" + kinematicPosition.y + ", " + kinematicPosition.x + ")\n");
-        }
 
         for (SwerveModule module : swerveModules) {
             

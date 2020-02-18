@@ -32,6 +32,8 @@ public class RobotMap {
   public static final int VISION_BUTTON_BUTTON = 7;
   public static final int REFERENCE_RESET_BUTTON = 8;
   public static final int TOGGLE_DRIVE_RECORD_BUTTON = 10;
+  public static final int SHOOTER_NOVISION_BUTTON = 1;
+  public static final int SHOOTER_WITHVISION_BUTTON = 1;
 
   public static final int DRIVETRAIN_FRONT_LEFT_ANGLE_MOTOR = 8;
   public static final int DRIVETRAIN_FRONT_LEFT_ANGLE_ENCODER = 3;
@@ -100,6 +102,8 @@ public class RobotMap {
     public static final int[] CLIMBER_CAN = {13,14};
     public static final int BALANCE_CAN = 15;
     public static final int COLOR_CAN = 16;
+    public static final int SHOOTER_TOP_CAN = 12;
+    public static final int SHOOTER_BOTTOM_CAN = 13;
 
     public static final int TOF_FIRST_CAN = 17;
     public static final int TOF_SECOND_CAN = 18;

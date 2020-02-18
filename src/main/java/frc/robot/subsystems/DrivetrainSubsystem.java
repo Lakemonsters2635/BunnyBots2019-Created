@@ -345,7 +345,7 @@ public static ArrayList<HolonomicDriveSignal> readDriveRecording(String fileName
   @Override
   public synchronized void updateKinematics(double timestamp) {
     
-      super.updateKinematics(timestamp, Robot.arcCommandIsRunning);
+      super.updateKinematics(timestamp);
         //System.out.println("Sybsystem.updateKinematics");
       double dt = timestamp - lastTimestamp;
       lastTimestamp = timestamp;
@@ -421,142 +421,7 @@ public static ArrayList<HolonomicDriveSignal> readDriveRecording(String fileName
       super.holonomicDrive(localSignal.getTranslation(), localSignal.getRotation(), localSignal.isFieldOriented());
   }
 
-  public boolean save(){
-    File f;
-    FileWriter fw;
-    BufferedWriter bw;
-    try {
-      f = new File("/home/lvuser/FrontLeftOutput.txt");
-      if(!f.exists()){
-        f.createNewFile();
-      }
-    fw = new FileWriter(f);
-  } catch (IOException e) {
-    // TODO Auto-generated catch block
-    e.printStackTrace();
-    return false;
-  }
-  bw = new BufferedWriter(fw);
-
-
-  try {
-    for(int i = 0; i < motorsPos[0].size(); i++){
-      bw.write(motorsPos[0].get(i));
-    }
-    bw.close();
-    fw.close();
-  } catch (IOException e) {
-    // TODO Auto-generated catch block
-    e.printStackTrace();
-  }
-
-  //SECOND #########################
-
-  try {
-    f = new File("/home/lvuser/FrontRightOutput.txt");
-    if(!f.exists()){
-      f.createNewFile();
-    }
-  fw = new FileWriter(f);
-} catch (IOException e) {
-  // TODO Auto-generated catch block
-  e.printStackTrace();
-  return false;
-}
-bw = new BufferedWriter(fw);
-
-
-try {
-  for(int i = 0; i < motorsPos[1].size(); i++){
-    bw.write(motorsPos[1].get(i));
-  }  bw.close();
-  fw.close();
-} catch (IOException e) {
-  // TODO Auto-generated catch block
-  e.printStackTrace();
-}
-
-//THIRD ########################
-
-try {
-  f = new File("/home/lvuser/BackLeftOutput.txt");
-  if(!f.exists()){
-    f.createNewFile();
-  }
-fw = new FileWriter(f);
-} catch (IOException e) {
-// TODO Auto-generated catch block
-e.printStackTrace();
-return false;
-}
-bw = new BufferedWriter(fw);
-
-
-try {
-  for(int i = 0; i < motorsPos[2].size(); i++){
-    bw.write(motorsPos[2].get(i));
-  }bw.close();
-fw.close();
-} catch (IOException e) {
-// TODO Auto-generated catch block
-e.printStackTrace();
-}
-
-//FOURTH #################
-
-try {
-  f = new File("/home/lvuser/BackRightOutput.txt");
-  if(!f.exists()){
-    f.createNewFile();
-  }
-  fw = new FileWriter(f);
-} catch (IOException e) {
-// TODO Auto-generated catch block
-e.printStackTrace();
-return false;
-}
-bw = new BufferedWriter(fw);
-
-
-try {
-  for(int i = 0; i < motorsPos[3].size(); i++){
-    bw.write(motorsPos[3].get(i));
-  }bw.close();
-fw.close();
-} catch (IOException e) {
-// TODO Auto-generated catch block
-e.printStackTrace();
-}
-
-//AVERAGE ###############################
-try {
-  f = new File("/home/lvuser/AverageOutput.txt");
-  if(!f.exists()){
-    f.createNewFile();
-  }
-fw = new FileWriter(f);
-} catch (IOException e) {
-// TODO Auto-generated catch block
-e.printStackTrace();
-return false;
-}
-bw = new BufferedWriter(fw);
-
-
-try {
-  for(int i = 0; i < avgPos.size(); i++){
-    bw.write(avgPos.get(i));
-  }bw.close();
-fw.close();
-} catch (IOException e) {
-// TODO Auto-generated catch block
-e.printStackTrace();
-}
-    
-return true;
-    
-  }
-
+ 
   @Override
   public void outputToSmartDashboard() {
       super.outputToSmartDashboard();

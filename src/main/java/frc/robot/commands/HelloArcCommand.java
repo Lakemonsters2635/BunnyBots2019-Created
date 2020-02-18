@@ -51,7 +51,6 @@ public class HelloArcCommand extends Command {
   protected void end() {
     Robot.drivetrainSubsystem.holonomicDrive(Vector2.ZERO, 0.0, true);
     Robot.drivetrainSubsystem.getFollower().cancel();
-    Robot.drivetrainSubsystem.save();
   }
 
   // Called when another command which requires one or more of the same

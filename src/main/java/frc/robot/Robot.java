@@ -48,7 +48,7 @@ public class Robot extends TimedRobot {
 
   public static ElevatorSubsystem elevatorSubsystem;
   public static IntakeSubsystem intakeSubsystem;
-
+  public static ShooterSubsystem shooterSubsystem;
   public static ClimberSubsystem climberSubsystem;
 
   Command m_autonomousCommand;
@@ -65,6 +65,9 @@ public class Robot extends TimedRobot {
   ElevatorUpCommand elevatorUpCommand;
   ElevatorDownCommand elevatorDownCommand;
 
+  ShooterCommand shooterWithVisionCommand;
+  ShooterCommand shooterNoVisionCommand;
+  
   IntakeInCommand  intakeInCommand;
   IntakeOutCommand intakeOutCommand;
 
@@ -74,11 +77,10 @@ public class Robot extends TimedRobot {
   LoadingBayToShootingCommand loadingBayToShootingCommand;
   public HelloArcCommand helloArcCommand;
   public static boolean arcCommandIsRunning = false;
-
+  RobotRotateCommand robotRotateCommand;
   ExtendClimberCommand extendClimberCommand;
   ClimbCommand climbCommand;
 
-  RobotRotateCommand robotRotateCommand;
   // IntakeCommandGroup intakeCommandGroup;
   /**
    * This function is run when the robot is first started up and should be
@@ -94,7 +96,7 @@ public class Robot extends TimedRobot {
     vision = new Vision();
     drivetrainSubsystem = new DrivetrainSubsystem();
     // elevatorSubsystem = new ElevatorSubsystem();
-
+    shooterSubsystem = new ShooterSubsystem();
     subsystemManager = new SubsystemManager(drivetrainSubsystem);
     // intakeSubsystem = new IntakeSubsystem();
 
@@ -106,8 +108,9 @@ public class Robot extends TimedRobot {
     visionLightCommand = new VisionLightCommand();
     visionRotationDriveCommand = new VisionRotationDriveCommand();
     loadingBayToShootingCommand = new LoadingBayToShootingCommand(99);
-
     robotRotateCommand = new RobotRotateCommand(90);
+    shooterWithVisionCommand = new ShooterCommand(shooterSubsystem, true);
+    shooterNoVisionCommand = new ShooterCommand(shooterSubsystem, false);
     // elevatorUpCommand = new ElevatorUpCommand();
     // elevatorDownCommand = new ElevatorDownCommand();
 
@@ -135,11 +138,12 @@ public class Robot extends TimedRobot {
     // oi.climberExtendButton.whenPressed(extendClimberCommand);
     // oi.climbButton.whileHeld(climbCommand);
 
+    //oi.helloArcButton.whileHeld(helloArcCommand);
     oi.helloArcButton.whileHeld(robotRotateCommand);
-
     //oi.bedReverseButton.toggleWhenPressed(bedReverseCommand);
     oi.referenceResetButton.whenPressed(zeroCommand);
-
+    oi.shooterNoVisionButton.whileHeld(shooterNoVisionCommand);
+    oi.shooterVisionButton.whileHeld(shooterWithVisionCommand);
     vision.ledOff();
   }
 

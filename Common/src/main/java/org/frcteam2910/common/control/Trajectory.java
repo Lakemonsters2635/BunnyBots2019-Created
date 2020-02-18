@@ -6,6 +6,7 @@ import org.frcteam2910.common.math.Vector2;
 import org.frcteam2910.common.motion.MotionProfile;
 import org.frcteam2910.common.motion.TrapezoidalMotionProfile;
 
+
 import java.io.Serializable;
 
 /**
@@ -192,6 +193,9 @@ public class Trajectory implements Serializable {
 		Vector2 pathPosition = path.getPositionAtDistance(state.position);
 		Rotation2 pathHeading = path.getHeadingAtDistance(state.position);
 		Rotation2 pathRotation = path.getRotationAtDistance(path.getLength() * (time / getDuration()));
+
+		//SmartDashboard.putString("Drivetrain position", getKinematicPosition().toString());
+		System.out.println("pathRotation: " + pathRotation + "pathPosition: : " + pathPosition + " profileTime: " + profileTime);
 
 		return new Segment(profileIndex, time, pathPosition, pathHeading, pathRotation, state.position, state.velocity,
                 state.acceleration, maxSegmentVelocities[profileIndex], maxSegmentAccelerations[profileIndex]);
