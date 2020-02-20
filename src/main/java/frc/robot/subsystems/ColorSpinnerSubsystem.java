@@ -34,6 +34,7 @@ public class ColorSpinnerSubsystem extends Subsystem {
   ColorMatcher matcher = new ColorMatcher();
 
   private Color m_targetColor; 
+  public String targetColorName;
 
 
   enum State {
@@ -76,6 +77,10 @@ public class ColorSpinnerSubsystem extends Subsystem {
       //SmartDashboard.putNumber("ColorSpinner Distance", GetMotorDistance());
   }
 
+  public Color getTargetColor() {
+      return m_targetColor;
+  }
+
   public void spinToTargetColor(){
       colorSpinnerMotor.set(0.2);
   }
@@ -92,43 +97,36 @@ public class ColorSpinnerSubsystem extends Subsystem {
       return isFinished;
   }
 
-  public void determineTargetColor(){
-    String gameData = DriverStation.getInstance().getGameSpecificMessage();
-    byte index;
-
-      FMSInfo fmsInfo = getFMSInfo();
-      if (gameData.length() > 0) {
-        switch (gameData.charAt(0)) {
-        case 'G':
-            index = 0;
-            break;
-        case 'R':
-            index = 1;
-            break;
-        case 'Y':
-            index = 2;
-            break;
-        case 'B':
-            index = 3;
-            break;
-        default:
-            index = 100;
-            break;
+  public boolean determineTargetColor(){
+    FMSInfo fmsInfo = getFMSInfo();
+    if (fmsInfo.isInitalized) {
+        switch(fmsInfo.controlPanelTargetColor) {
+            case 'R':
+                m_targetColor = (Color)ColorMatcher.m_colorDictionary.get(ColorMatcher.kRedTarget);
+                targetColorName = "Red";
+                break;
+            case 'G':
+                m_targetColor = (Color)ColorMatcher.m_colorDictionary.get(ColorMatcher.kGreenTarget);
+                targetColorName = "Green";
+                break;
+            case 'B':
+                m_targetColor = (Color)ColorMatcher.m_colorDictionary.get(ColorMatcher.kBlueTarget);
+                targetColorName = "Blue";
+                break;   
+            case 'Y':
+                m_targetColor = (Color)ColorMatcher.m_colorDictionary.get(ColorMatcher.kYellowTarget);
+                targetColorName = "Yellow";
+            break;                     
+            default:
+                return false;
         }
-    } else {
-        index = 100;
-    }
-
-    //start the color finding
-    if(index >= 4) {
-        System.out.println("No color was provided to spin to.");
-    } else {
-        //need to rotate around the table.  We look at it from the far left, and need to rotate it 3 slots left, or 1 right, over to be what needs to be under the sensor.
-        index = (byte)((index + 1) % 4);
-    
-        //seq.addStep(new FindColorWheelSlot(ColorWheel[index]));
+        return true;
+    }  else {
+        return false;
     }
 }
+
+
 
 public static FMSInfo getFMSInfo()
 {

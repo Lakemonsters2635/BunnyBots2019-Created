@@ -110,8 +110,8 @@ public class Robot extends TimedRobot {
     visionLightCommand = new VisionLightCommand();
     visionRotationDriveCommand = new VisionRotationDriveCommand();
     robotRotateCommand = new RobotRotateCommand(90);
-    shooterWithVisionCommand = new ShooterCommand(shooterSubsystem, true);
-    shooterNoVisionCommand = new ShooterCommand(shooterSubsystem, false);
+    shooterWithVisionCommand = new ShooterCommand(true);
+    shooterNoVisionCommand = new ShooterCommand(false);
     // elevatorUpCommand = new ElevatorUpCommand();
     // elevatorDownCommand = new ElevatorDownCommand();
 
