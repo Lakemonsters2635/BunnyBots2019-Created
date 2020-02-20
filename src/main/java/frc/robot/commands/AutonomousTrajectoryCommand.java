@@ -24,10 +24,11 @@ public class AutonomousTrajectoryCommand extends Command {
 
     Trajectory autonomousTrajectory;
     PIDController angleController;
-    public AutonomousTrajectoryCommand( double timeout) {
-        super(timeout);
+    
+    public AutonomousTrajectoryCommand(Trajectory trajectory) {
         requires(Robot.drivetrainSubsystem);
        
+        autonomousTrajectory = trajectory;
         angleController = new PIDController(0.01, 0.01, 0);
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -36,10 +37,7 @@ public class AutonomousTrajectoryCommand extends Command {
     // Called just before this Command runs the first time
     protected void initialize() {
         //Robot.drivetrainSubsystem.getGyroscope().setAdjustmentAngle(Robot.drivetrainSubsystem.getGyroscope().getUnadjustedAngle());
-        AutonomousTrajectories trajectoryLibrary = new AutonomousTrajectories(Robot.drivetrainSubsystem.CONSTRAINTS);
-        //autonomousTrajectory = trajectoryLibrary.getCargoSideMidToLoadingStationTrajectory(Side.LEFT);
-        autonomousTrajectory = trajectoryLibrary.getHelloTrajectory();
-
+    
 
 
         //autonomousTrajectory.calculateSegments(5/1000);
@@ -67,7 +65,7 @@ public class AutonomousTrajectoryCommand extends Command {
 
         double currentAngle = rotationAngle * (lastTimeStamp/pathDuration);
 
-        System.out.println("currentAngle: " + currentAngle);
+        // System.out.println("currentAngle: " + currentAngle);
 
         //Robot.drivetrainSubsystem.setRotation(currentAngle);
         //angleController.setSetpoint(currentAngle);

@@ -65,10 +65,6 @@ public class DrivetrainSubsystem extends SwerveDrivetrain {
           new CentripetalAccelerationConstraint(25.0 * 3.0)
   };    
 
-  //Properties used by the "ToggleDriveRecordCommand" (Left Joystick Button 10)
-  public boolean isRecordingDrive;
-  public ArrayList<Vector2> translationLog;
-  public ArrayList<Double> rotationLog;
 
   //Properties used for Path following.
   private static Vector2 prevPosition = new Vector2(0.0D, 0.0D);
@@ -124,8 +120,6 @@ public class DrivetrainSubsystem extends SwerveDrivetrain {
 
   public DrivetrainSubsystem() {
 
-    translationLog = new ArrayList<Vector2>();
-    rotationLog = new ArrayList<Double>();
 
       double frontLeftAngleOffset = FRONT_LEFT_ANGLE_OFFSET_COMPETITION;
       double frontRightAngleOffset = FRONT_RIGHT_ANGLE_OFFSET_COMPETITION;
@@ -193,13 +187,6 @@ public class DrivetrainSubsystem extends SwerveDrivetrain {
 
   @Override
   public void holonomicDrive(Vector2 translation, double rotation, boolean fieldOriented) {
-      translationLog.add(translation);
-      rotationLog.add(rotation);
-      if(isRecordingDrive){
-    
-       translationLog.add(translation);
-       rotationLog.add(rotation);
-      }
       synchronized (lock) {
           this.signal = new HolonomicDriveSignal(translation, rotation, fieldOriented);
       }
@@ -220,24 +207,7 @@ public class DrivetrainSubsystem extends SwerveDrivetrain {
         return false;    
   }
 
-  public  void writeDriveLog() throws IOException {
-
-    System.out.println("Writing Logfiles");
-    FileWriter fw = new FileWriter("/home/lvuser/drive.log");
-    for (int i=0; i < translationLog.size(); i++) {
-      Vector2 translation = translationLog.get(i);
-      fw.write(translation.x + "," + translation.y + "," + rotationLog.get(i) + "\n");
-    }
-    fw.close();
-
-
-    FileWriter fw2 = new FileWriter("/home/lvuser/rotations.log");
-    for (int i=0; i < rotationLog.size(); i++) {
-      Double rotation = rotationLog.get(i);
-      fw2.write("rotations.add(" + rotation + ");");
-    }
-    fw2.close();
-  }
+  
 
 public static ArrayList<HolonomicDriveSignal> readDriveRecording(String fileName, boolean isFieldOriented) {
     ArrayList<HolonomicDriveSignal> driveRecording = new ArrayList<HolonomicDriveSignal>();

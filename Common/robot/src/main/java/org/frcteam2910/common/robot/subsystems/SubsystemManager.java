@@ -44,7 +44,7 @@ public final class SubsystemManager {
 	}
 
 	public void outputToSmartDashboard() {
-		subsystems.forEach(Subsystem::outputToSmartDashboard);
+		// subsystems.forEach(Subsystem::outputToSmartDashboard);
 	}
 
 	public void writeToLog() {

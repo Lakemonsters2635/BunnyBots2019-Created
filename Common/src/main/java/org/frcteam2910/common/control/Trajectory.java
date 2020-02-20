@@ -195,7 +195,7 @@ public class Trajectory implements Serializable {
 		Rotation2 pathRotation = path.getRotationAtDistance(path.getLength() * (time / getDuration()));
 
 		//SmartDashboard.putString("Drivetrain position", getKinematicPosition().toString());
-		System.out.println("pathRotation: " + pathRotation + "pathPosition: : " + pathPosition + " profileTime: " + profileTime);
+		// System.out.println("pathRotation: " + pathRotation + "pathPosition: : " + pathPosition + " profileTime: " + profileTime);
 
 		return new Segment(profileIndex, time, pathPosition, pathHeading, pathRotation, state.position, state.velocity,
                 state.acceleration, maxSegmentVelocities[profileIndex], maxSegmentAccelerations[profileIndex]);

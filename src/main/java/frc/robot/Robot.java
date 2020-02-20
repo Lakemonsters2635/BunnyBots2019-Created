@@ -18,10 +18,12 @@ import org.frcteam2910.common.robot.subsystems.SubsystemManager;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.*;
+import frc.robot.models.AutonomousTrajectories;
 import frc.robot.subsystems.*;
 
 
@@ -42,6 +44,8 @@ public class Robot extends TimedRobot {
   public static OI oi;
   private static final double UPDATE_DT = 5e-3; // 5 ms
 
+  Command autonomousCommand;
+
   public static DrivetrainSubsystem drivetrainSubsystem;
 
   public static Vision vision;
@@ -51,8 +55,7 @@ public class Robot extends TimedRobot {
   public static ShooterSubsystem shooterSubsystem;
   public static ClimberSubsystem climberSubsystem;
 
-  Command m_autonomousCommand;
-  SendableChooser<Command> m_chooser = new SendableChooser<>();
+  SendableChooser<CommandGroup> m_chooser = new SendableChooser<>();
 
   private SubsystemManager subsystemManager;
 
@@ -60,7 +63,6 @@ public class Robot extends TimedRobot {
   ZeroFieldOrientedCommand zeroCommand;
 
 
-  ToggleDriveRecordCommand recordCommand;
 
   ElevatorUpCommand elevatorUpCommand;
   ElevatorDownCommand elevatorDownCommand;
@@ -74,7 +76,6 @@ public class Robot extends TimedRobot {
 
   VisionLightCommand visionLightCommand;
   VisionRotationDriveCommand visionRotationDriveCommand;
-  LoadingBayToShootingCommand loadingBayToShootingCommand;
   public HelloArcCommand helloArcCommand;
   public static boolean arcCommandIsRunning = false;
   RobotRotateCommand robotRotateCommand;
@@ -90,8 +91,9 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     oi = new OI();
     //m_chooser.setDefaultOption("Default Auto", new AutonomousCommand());
-    // chooser.addOption("My Auto", new MyAutoCommand());
-    SmartDashboard.putData("Auto mode", m_chooser);
+    
+    
+
 
     vision = new Vision();
     drivetrainSubsystem = new DrivetrainSubsystem();
@@ -107,7 +109,6 @@ public class Robot extends TimedRobot {
     driveCommand = new HolonomicDriveCommand(DrivetrainSubsystem.ControlMode.DualStick);
     visionLightCommand = new VisionLightCommand();
     visionRotationDriveCommand = new VisionRotationDriveCommand();
-    loadingBayToShootingCommand = new LoadingBayToShootingCommand(99);
     robotRotateCommand = new RobotRotateCommand(90);
     shooterWithVisionCommand = new ShooterCommand(shooterSubsystem, true);
     shooterNoVisionCommand = new ShooterCommand(shooterSubsystem, false);
@@ -140,11 +141,21 @@ public class Robot extends TimedRobot {
 
     //oi.helloArcButton.whileHeld(helloArcCommand);
     oi.helloArcButton.whileHeld(robotRotateCommand);
-    //oi.bedReverseButton.toggleWhenPressed(bedReverseCommand);
     oi.referenceResetButton.whenPressed(zeroCommand);
     oi.shooterNoVisionButton.whileHeld(shooterNoVisionCommand);
     oi.shooterVisionButton.whileHeld(shooterWithVisionCommand);
     vision.ledOff();
+
+
+
+
+
+    AutonomousTrajectories autonomousTrajectories = new AutonomousTrajectories(Robot.drivetrainSubsystem.CONSTRAINTS);
+
+    m_chooser.addOption("Back and Turn", new AutonomousCommand(autonomousTrajectories.getHelloTrajectory(), 90));
+    m_chooser.addOption("Shooting To Trench Pickup", new AutonomousCommand(autonomousTrajectories.getShootingToTrenchPickupTrajectory(), 0));
+
+    SmartDashboard.putData("Auto mode", m_chooser);
   }
 
   /**
@@ -203,9 +214,11 @@ public class Robot extends TimedRobot {
     
     subsystemManager.enableKinematicLoop(UPDATE_DT);
     zeroCommand.start();
-    //m_autonomousCommand = m_chooser.getSelected();
 
-    m_autonomousCommand = new AutonomousCommand();
+    autonomousCommand = m_chooser.getSelected();
+    
+    AutonomousTrajectories autonomousTrajectories = new AutonomousTrajectories(Robot.drivetrainSubsystem.CONSTRAINTS);
+     
 
     /*
      * String autoSelected = SmartDashboard.getString("Auto Selector",
@@ -215,8 +228,8 @@ public class Robot extends TimedRobot {
      */
 
     // schedule the autonomous command (example)
-    if (m_autonomousCommand != null) {
-      m_autonomousCommand.start();
+    if (autonomousCommand != null) {
+      autonomousCommand.start();
     }
   }
 
@@ -235,8 +248,8 @@ public class Robot extends TimedRobot {
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
     // this line or comment it out.
-    if (m_autonomousCommand != null) {
-      m_autonomousCommand.cancel();
+    if (autonomousCommand != null) {
+      autonomousCommand.cancel();
     }
     
     Robot.drivetrainSubsystem.getFollower().cancel();
@@ -258,7 +271,7 @@ public class Robot extends TimedRobot {
     //SmartDashboard.putNumber("Current Pose Y", vec.y);
    
 
-    drivetrainSubsystem.outputToSmartDashboard();
+    // drivetrainSubsystem.outputToSmartDashboard();
   }
 
   /**

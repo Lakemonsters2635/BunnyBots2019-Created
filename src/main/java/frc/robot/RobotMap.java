@@ -31,7 +31,6 @@ public class RobotMap {
 
   public static final int VISION_BUTTON_BUTTON = 7;
   public static final int REFERENCE_RESET_BUTTON = 8;
-  public static final int TOGGLE_DRIVE_RECORD_BUTTON = 10;
   public static final int SHOOTER_NOVISION_BUTTON = 1;
   public static final int SHOOTER_WITHVISION_BUTTON = 1;
 

@@ -22,8 +22,8 @@ public class ShooterCommand extends Command {
    *
    * @param subsystem The subsystem used by this command.
    */
-  public ShooterCommand(ShooterSubsystem subsystem, boolean useCamera) {
-    m_Shooter = subsystem;
+  public ShooterCommand(boolean useCamera) {
+    m_Shooter = Robot.shooterSubsystem;
     this.useCamera = useCamera;
     // Use addRequirements() here to declare subsystem dependencies.
     //addRequirements(subsystem);

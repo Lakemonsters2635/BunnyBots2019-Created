@@ -72,8 +72,8 @@ public abstract class SwerveDrivetrain extends HolonomicDrivetrain {
         
         averageCenter = averageCenter.scale(1.0 / swerveModules.length);
         //System.out.println("average center: " + averageCenter);
-        SmartDashboard.putNumber("Average Center X", averageCenter.x);
-        SmartDashboard.putNumber("Average Center Y", averageCenter.y);
+        // SmartDashboard.putNumber("Average Center X", averageCenter.x);
+        // SmartDashboard.putNumber("Average Center Y", averageCenter.y);
         //SmartDashboard.putNumber("Average center", averageCenter);
         positionSamples.put(new InterpolatingDouble(timestamp), averageCenter);
 

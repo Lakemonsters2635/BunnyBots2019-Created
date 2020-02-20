@@ -13,15 +13,20 @@ import frc.robot.Robot;
 import org.frcteam2910.common.math.Vector2;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.TimedCommand;
 
 public class RobotRotateCommand extends Command {
   PIDController angleController;
   double angle;
   double currentAngle;
+
+  //NOTE: This command rotates to an absolute angle based on the orientation the robot started in. Will work in Auto, must be adapted for Teleop
   public RobotRotateCommand(double angle) {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    angleController = new PIDController(0.01, 0.01, 0);
+    super(2);
+    angleController = new PIDController(0.005, 0.001, 0.0);
+    angleController.enableContinuousInput(-180, 180);
     this.angle = angle;
   }
 
