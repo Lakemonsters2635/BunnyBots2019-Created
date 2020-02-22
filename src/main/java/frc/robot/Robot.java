@@ -114,7 +114,7 @@ public class Robot extends TimedRobot {
     shooterNoVisionCommand = new ShooterCommand(false);
     elevatorUpCommand = new ElevatorUpCommand();
     elevatorDownCommand = new ElevatorDownCommand();
-
+    
     // intakeInCommand = new IntakeInCommand();
     // intakeOutCommand = new IntakeOutCommand();
 

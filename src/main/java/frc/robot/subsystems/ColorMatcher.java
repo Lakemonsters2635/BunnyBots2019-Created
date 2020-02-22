@@ -64,8 +64,8 @@ public class ColorMatcher {
   public static final Color kRedTarget = ColorMatch.makeColor(0.384277,  0.413818,  0.201660);
   public static final Color kYellowTarget = ColorMatch.makeColor( 0.326172,  0.540283,  0.133789);
 
-  private ColorMatchResult matchedResult = new ColorMatchResult(Color.kBlack, 0);
-  public static Dictionary m_colorDictionary = new Hashtable();
+
+  public static final Dictionary<Color,Color> m_colorDictionary = new Hashtable();
   ///public Dictionary<String, Integer> ageDictionary = new Dictionary<String, Integer>();
 
   // Rev Color threshold

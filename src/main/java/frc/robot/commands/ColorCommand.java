@@ -7,20 +7,17 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.DriverStation;
+
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.util.Color;
-import frc.robot.models.FMSInfo;
 import frc.robot.subsystems.ColorSpinnerSubsystem;
 
 public class ColorCommand extends Command {
   @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
   private final ColorSpinnerSubsystem m_colorSpinner;
-  private FMSInfo m_fmsInfo;
-  private Color m_targetColor;
-  private boolean m_CommandInitializationFailed = false;
+
+
   /**
-   * Creates a new ExampleCommand.
+   * Creates a new ColorCommand.
    *
    * @param subsystem The subsystem used by this command.
    */
@@ -34,8 +31,14 @@ public class ColorCommand extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {    
-    m_colorSpinner.determineTargetColor();
+    boolean targetColorDetected = m_colorSpinner.determineTargetColor();
+    if (targetColorDetected ){
       System.out.println("color command initalized");
+    } else {
+        System.out.println("Could not determine target color from FMS.");
+        end();
+    }
+     
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -54,45 +57,13 @@ public class ColorCommand extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (m_CommandInitializationFailed) {
-      System.out.println("Command initalization failed. Finished immediately.");
-      return true;
+    boolean colorFound =  m_colorSpinner.spinFinished();
+    if (colorFound) {
+      System.out.println("Color '" +  m_colorSpinner.targetColorName + "' found.");
     }
-
-    return m_colorSpinner.spinFinished();
-    // boolean colorFound =  m_colorSpinner.isFinished(m_targetColor);
-    // if (colorFound) {
-    //   System.out.println("Color '" +  m_fmsInfo.controlPanelTargetColor + "' found.");
-    // }
-    // return colorFound;
+    return colorFound;
   }
 
 
-  public static FMSInfo getFMSInfo()
-	{
-    FMSInfo fmsInfo = new FMSInfo();
-    try {
-      DriverStation driveStation= DriverStation.getInstance();
-      
-      System.out.println("FMS Attached: " + driveStation.isFMSAttached());
-        
-      //FHE: How do we test "IsFMSAttached())
-    
-      String gameSpecificMessage = "";
-
-        
-      //driveStation.waitForData(); //FHE: DO WE NEED THIS?
-      fmsInfo.alliance = driveStation.getAlliance();
-      gameSpecificMessage = driveStation.getGameSpecificMessage();
-
-      fmsInfo.controlPanelTargetColor = gameSpecificMessage.trim().toUpperCase().charAt(0);
-      fmsInfo.driveStation = driveStation.getLocation();
-      fmsInfo.isAutonomous = driveStation.isAutonomous();
-      fmsInfo.isInitalized = true;
-    } catch(Exception err) {
-      System.out.println("ERROR Getting FMS Info: " + err.getMessage());
-    }
-		
-		return fmsInfo;
-	}
+  
 }
