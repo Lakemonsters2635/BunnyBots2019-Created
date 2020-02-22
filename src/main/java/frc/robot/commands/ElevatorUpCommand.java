@@ -19,11 +19,13 @@ public class ElevatorUpCommand extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    System.out.println("Elevator Up command init");
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    
     Robot.elevatorSubsystem.setBeltMotor(1);
   }
 
@@ -37,6 +39,7 @@ public class ElevatorUpCommand extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    System.out.println("Elevator Up command end");
     Robot.elevatorSubsystem.setBeltMotor(0);
   }
 
@@ -44,5 +47,6 @@ public class ElevatorUpCommand extends Command {
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    end();
   }
 }

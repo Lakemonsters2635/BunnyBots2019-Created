@@ -13,6 +13,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import frc.robot.RobotMap;
 
 /**
  * Add your docs here.
@@ -27,9 +28,9 @@ public class ElevatorSubsystem extends Subsystem {
   DigitalInput bottomSensor;
 
   public ElevatorSubsystem() {
-    beltMotor = new CANSparkMax(0, MotorType.kBrushless);
+    beltMotor = new CANSparkMax(RobotMap.ELEVATOR_MOTOR_CHANNEL, MotorType.kBrushless);
     bottomKickerMotor = new CANSparkMax(0, MotorType.kBrushless);
-    topKickerMotor = new CANSparkMax(0, MotorType.kBrushless);
+    topKickerMotor = new CANSparkMax(RobotMap.UPPER_KICKER_MOTOR, MotorType.kBrushless);
 
     bottomSensor = new DigitalInput(0);
   }

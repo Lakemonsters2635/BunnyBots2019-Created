@@ -97,7 +97,7 @@ public class Robot extends TimedRobot {
 
     vision = new Vision();
     drivetrainSubsystem = new DrivetrainSubsystem();
-    // elevatorSubsystem = new ElevatorSubsystem();
+     elevatorSubsystem = new ElevatorSubsystem();
     shooterSubsystem = new ShooterSubsystem();
     subsystemManager = new SubsystemManager(drivetrainSubsystem);
     // intakeSubsystem = new IntakeSubsystem();
@@ -110,10 +110,10 @@ public class Robot extends TimedRobot {
     visionLightCommand = new VisionLightCommand();
     visionRotationDriveCommand = new VisionRotationDriveCommand();
     robotRotateCommand = new RobotRotateCommand(90);
-    shooterWithVisionCommand = new ShooterCommand(shooterSubsystem, true);
-    shooterNoVisionCommand = new ShooterCommand(shooterSubsystem, false);
-    // elevatorUpCommand = new ElevatorUpCommand();
-    // elevatorDownCommand = new ElevatorDownCommand();
+    shooterWithVisionCommand = new ShooterCommand(true);
+    shooterNoVisionCommand = new ShooterCommand(false);
+    elevatorUpCommand = new ElevatorUpCommand();
+    elevatorDownCommand = new ElevatorDownCommand();
 
     // intakeInCommand = new IntakeInCommand();
     // intakeOutCommand = new IntakeOutCommand();
@@ -130,8 +130,8 @@ public class Robot extends TimedRobot {
     oi.visionButton.whileHeld(visionRotationDriveCommand);
     
     //oi.intakeButton.whileHeld(intakeCommandGroup);
-    // oi.elevatorUpButton.whileHeld(elevatorUpCommand);
-    // oi.elevatorDownButton.whileHeld(elevatorDownCommand);
+     oi.elevatorUpButton.whileHeld(elevatorUpCommand);
+    oi.elevatorDownButton.whileHeld(elevatorDownCommand);
 
     // oi.intakeInButton.whileHeld(intakeInCommand);
     // oi.intakeOutButton.whileHeld(intakeOutCommand);
@@ -271,7 +271,7 @@ public class Robot extends TimedRobot {
     //SmartDashboard.putNumber("Current Pose Y", vec.y);
    
 
-    // drivetrainSubsystem.outputToSmartDashboard();
+    drivetrainSubsystem.outputToSmartDashboard();
   }
 
   /**
