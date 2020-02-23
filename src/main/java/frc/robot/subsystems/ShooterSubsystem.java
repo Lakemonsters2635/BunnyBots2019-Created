@@ -9,7 +9,11 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.IdleMode;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -23,10 +27,14 @@ public class ShooterSubsystem extends Subsystem {
   // here. Call these from Commands.
   TalonFX motor1;
   TalonFX motor2;
+  CANSparkMax topKickerMotor;
   DoubleSolenoid solenoid;
   public ShooterSubsystem(){
     motor1 = new TalonFX(RobotMap.SHOOTER_TOP_CAN);
     motor2 = new TalonFX(RobotMap.SHOOTER_BOTTOM_CAN);
+
+    topKickerMotor = new CANSparkMax(RobotMap.UPPER_KICKER_MOTOR, MotorType.kBrushless);
+    //topKickerMotor = new CANSparkMax(10, MotorType.kBrushless);
 
     //solenoid = new DoubleSolenoid(0,0);
 
@@ -39,36 +47,38 @@ public class ShooterSubsystem extends Subsystem {
 
   public void configureMotors(){
       motor1.setSensorPhase(true);
-  motor2.setSensorPhase(true);
+      motor2.setSensorPhase(true);
 
-  motor1.configNominalOutputForward(0, RobotMap.kTimeoutMs);
-  motor1.configNominalOutputReverse(0, RobotMap.kTimeoutMs);
-  motor1.configPeakOutputForward(1, RobotMap.kTimeoutMs);
-  motor1.configPeakOutputReverse(-1, RobotMap.kTimeoutMs);
+      motor1.configNominalOutputForward(0, RobotMap.kTimeoutMs);
+      motor1.configNominalOutputReverse(0, RobotMap.kTimeoutMs);
+      motor1.configPeakOutputForward(1, RobotMap.kTimeoutMs);
+      motor1.configPeakOutputReverse(-1, RobotMap.kTimeoutMs);
 
-  motor2.configNominalOutputForward(0, RobotMap.kTimeoutMs);
-  motor2.configNominalOutputReverse(0, RobotMap.kTimeoutMs);
-  motor2.configPeakOutputForward(1, RobotMap.kTimeoutMs);
-  motor2.configPeakOutputReverse(-1, RobotMap.kTimeoutMs);
+      motor2.configNominalOutputForward(0, RobotMap.kTimeoutMs);
+      motor2.configNominalOutputReverse(0, RobotMap.kTimeoutMs);
+      motor2.configPeakOutputForward(1, RobotMap.kTimeoutMs);
+      motor2.configPeakOutputReverse(-1, RobotMap.kTimeoutMs);
 
-  motor1.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor,
-                                          RobotMap.kPIDLoopIdx, 
-                                          RobotMap.kTimeoutMs);
+      motor1.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor,
+                                              RobotMap.kPIDLoopIdx, 
+                                              RobotMap.kTimeoutMs);
 
-  motor2.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor,
-                                          RobotMap.kPIDLoopIdx, 
-                                          RobotMap.kTimeoutMs);
+      motor2.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor,
+                                              RobotMap.kPIDLoopIdx, 
+                                              RobotMap.kTimeoutMs);
 
-  motor1.config_kF(RobotMap.kPIDLoopIdx, RobotMap.kGains_Velocit.kF, RobotMap.kTimeoutMs);
-  motor1.config_kP(RobotMap.kPIDLoopIdx, RobotMap.kGains_Velocit.kP, RobotMap.kTimeoutMs);
-  motor1.config_kI(RobotMap.kPIDLoopIdx, RobotMap.kGains_Velocit.kI, RobotMap.kTimeoutMs);
-  motor1.config_kD(RobotMap.kPIDLoopIdx, RobotMap.kGains_Velocit.kD, RobotMap.kTimeoutMs);
+      motor1.config_kF(RobotMap.kPIDLoopIdx, RobotMap.kGains_Velocit.kF, RobotMap.kTimeoutMs);
+      motor1.config_kP(RobotMap.kPIDLoopIdx, RobotMap.kGains_Velocit.kP, RobotMap.kTimeoutMs);
+      motor1.config_kI(RobotMap.kPIDLoopIdx, RobotMap.kGains_Velocit.kI, RobotMap.kTimeoutMs);
+      motor1.config_kD(RobotMap.kPIDLoopIdx, RobotMap.kGains_Velocit.kD, RobotMap.kTimeoutMs);
 
-  motor2.config_kF(RobotMap.kPIDLoopIdx, RobotMap.kGains_Velocit.kF, RobotMap.kTimeoutMs);
-  motor2.config_kP(RobotMap.kPIDLoopIdx, RobotMap.kGains_Velocit.kP, RobotMap.kTimeoutMs);
-  motor2.config_kI(RobotMap.kPIDLoopIdx, RobotMap.kGains_Velocit.kI, RobotMap.kTimeoutMs);
-  motor2.config_kD(RobotMap.kPIDLoopIdx, RobotMap.kGains_Velocit.kD, RobotMap.kTimeoutMs);
+      motor2.config_kF(RobotMap.kPIDLoopIdx, RobotMap.kGains_Velocit.kF, RobotMap.kTimeoutMs);
+      motor2.config_kP(RobotMap.kPIDLoopIdx, RobotMap.kGains_Velocit.kP, RobotMap.kTimeoutMs);
+      motor2.config_kI(RobotMap.kPIDLoopIdx, RobotMap.kGains_Velocit.kI, RobotMap.kTimeoutMs);
+      motor2.config_kD(RobotMap.kPIDLoopIdx, RobotMap.kGains_Velocit.kD, RobotMap.kTimeoutMs);
 
+
+      topKickerMotor.setIdleMode(IdleMode.kBrake);
   }
 
   public void update() {
@@ -76,9 +86,10 @@ public class ShooterSubsystem extends Subsystem {
   }
 
   public void stop() {
-  //  state = State.DISABLED;
-  motor1.set(ControlMode.Velocity, 0);
-  motor2.set(ControlMode.Velocity, 0);
+    //  state = State.DISABLED;
+    motor1.set(ControlMode.Velocity, 0);
+    motor2.set(ControlMode.Velocity, 0);
+    topKickerMotor.set(0);
   
   }
 
@@ -90,8 +101,18 @@ public class ShooterSubsystem extends Subsystem {
       motor1Speed = Math.min(5000, Math.abs(motor1Speed));
       motor2Speed = Math.min(5000, Math.abs(motor2Speed));
 
-      motor1.set(ControlMode.Velocity, -motor1Speed*2048/600);
-      motor2.set(ControlMode.Velocity, motor2Speed*2048/600);
+      motor1.set(ControlMode.Velocity, motor1Speed*2048/600);
+      motor2.set(ControlMode.Velocity, -motor2Speed*2048/600);
+
+      topKickerMotor.set(-1);
+  }
+
+  public void setTopKickerMotor(double input) {
+    topKickerMotor.set(input);
+  }
+
+  public void shooterLoad() {
+    topKickerMotor.set(1);
   }
 
   public double GetMotorDistance() {

@@ -100,7 +100,7 @@ public class Robot extends TimedRobot {
      elevatorSubsystem = new ElevatorSubsystem();
     shooterSubsystem = new ShooterSubsystem();
     subsystemManager = new SubsystemManager(drivetrainSubsystem);
-    // intakeSubsystem = new IntakeSubsystem();
+    intakeSubsystem = new IntakeSubsystem();
 
     // climberSubsystem = new ClimberSubsystem();
 
@@ -115,8 +115,8 @@ public class Robot extends TimedRobot {
     elevatorUpCommand = new ElevatorUpCommand();
     elevatorDownCommand = new ElevatorDownCommand();
     
-    // intakeInCommand = new IntakeInCommand();
-    // intakeOutCommand = new IntakeOutCommand();
+    intakeInCommand = new IntakeInCommand();
+    intakeOutCommand = new IntakeOutCommand();
 
     helloArcCommand = new HelloArcCommand();
 
@@ -133,8 +133,8 @@ public class Robot extends TimedRobot {
      oi.elevatorUpButton.whileHeld(elevatorUpCommand);
     oi.elevatorDownButton.whileHeld(elevatorDownCommand);
 
-    // oi.intakeInButton.whileHeld(intakeInCommand);
-    // oi.intakeOutButton.whileHeld(intakeOutCommand);
+     oi.intakeInButton.whileHeld(intakeInCommand);
+     oi.intakeOutButton.whileHeld(intakeOutCommand);
 
     // oi.climberExtendButton.whenPressed(extendClimberCommand);
     // oi.climbButton.whileHeld(climbCommand);
@@ -271,7 +271,7 @@ public class Robot extends TimedRobot {
     //SmartDashboard.putNumber("Current Pose Y", vec.y);
    
 
-    drivetrainSubsystem.outputToSmartDashboard();
+    //drivetrainSubsystem.outputToSmartDashboard();
   }
 
   /**

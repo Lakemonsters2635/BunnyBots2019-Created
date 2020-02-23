@@ -22,30 +22,25 @@ public class ElevatorSubsystem extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
   CANSparkMax beltMotor;
-  CANSparkMax bottomKickerMotor;
-  CANSparkMax topKickerMotor;
+ 
+
   
   DigitalInput bottomSensor;
 
   public ElevatorSubsystem() {
     beltMotor = new CANSparkMax(RobotMap.ELEVATOR_MOTOR_CHANNEL, MotorType.kBrushless);
-    bottomKickerMotor = new CANSparkMax(0, MotorType.kBrushless);
-    topKickerMotor = new CANSparkMax(RobotMap.UPPER_KICKER_MOTOR, MotorType.kBrushless);
-
-    bottomSensor = new DigitalInput(0);
+    //bottomKickerMotor = new CANSparkMax(0, MotorType.kBrushless);
+  
+    //bottomSensor = new DigitalInput(0);
   }
 
   public void setBeltMotor(double input) {
     beltMotor.set(input);
   }
   
-  public void setBottomKickerMotor(double input) {
-    bottomKickerMotor.set(input);
-  }
 
-  public void setTopKickerMotor(double input) {
-    topKickerMotor.set(input);
-  }
+
+
 
   public boolean isBlocked() {
     return bottomSensor.get();
@@ -53,7 +48,7 @@ public class ElevatorSubsystem extends Subsystem {
   
   public void shooterLoad() {
     beltMotor.set(1);
-    topKickerMotor.set(1);
+  
   }
   @Override
   public void initDefaultCommand() {

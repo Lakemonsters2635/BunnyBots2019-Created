@@ -79,14 +79,20 @@ public class DrivetrainSubsystem extends SwerveDrivetrain {
 //   BL -347.648226
 //   BR -284.570943
 
-  private static final double BACK_RIGHT_ANGLE_OFFSET_COMPETITION = Math.toRadians(-284.570943); //272   -281
-  private static final double BACK_LEFT_ANGLE_OFFSET_COMPETITION = Math.toRadians(-347.648226); //346   -346
-  private static final double FRONT_RIGHT_ANGLE_OFFSET_COMPETITION = Math.toRadians(-331.565027); //331   -331
-  private static final double FRONT_LEFT_ANGLE_OFFSET_COMPETITION = Math.toRadians(-38.709162); //37   -37
-  private static final double FRONT_LEFT_ANGLE_OFFSET_PRACTICE = Math.toRadians(-56.53 + 180);
-  private static final double FRONT_RIGHT_ANGLE_OFFSET_PRACTICE = Math.toRadians(-109.38 + 180);
-  private static final double BACK_LEFT_ANGLE_OFFSET_PRACTICE = Math.toRadians(-4.21 + 180);
-  private static final double BACK_RIGHT_ANGLE_OFFSET_PRACTICE = Math.toRadians(-332.17);
+//BUNNYBOT
+//   private static final double BACK_RIGHT_ANGLE_OFFSET_COMPETITION = Math.toRadians(-284.570943); //272   -281
+//   private static final double BACK_LEFT_ANGLE_OFFSET_COMPETITION = Math.toRadians(-347.648226); //346   -346
+//   private static final double FRONT_RIGHT_ANGLE_OFFSET_COMPETITION = Math.toRadians(-331.565027); //331   -331
+//   private static final double FRONT_LEFT_ANGLE_OFFSET_COMPETITION = Math.toRadians(-38.709162); //37   -37
+
+
+//NEGATE SMARTDASHBOARD VALUES IN OFFSEST
+//COMP BOT
+  private static final double BACK_RIGHT_ANGLE_OFFSET_COMPETITION = Math.toRadians(-99.339977); //272   -281  99.339977
+  private static final double BACK_LEFT_ANGLE_OFFSET_COMPETITION = Math.toRadians(-46.958537); //346   -346   46.958537
+  private static final double FRONT_RIGHT_ANGLE_OFFSET_COMPETITION = Math.toRadians(-12.572081); //331   -331 12.572081
+  private static final double FRONT_LEFT_ANGLE_OFFSET_COMPETITION = Math.toRadians(-104.136930); //37   -37    104.136930
+  
 
   private static final PidConstants FOLLOWER_TRANSLATION_CONSTANTS = new PidConstants(0.05, 0.01, 0.0);
   private static final PidConstants FOLLOWER_ROTATION_CONSTANTS = new PidConstants(0.3, 0.01, 0.0);

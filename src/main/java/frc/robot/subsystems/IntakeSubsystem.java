@@ -8,9 +8,11 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
+import frc.robot.RobotMap;
 
 /**
  * Add your docs here.
@@ -18,15 +20,23 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class IntakeSubsystem extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
-  CANSparkMax intakeMotor;
+  CANSparkMax intakeSweeperMotor;
+  CANSparkMax intakeKickerMotor;
 
   public IntakeSubsystem() {
-    intakeMotor = new CANSparkMax(0, MotorType.kBrushless);
+    intakeSweeperMotor = new CANSparkMax(RobotMap.INTAKE_SWEEPER_MOTOR, MotorType.kBrushless);
+    intakeKickerMotor = new CANSparkMax(RobotMap.INTAKE_KICKER_MOTOR, MotorType.kBrushless);
+    intakeKickerMotor.setIdleMode(IdleMode.kBrake);
+    intakeSweeperMotor.setIdleMode(IdleMode.kBrake);
   }
 
-  public void setIntakeMotor(double input) {
-    intakeMotor.set(input);
+  public void setIntakeMotors(double input) {
+    intakeSweeperMotor.set(input);
+    intakeKickerMotor.set(input);
   }
+
+ 
+
   @Override
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.

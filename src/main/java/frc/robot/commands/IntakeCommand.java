@@ -24,8 +24,7 @@ public class IntakeCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.elevatorSubsystem.setBottomKickerMotor(1);
-    Robot.intakeSubsystem.setIntakeMotor(1);
+    Robot.intakeSubsystem.setIntakeMotors(1);
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -37,8 +36,8 @@ public class IntakeCommand extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.elevatorSubsystem.setBottomKickerMotor(0);
-    Robot.intakeSubsystem.setIntakeMotor(0);
+    //Robot.intakeSubsystem.setBottomKickerMotor(0);
+    Robot.intakeSubsystem.setIntakeMotors(0);
   }
 
   // Called when another command which requires one or more of the same

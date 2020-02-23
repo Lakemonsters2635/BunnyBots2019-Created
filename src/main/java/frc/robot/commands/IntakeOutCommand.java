@@ -24,8 +24,8 @@ public class IntakeOutCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.intakeSubsystem.setIntakeMotor(-1);
-    Robot.elevatorSubsystem.setBottomKickerMotor(-1);
+    Robot.intakeSubsystem.setIntakeMotors(-0.5);
+
 
   }
 
@@ -38,8 +38,8 @@ public class IntakeOutCommand extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.intakeSubsystem.setIntakeMotor(0);
-    Robot.elevatorSubsystem.setBottomKickerMotor(0);
+    Robot.intakeSubsystem.setIntakeMotors(0);
+   
   }
 
   // Called when another command which requires one or more of the same

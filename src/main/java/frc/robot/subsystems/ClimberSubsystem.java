@@ -13,6 +13,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import frc.robot.RobotMap;
 
 /**
  * Add your docs here.
@@ -32,7 +33,7 @@ public class ClimberSubsystem extends Subsystem {
     // setDefaultCommand(new MySpecialCommand());
     leftClimber = new DoubleSolenoid(0, 1);
     rightClimber = new DoubleSolenoid(2, 3);
-    winchMotor = new CANSparkMax(0,MotorType.kBrushless);
+    winchMotor = new CANSparkMax(RobotMap.CLIMBER_WINCH_MOTOR,MotorType.kBrushless);
   }
 
   public void extendPistons() {

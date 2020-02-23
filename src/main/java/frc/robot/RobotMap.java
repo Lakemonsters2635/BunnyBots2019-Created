@@ -50,8 +50,16 @@ public class RobotMap {
   public static final int DRIVETRAIN_BACK_RIGHT_ANGLE_ENCODER = 0;
   public static final int DRIVETRAIN_BACK_RIGHT_DRIVE_MOTOR = 1; 
 
+  public static final int INTAKE_SWEEPER_MOTOR = 14;
+  public static final int INTAKE_KICKER_MOTOR = 16;
+
+  public static final int SHOOTER_TOP_CAN = 12;
+  public static final int SHOOTER_BOTTOM_CAN = 13;
+
   public static final int UPPER_KICKER_MOTOR = 11;
   public static final int ELEVATOR_MOTOR_CHANNEL = 10;
+  public static final int CLIMBER_WINCH_MOTOR = 15;
+
 //90.7
   public static final double TARGET_HEIGHT =81.25-15.2; //height to center target - camera height
   //public static final double CAMERA_ANGLE = -1*Math.atan(TARGET_HEIGHT/183);
@@ -91,25 +99,7 @@ public class RobotMap {
 
 	 public final static double SHOOTER_MOTOR_1_DEFAULT_SPEED = 1500;
 	 public final static double SHOOTER_MOTOR_2_DEFAULT_SPEED = 1500;
-   
-   public static final int[] LEFT_DRIVE_CAN = {1, 2, 3};
-    public static final int[] RIGHT_DRIVE_CAN = {4, 5, 6};
-    public static final int INTAKE_CAN = 7;
-    public static final int[] SHOOTER_CAN = {8, 9};
-    public static final int[] INDEXER_CAN = {10,11};
-    public static final int FEED_CAN = 12;
-    public static final int[] CLIMBER_CAN = {13,14};
-    public static final int BALANCE_CAN = 15;
-    public static final int COLOR_CAN = 16;
-    public static final int SHOOTER_TOP_CAN = 12;
-    public static final int SHOOTER_BOTTOM_CAN = 13;
-
-    public static final int TOF_FIRST_CAN = 17;
-    public static final int TOF_SECOND_CAN = 18;
-
-    //PCM IDs
-
 
     //MOTORS
-    public static final int COLOR_SPINNER_MOTOR = 1;
+    public static final int COLOR_SPINNER_MOTOR = 9;
 }
