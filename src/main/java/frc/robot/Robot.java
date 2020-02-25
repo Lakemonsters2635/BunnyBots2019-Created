@@ -23,6 +23,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.*;
+import frc.robot.commands.AutonomousCommandGroups.AutonomousShooterToTrenchSequence;
 import frc.robot.models.AutonomousTrajectories;
 import frc.robot.subsystems.*;
 
@@ -158,8 +159,8 @@ public class Robot extends TimedRobot {
 
     AutonomousTrajectories autonomousTrajectories = new AutonomousTrajectories(Robot.drivetrainSubsystem.CONSTRAINTS);
 
-    m_chooser.addOption("Back and Turn", new AutonomousCommand(autonomousTrajectories.getHelloTrajectory(), 90));
-    m_chooser.addOption("Shooting To Trench Pickup", new AutonomousCommand(autonomousTrajectories.getShootingToTrenchPickupTrajectory(), 0));
+    m_chooser.addOption("Back and Turn", new AutonomousCommand(autonomousTrajectories.getHelloTrajectory(), 0));
+    m_chooser.addOption("Shooting To Trench Pickup", new AutonomousShooterToTrenchSequence());
 
     SmartDashboard.putData("Auto mode", m_chooser);
   }

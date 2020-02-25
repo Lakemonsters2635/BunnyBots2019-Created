@@ -24,7 +24,7 @@ public class IntakeOutCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.intakeSubsystem.setIntakeMotors(-0.5);
+    Robot.intakeSubsystem.setIntakeMotors(-0.8);
 
 
   }

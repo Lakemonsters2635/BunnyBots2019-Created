@@ -26,8 +26,8 @@ public class ElevatorUpCommand extends Command {
   @Override
   protected void execute() {
     
-    Robot.elevatorSubsystem.setBeltMotor(-0.15);
-    Robot.intakeSubsystem.setKickerMotor(0.4);
+    Robot.elevatorSubsystem.setBeltMotor(-1);
+    Robot.intakeSubsystem.setKickerMotor(1);
   }
 
 

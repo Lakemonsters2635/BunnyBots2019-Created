@@ -38,8 +38,8 @@ public class AutonomousTrajectories {
         helloPath.addSegment(
                 new PathLineSegment(
                         new Vector2(0.0, 0.0),
-                        new Vector2(48, 0.0)
-                ), Rotation2.fromDegrees(0.0)
+                        new Vector2(-200, 0)
+                )
         );
         helloPath.subdivide(SUBDIVIDE_ITERATIONS);
         helloTrajectory = new Trajectory(helloPath, constraints);
@@ -90,7 +90,7 @@ public class AutonomousTrajectories {
         shootingToTrenchPickupPath.addSegment(
                 new PathLineSegment(
                         new Vector2(0,0),
-                        new Vector2(87, -200)
+                        new Vector2(-87, 200)
                 )
         );
         shootingToTrenchPickupTrajectory = new Trajectory(shootingToTrenchPickupPath, constraints);

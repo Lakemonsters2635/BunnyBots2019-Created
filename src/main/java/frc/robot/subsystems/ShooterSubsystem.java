@@ -29,8 +29,8 @@ public class ShooterSubsystem extends Subsystem {
   TalonFX motor1;
   TalonFX motor2;
   CANSparkMax topKickerMotor;
-  DoubleSolenoid leftSolenoid;
-  DoubleSolenoid rightSolenoid;
+  // DoubleSolenoid leftSolenoid;
+  // DoubleSolenoid rightSolenoid;
   public ShooterSubsystem(){
     motor1 = new TalonFX(RobotMap.SHOOTER_TOP_CAN);
     motor2 = new TalonFX(RobotMap.SHOOTER_BOTTOM_CAN);
@@ -38,16 +38,16 @@ public class ShooterSubsystem extends Subsystem {
     topKickerMotor = new CANSparkMax(RobotMap.UPPER_KICKER_MOTOR, MotorType.kBrushless);
     //topKickerMotor = new CANSparkMax(10, MotorType.kBrushless);
 
-    leftSolenoid = new DoubleSolenoid(0,1);
+    // leftSolenoid = new DoubleSolenoid(0,1);
 
     configureMotors();  
   }
 
   public void on(){
-    leftSolenoid.set(Value.kForward);
+    // leftSolenoid.set(Value.kForward);
   }
   public void off(){
-    leftSolenoid.set(Value.kReverse);
+    // leftSolenoid.set(Value.kReverse);
   }
   
 

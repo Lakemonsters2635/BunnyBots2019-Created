@@ -32,27 +32,27 @@ protected void execute() {
   //boolean ignoreScalars = Robot.oi.primaryController.getforwardBumperButton().get();
 
   //Comment this to deactivate teleop drive
-  // switch(mode) {
-  //   case DualStick: 
-  //      forward = Robot.oi.leftStick.getRawAxis(1);
-  //      strafe = Robot.oi.leftStick.getRawAxis(0);
-  //      rotation = Robot.oi.rightStick.getRawAxis(0);
-  //     break;
-  //   case SingleStick: 
-  //      forward = Robot.oi.leftStick.getRawAxis(1);
-  //      strafe = Robot.oi.leftStick.getRawAxis(0);
-  //      rotation = Robot.oi.leftStick.getRawAxis(2);
-  //      break; 
-  //   case Controller:
-  //     forward = Robot.oi.leftStick.getRawAxis(1);
-  //     strafe = Robot.oi.leftStick.getRawAxis(0);
-  //     rotation = Robot.oi.leftStick.getRawAxis(4);  
-  //     break;    
+  switch(mode) {
+    case DualStick: 
+       forward = Robot.oi.leftStick.getRawAxis(1);
+       strafe = Robot.oi.leftStick.getRawAxis(0);
+       rotation = Robot.oi.rightStick.getRawAxis(0);
+      break;
+    case SingleStick: 
+       forward = Robot.oi.leftStick.getRawAxis(1);
+       strafe = Robot.oi.leftStick.getRawAxis(0);
+       rotation = Robot.oi.leftStick.getRawAxis(2);
+       break; 
+    case Controller:
+      forward = Robot.oi.leftStick.getRawAxis(1);
+      strafe = Robot.oi.leftStick.getRawAxis(0);
+      rotation = Robot.oi.leftStick.getRawAxis(4);  
+      break;    
       
-  // }
+  }
 
 
-  double deadzone = 0.1;
+  double deadzone = 0.05;
   
   forward = deadZoneAdjust(forward, deadzone);
   strafe = deadZoneAdjust(strafe, deadzone);
