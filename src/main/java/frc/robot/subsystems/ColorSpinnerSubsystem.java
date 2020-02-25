@@ -81,6 +81,9 @@ public class ColorSpinnerSubsystem extends Subsystem {
       //SmartDashboard.putNumber("ColorSpinner Distance", GetMotorDistance());
   }
 
+  public Color getColorSensorColor() {
+      return matcher.get_color();
+  }
   public Color getTargetColor() {
       return m_targetColor;
   }
@@ -106,6 +109,7 @@ public class ColorSpinnerSubsystem extends Subsystem {
   }
 
   public boolean determineTargetColor(){
+    targetColorName = "Unknown";
     FMSInfo fmsInfo = getFMSInfo();
     if (fmsInfo.isInitalized) {
         switch(fmsInfo.controlPanelTargetColor) {
