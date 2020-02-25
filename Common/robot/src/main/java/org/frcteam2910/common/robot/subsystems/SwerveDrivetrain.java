@@ -101,6 +101,7 @@ public abstract class SwerveDrivetrain extends HolonomicDrivetrain {
 
             module.resetKinematics(bigStringTranslation);
             
+            //Comment this line to do drive angle calibration
             module.updateState(dt);
         }
     }

@@ -24,13 +24,14 @@ public class IntakeCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.intakeSubsystem.setIntakeMotors(1);
+    Robot.intakeSubsystem.setIntakeMotors(0.05);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return Robot.elevatorSubsystem.isBlocked();
+    //return Robot.elevatorSubsystem.isBlocked();
+    return false;
   }
 
   // Called once after isFinished returns true
@@ -44,5 +45,6 @@ public class IntakeCommand extends Command {
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+    end();
   }
 }

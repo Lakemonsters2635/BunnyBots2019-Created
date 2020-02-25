@@ -19,14 +19,15 @@ public class ElevatorDownCommand extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    System.out.println("Elevator Down command init");
+    //System.out.println("Elevator Down command init");
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
     
-    Robot.elevatorSubsystem.setBeltMotor(-1);
+    Robot.elevatorSubsystem.setBeltMotor(0.5);
+    Robot.intakeSubsystem.setKickerMotor(-0.4);
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -38,8 +39,9 @@ public class ElevatorDownCommand extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    System.out.println("Elevator Down command end");
+    //System.out.println("Elevator Down command end");
     Robot.elevatorSubsystem.setBeltMotor(0);
+    Robot.intakeSubsystem.setKickerMotor(0);
   }
 
   // Called when another command which requires one or more of the same

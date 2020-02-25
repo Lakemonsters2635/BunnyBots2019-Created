@@ -11,7 +11,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.subsystems.ColorSpinnerSubsystem;
 
-public class ColorCommand extends Command {
+public class ColorSpinCommand extends Command {
   @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
   private final ColorSpinnerSubsystem m_colorSpinner;
 
@@ -21,7 +21,7 @@ public class ColorCommand extends Command {
    *
    * @param subsystem The subsystem used by this command.
    */
-  public ColorCommand(ColorSpinnerSubsystem subsystem) {
+  public ColorSpinCommand(ColorSpinnerSubsystem subsystem) {
     m_colorSpinner = subsystem;
  
     // Use addRequirements() here to declare subsystem dependencies.
@@ -31,13 +31,7 @@ public class ColorCommand extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {    
-    boolean targetColorDetected = m_colorSpinner.determineTargetColor();
-    if (targetColorDetected ){
-      System.out.println("color command initalized");
-    } else {
-        System.out.println("Could not determine target color from FMS.");
-        end();
-    }
+      System.out.println("color spin command initalized");
      
   }
 
@@ -52,18 +46,21 @@ public class ColorCommand extends Command {
   @Override
   public void end() {
     m_colorSpinner.stopTargetSpinner();
+ 
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    boolean colorFound =  m_colorSpinner.spinFinished();
-    if (colorFound) {
-      System.out.println("Color '" +  m_colorSpinner.targetColorName + "' found.");
-    }
-    return colorFound;
+    return false;
   }
 
+  @Override
+  protected void interrupted() {
+    
+    super.interrupted();
+    end();
+  }
 
   
 }

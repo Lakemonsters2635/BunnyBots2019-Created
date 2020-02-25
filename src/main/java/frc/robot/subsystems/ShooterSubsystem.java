@@ -16,6 +16,7 @@ import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
 
@@ -28,7 +29,8 @@ public class ShooterSubsystem extends Subsystem {
   TalonFX motor1;
   TalonFX motor2;
   CANSparkMax topKickerMotor;
-  DoubleSolenoid solenoid;
+  DoubleSolenoid leftSolenoid;
+  DoubleSolenoid rightSolenoid;
   public ShooterSubsystem(){
     motor1 = new TalonFX(RobotMap.SHOOTER_TOP_CAN);
     motor2 = new TalonFX(RobotMap.SHOOTER_BOTTOM_CAN);
@@ -36,11 +38,17 @@ public class ShooterSubsystem extends Subsystem {
     topKickerMotor = new CANSparkMax(RobotMap.UPPER_KICKER_MOTOR, MotorType.kBrushless);
     //topKickerMotor = new CANSparkMax(10, MotorType.kBrushless);
 
-    //solenoid = new DoubleSolenoid(0,0);
+    leftSolenoid = new DoubleSolenoid(0,1);
 
     configureMotors();  
   }
 
+  public void on(){
+    leftSolenoid.set(Value.kForward);
+  }
+  public void off(){
+    leftSolenoid.set(Value.kReverse);
+  }
   
 
 

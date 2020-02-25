@@ -32,9 +32,12 @@ public class IntakeSubsystem extends Subsystem {
 
   public void setIntakeMotors(double input) {
     intakeSweeperMotor.set(input);
-    intakeKickerMotor.set(input);
+    intakeKickerMotor.set(-input);
   }
 
+  public void setKickerMotor(double input){
+    intakeKickerMotor.set(-input);
+  }
  
 
   @Override

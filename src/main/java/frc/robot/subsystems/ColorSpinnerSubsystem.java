@@ -13,7 +13,10 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
+import com.revrobotics.CANSparkMax;
 import com.revrobotics.ColorSensorV3;
+import com.revrobotics.CANSparkMax.IdleMode;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
@@ -27,8 +30,8 @@ public class ColorSpinnerSubsystem extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
   public ColorSpinnerSubsystem() {
-    colorSpinnerMotor = new WPI_TalonSRX(RobotMap.COLOR_SPINNER_MOTOR);
-    colorSpinnerMotor.setNeutralMode(NeutralMode.Brake);
+    colorSpinnerMotor = new CANSparkMax(RobotMap.COLOR_SPINNER_MOTOR, MotorType.kBrushless);
+    colorSpinnerMotor.setIdleMode(IdleMode.kBrake);
   }
 
   ColorMatcher matcher = new ColorMatcher();
@@ -43,7 +46,8 @@ public class ColorSpinnerSubsystem extends Subsystem {
       COLOR_ROTATE,
       COLOR_ROTATE_FINAL,
   };
-  WPI_TalonSRX colorSpinnerMotor;
+
+  CANSparkMax colorSpinnerMotor;
   State state = State.DISABLED;
   Color expectedColor = ColorMatcher.kRedTarget;
   double target_rotation = 0;
@@ -83,6 +87,10 @@ public class ColorSpinnerSubsystem extends Subsystem {
 
   public void spinToTargetColor(){
       colorSpinnerMotor.set(0.2);
+  }
+
+  public void stopTargetSpinner() {
+      colorSpinnerMotor.set(0.0);
   }
 
   public boolean spinFinished(){

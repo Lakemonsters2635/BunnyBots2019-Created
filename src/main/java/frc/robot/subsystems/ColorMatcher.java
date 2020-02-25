@@ -135,7 +135,7 @@ public class ColorMatcher {
        //System.out.println(colorString + "  \tconfidence: " + match.confidence) ;
        //SmartDashboard.putNumber("Confidence", match.confidence);
     }
-  
+    System.out.println(colorString);
     /**
      * Open Smart Dashboard or Shuffleboard to see the color detected by the sensor.
      */

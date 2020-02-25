@@ -54,6 +54,7 @@ public class Robot extends TimedRobot {
   public static IntakeSubsystem intakeSubsystem;
   public static ShooterSubsystem shooterSubsystem;
   public static ClimberSubsystem climberSubsystem;
+  public static ColorSpinnerSubsystem colorSpinnerSubsystem;
 
   SendableChooser<CommandGroup> m_chooser = new SendableChooser<>();
 
@@ -62,7 +63,7 @@ public class Robot extends TimedRobot {
   public HolonomicDriveCommand driveCommand;
   ZeroFieldOrientedCommand zeroCommand;
 
-
+  public ColorSpinCommand colorSpinCommand;
 
   ElevatorUpCommand elevatorUpCommand;
   ElevatorDownCommand elevatorDownCommand;
@@ -81,6 +82,7 @@ public class Robot extends TimedRobot {
   RobotRotateCommand robotRotateCommand;
   ExtendClimberCommand extendClimberCommand;
   ClimbCommand climbCommand;
+  ColorCommand colorCommand;
 
   // IntakeCommandGroup intakeCommandGroup;
   /**
@@ -101,6 +103,8 @@ public class Robot extends TimedRobot {
     shooterSubsystem = new ShooterSubsystem();
     subsystemManager = new SubsystemManager(drivetrainSubsystem);
     intakeSubsystem = new IntakeSubsystem();
+    colorSpinnerSubsystem = new ColorSpinnerSubsystem();
+
 
     // climberSubsystem = new ClimberSubsystem();
 
@@ -114,10 +118,11 @@ public class Robot extends TimedRobot {
     shooterNoVisionCommand = new ShooterCommand(false);
     elevatorUpCommand = new ElevatorUpCommand();
     elevatorDownCommand = new ElevatorDownCommand();
+    colorCommand = new ColorCommand(colorSpinnerSubsystem);
     
     intakeInCommand = new IntakeInCommand();
     intakeOutCommand = new IntakeOutCommand();
-
+    colorSpinCommand = new ColorSpinCommand(colorSpinnerSubsystem);
     helloArcCommand = new HelloArcCommand();
 
     // intakeCommandGroup = new IntakeCommandGroup();
@@ -144,6 +149,7 @@ public class Robot extends TimedRobot {
     oi.referenceResetButton.whenPressed(zeroCommand);
     oi.shooterNoVisionButton.whileHeld(shooterNoVisionCommand);
     oi.shooterVisionButton.whileHeld(shooterWithVisionCommand);
+    oi.colorSpinnerButton.whenPressed(colorCommand);
     vision.ledOff();
 
 
@@ -271,14 +277,21 @@ public class Robot extends TimedRobot {
     //SmartDashboard.putNumber("Current Pose Y", vec.y);
    
 
-    //drivetrainSubsystem.outputToSmartDashboard();
+    drivetrainSubsystem.outputToSmartDashboard();
   }
+@Override
+public void testInit(){
+  //subsystemManager.enableKinematicLoop(UPDATE_DT);
+
+}
 
   /**
    * This function is called periodically during test mode.
    */
   @Override
   public void testPeriodic() {
+    //drivetrainSubsystem.updateKinematics(UPDATE_DT);
     drivetrainSubsystem.outputToSmartDashboard();
+    
   }
 }

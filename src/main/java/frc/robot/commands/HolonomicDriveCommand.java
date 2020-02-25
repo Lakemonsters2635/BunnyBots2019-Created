@@ -30,24 +30,26 @@ protected void execute() {
   double rotation = 0;      
 
   //boolean ignoreScalars = Robot.oi.primaryController.getforwardBumperButton().get();
-  switch(mode) {
-    case DualStick: 
-       forward = Robot.oi.leftStick.getRawAxis(1);
-       strafe = Robot.oi.leftStick.getRawAxis(0);
-       rotation = Robot.oi.rightStick.getRawAxis(0);
-      break;
-    case SingleStick: 
-       forward = Robot.oi.leftStick.getRawAxis(1);
-       strafe = Robot.oi.leftStick.getRawAxis(0);
-       rotation = Robot.oi.leftStick.getRawAxis(2);
-       break; 
-    case Controller:
-      forward = Robot.oi.leftStick.getRawAxis(1);
-      strafe = Robot.oi.leftStick.getRawAxis(0);
-      rotation = Robot.oi.leftStick.getRawAxis(4);  
-      break;    
+
+  //Comment this to deactivate teleop drive
+  // switch(mode) {
+  //   case DualStick: 
+  //      forward = Robot.oi.leftStick.getRawAxis(1);
+  //      strafe = Robot.oi.leftStick.getRawAxis(0);
+  //      rotation = Robot.oi.rightStick.getRawAxis(0);
+  //     break;
+  //   case SingleStick: 
+  //      forward = Robot.oi.leftStick.getRawAxis(1);
+  //      strafe = Robot.oi.leftStick.getRawAxis(0);
+  //      rotation = Robot.oi.leftStick.getRawAxis(2);
+  //      break; 
+  //   case Controller:
+  //     forward = Robot.oi.leftStick.getRawAxis(1);
+  //     strafe = Robot.oi.leftStick.getRawAxis(0);
+  //     rotation = Robot.oi.leftStick.getRawAxis(4);  
+  //     break;    
       
-  }
+  // }
 
 
   double deadzone = 0.1;

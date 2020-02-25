@@ -70,4 +70,6 @@ public class OI {
   Button climberExtendButton  = new JoystickButton(rightStick, 8);
   Button climbButton = new JoystickButton(rightStick, 9);
 
+  Button colorSpinnerButton = new JoystickButton(leftStick, 9);
+
 }
