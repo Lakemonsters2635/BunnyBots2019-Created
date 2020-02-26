@@ -11,9 +11,11 @@ import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
 public class IntakeCommand extends Command {
-  public IntakeCommand() {
+  private boolean m_reverse = false;
+  public IntakeCommand(boolean reverse) {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
+    m_reverse = reverse;
   }
 
   // Called just before this Command runs the first time
@@ -24,22 +26,28 @@ public class IntakeCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.intakeSubsystem.setIntakeMotors(0.05);
+    if (m_reverse) {
+      Robot.intakeSubsystem.setIntakeMotors(0.5);
+    } else {
+      Robot.intakeSubsystem.setIntakeMotors(-0.8);
+    }
+   
+    //Robot.elevatorSubsystem.setBottomKickerMotor(1);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    //return Robot.elevatorSubsystem.isBlocked();
     return false;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    //Robot.intakeSubsystem.setBottomKickerMotor(0);
     Robot.intakeSubsystem.setIntakeMotors(0);
+
   }
+
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run

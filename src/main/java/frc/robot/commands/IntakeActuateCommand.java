@@ -10,10 +10,12 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class IntakeInCommand extends Command {
-  public IntakeInCommand() {
+public class IntakeActuateCommand extends Command {
+  private boolean m_raiseIntake = false;
+  public IntakeActuateCommand(boolean raiseIntake) {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
+    m_raiseIntake = raiseIntake;
   }
 
   // Called just before this Command runs the first time
@@ -24,8 +26,11 @@ public class IntakeInCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.intakeSubsystem.setIntakeMotors(0.5);
-    //Robot.elevatorSubsystem.setBottomKickerMotor(1);
+    if (m_raiseIntake) {
+      Robot.intakeSubsystem.raiseIntake();
+    } else {
+      Robot.intakeSubsystem.raiseIntake();
+    }
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -37,8 +42,8 @@ public class IntakeInCommand extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.intakeSubsystem.setIntakeMotors(0);
-
+   
+    super.end();
   }
 
 

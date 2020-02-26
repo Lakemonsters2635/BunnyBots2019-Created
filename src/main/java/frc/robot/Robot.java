@@ -72,14 +72,12 @@ public class Robot extends TimedRobot {
   ShooterCommand shooterWithVisionCommand;
   ShooterCommand shooterNoVisionCommand;
   
-  IntakeInCommand  intakeInCommand;
-  IntakeOutCommand intakeOutCommand;
+  IntakeCommand  intakeInCommand;
+  IntakeCommand intakeOutCommand;
 
 
   VisionLightCommand visionLightCommand;
   VisionRotationDriveCommand visionRotationDriveCommand;
-  public HelloArcCommand helloArcCommand;
-  public static boolean arcCommandIsRunning = false;
   RobotRotateCommand robotRotateCommand;
   ExtendClimberCommand extendClimberCommand;
   ClimbCommand climbCommand;
@@ -121,10 +119,9 @@ public class Robot extends TimedRobot {
     elevatorDownCommand = new ElevatorDownCommand();
     colorCommand = new ColorCommand(colorSpinnerSubsystem);
     
-    intakeInCommand = new IntakeInCommand();
-    intakeOutCommand = new IntakeOutCommand();
+    intakeInCommand = new IntakeCommand(false);
+    intakeOutCommand = new IntakeCommand(true);
     colorSpinCommand = new ColorSpinCommand(colorSpinnerSubsystem);
-    helloArcCommand = new HelloArcCommand();
 
     // intakeCommandGroup = new IntakeCommandGroup();
 
@@ -145,7 +142,7 @@ public class Robot extends TimedRobot {
     // oi.climberExtendButton.whenPressed(extendClimberCommand);
     // oi.climbButton.whileHeld(climbCommand);
 
-    //oi.helloArcButton.whileHeld(helloArcCommand);
+
     oi.helloArcButton.whileHeld(robotRotateCommand);
     oi.referenceResetButton.whenPressed(zeroCommand);
     oi.shooterNoVisionButton.whileHeld(shooterNoVisionCommand);
@@ -175,7 +172,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
-    arcCommandIsRunning = helloArcCommand.isRunning();
+
   }
 
   /**

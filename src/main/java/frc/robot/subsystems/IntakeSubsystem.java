@@ -11,6 +11,8 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
 
@@ -23,11 +25,16 @@ public class IntakeSubsystem extends Subsystem {
   CANSparkMax intakeSweeperMotor;
   CANSparkMax intakeKickerMotor;
 
+  DoubleSolenoid intakeSolenoid;
+
+
   public IntakeSubsystem() {
     intakeSweeperMotor = new CANSparkMax(RobotMap.INTAKE_SWEEPER_MOTOR, MotorType.kBrushless);
     intakeKickerMotor = new CANSparkMax(RobotMap.INTAKE_KICKER_MOTOR, MotorType.kBrushless);
     intakeKickerMotor.setIdleMode(IdleMode.kBrake);
     intakeSweeperMotor.setIdleMode(IdleMode.kBrake);
+
+    intakeSolenoid = new DoubleSolenoid(4,5);
   }
 
   public void setIntakeMotors(double input) {
@@ -39,6 +46,13 @@ public class IntakeSubsystem extends Subsystem {
     intakeKickerMotor.set(-input);
   }
  
+  public void raiseIntake() {
+    intakeSolenoid.set(Value.kReverse);
+  }
+
+  public void lowerIntake() {
+    intakeSolenoid.set(Value.kForward);
+  }
 
   @Override
   public void initDefaultCommand() {
