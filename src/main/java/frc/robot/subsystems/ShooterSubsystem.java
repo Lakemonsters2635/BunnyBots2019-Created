@@ -38,7 +38,7 @@ public class ShooterSubsystem extends Subsystem {
     topKickerMotor = new CANSparkMax(RobotMap.UPPER_KICKER_MOTOR, MotorType.kBrushless);
     //topKickerMotor = new CANSparkMax(10, MotorType.kBrushless);
 
-    // leftSolenoid = new DoubleSolenoid(0,1);
+    // leftSolenoid = new DoubleSolenoid(4,5);
 
     configureMotors();  
   }

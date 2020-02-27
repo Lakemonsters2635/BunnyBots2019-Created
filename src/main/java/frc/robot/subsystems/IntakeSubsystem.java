@@ -24,8 +24,7 @@ public class IntakeSubsystem extends Subsystem {
   // here. Call these from Commands.
   CANSparkMax intakeSweeperMotor;
   CANSparkMax intakeKickerMotor;
-
-  DoubleSolenoid intakeSolenoid;
+  DoubleSolenoid extender;
 
 
   public IntakeSubsystem() {
@@ -34,12 +33,22 @@ public class IntakeSubsystem extends Subsystem {
     intakeKickerMotor.setIdleMode(IdleMode.kBrake);
     intakeSweeperMotor.setIdleMode(IdleMode.kBrake);
 
-    intakeSolenoid = new DoubleSolenoid(4,5);
+
+    extender = new DoubleSolenoid(6,7);
+
+  }
+
+   public void extendExtender() {
+     extender.set(Value.kForward);
+   }
+
+  public void retractExtender() {
+    extender.set(Value.kReverse);
+
   }
 
   public void setIntakeMotors(double input) {
     intakeSweeperMotor.set(input);
-    intakeKickerMotor.set(-input);
   }
 
   public void setKickerMotor(double input){

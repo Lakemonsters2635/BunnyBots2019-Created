@@ -41,7 +41,6 @@ import frc.robot.subsystems.*;
 
  //To deploy this, run (gradlew deploy -x test) in the command prompt
 public class Robot extends TimedRobot {
-  //public static ExampleSubsystem m_subsystem = new ExampleSubsystem();
   public static OI oi;
   private static final double UPDATE_DT = 5e-3; // 5 ms
 
@@ -72,8 +71,13 @@ public class Robot extends TimedRobot {
   ShooterCommand shooterWithVisionCommand;
   ShooterCommand shooterNoVisionCommand;
   
+
   IntakeCommand  intakeInCommand;
   IntakeCommand intakeOutCommand;
+
+
+  ExtendIntakeCommand extendIntakeCommand;
+  RetractIntakeCommand retractIntakeCommand;
 
 
   VisionLightCommand visionLightCommand;
@@ -82,6 +86,7 @@ public class Robot extends TimedRobot {
   ExtendClimberCommand extendClimberCommand;
   ClimbCommand climbCommand;
   ColorCommand colorCommand;
+
 
   // IntakeCommandGroup intakeCommandGroup;
   /**
@@ -119,8 +124,13 @@ public class Robot extends TimedRobot {
     elevatorDownCommand = new ElevatorDownCommand();
     colorCommand = new ColorCommand(colorSpinnerSubsystem);
     
+
     intakeInCommand = new IntakeCommand(false);
     intakeOutCommand = new IntakeCommand(true);
+
+    extendIntakeCommand = new ExtendIntakeCommand();
+    retractIntakeCommand = new RetractIntakeCommand();
+
     colorSpinCommand = new ColorSpinCommand(colorSpinnerSubsystem);
 
     // intakeCommandGroup = new IntakeCommandGroup();
@@ -138,6 +148,8 @@ public class Robot extends TimedRobot {
 
      oi.intakeInButton.whileHeld(intakeInCommand);
      oi.intakeOutButton.whileHeld(intakeOutCommand);
+     oi.extendIntakeButton.whenPressed(extendIntakeCommand);
+     oi.retractIntakeButton.whenPressed(retractIntakeCommand);
 
     // oi.climberExtendButton.whenPressed(extendClimberCommand);
     // oi.climbButton.whileHeld(climbCommand);
@@ -148,6 +160,8 @@ public class Robot extends TimedRobot {
     oi.shooterNoVisionButton.whileHeld(shooterNoVisionCommand);
     oi.shooterVisionButton.whileHeld(shooterWithVisionCommand);
     oi.colorSpinnerButton.whenPressed(colorCommand);
+
+
     vision.ledOff();
 
 
@@ -222,7 +236,8 @@ public class Robot extends TimedRobot {
     autonomousCommand = m_chooser.getSelected();
     
     AutonomousTrajectories autonomousTrajectories = new AutonomousTrajectories(Robot.drivetrainSubsystem.CONSTRAINTS);
-     
+    
+    extendIntakeCommand.start();
 
     /*
      * String autoSelected = SmartDashboard.getString("Auto Selector",
