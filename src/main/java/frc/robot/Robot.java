@@ -76,8 +76,8 @@ public class Robot extends TimedRobot {
   IntakeCommand intakeOutCommand;
 
 
-  ExtendIntakeCommand extendIntakeCommand;
-  RetractIntakeCommand retractIntakeCommand;
+  IntakeActuateCommand lowerIntakeCommand;
+  IntakeActuateCommand raiseIntakeCommand;
 
 
   VisionLightCommand visionLightCommand;
@@ -128,8 +128,8 @@ public class Robot extends TimedRobot {
     intakeInCommand = new IntakeCommand(false);
     intakeOutCommand = new IntakeCommand(true);
 
-    extendIntakeCommand = new ExtendIntakeCommand();
-    retractIntakeCommand = new RetractIntakeCommand();
+    lowerIntakeCommand = new IntakeActuateCommand(false);
+    raiseIntakeCommand = new IntakeActuateCommand(true);
 
     colorSpinCommand = new ColorSpinCommand(colorSpinnerSubsystem);
 
@@ -148,8 +148,8 @@ public class Robot extends TimedRobot {
 
      oi.intakeInButton.whileHeld(intakeInCommand);
      oi.intakeOutButton.whileHeld(intakeOutCommand);
-     oi.extendIntakeButton.whenPressed(extendIntakeCommand);
-     oi.retractIntakeButton.whenPressed(retractIntakeCommand);
+     oi.extendIntakeButton.whenPressed(lowerIntakeCommand);
+     oi.retractIntakeButton.whenPressed(raiseIntakeCommand);
 
     // oi.climberExtendButton.whenPressed(extendClimberCommand);
     // oi.climbButton.whileHeld(climbCommand);
@@ -237,7 +237,7 @@ public class Robot extends TimedRobot {
     
     AutonomousTrajectories autonomousTrajectories = new AutonomousTrajectories(Robot.drivetrainSubsystem.CONSTRAINTS);
     
-    extendIntakeCommand.start();
+    lowerIntakeCommand.start();
 
     /*
      * String autoSelected = SmartDashboard.getString("Auto Selector",

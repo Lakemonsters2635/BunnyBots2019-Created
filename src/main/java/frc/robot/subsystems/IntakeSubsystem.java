@@ -38,13 +38,13 @@ public class IntakeSubsystem extends Subsystem {
 
   }
 
-   public void extendExtender() {
-     extender.set(Value.kForward);
-   }
 
-  public void retractExtender() {
+  public void raiseIntake() {
     extender.set(Value.kReverse);
+  }
 
+  public void lowerIntake() {
+    extender.set(Value.kForward);
   }
 
   public void setIntakeMotors(double input) {
@@ -55,13 +55,7 @@ public class IntakeSubsystem extends Subsystem {
     intakeKickerMotor.set(-input);
   }
  
-  public void raiseIntake() {
-    intakeSolenoid.set(Value.kReverse);
-  }
 
-  public void lowerIntake() {
-    intakeSolenoid.set(Value.kForward);
-  }
 
   @Override
   public void initDefaultCommand() {
