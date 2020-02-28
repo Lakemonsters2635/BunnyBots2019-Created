@@ -42,7 +42,7 @@ public class ShooterCommand extends Command {
 
     double motor1Speed = RobotMap.SHOOTER_MOTOR_1_DEFAULT_SPEED;
     double motor2Speed = RobotMap.SHOOTER_MOTOR_2_DEFAULT_SPEED;
-    Robot.shooterSubsystem.on();
+
     if (useCamera) {
 
       Robot.vision.data();
@@ -95,7 +95,7 @@ public class ShooterCommand extends Command {
   @Override
   public void end() {
     m_Shooter.stop();
-    Robot.shooterSubsystem.off();
+    
     if (useCamera) {
       Robot.vision.ledOff();
     }

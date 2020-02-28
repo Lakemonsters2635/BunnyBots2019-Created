@@ -67,6 +67,10 @@ public class OI {
   Button lowerIntakeButton = new JoystickButton(leftStick, 11);
   Button raiseIntakeButton = new JoystickButton(leftStick, 10);
 
+  Button lowerShooterButton = new JoystickButton(leftStick, 7);
+  Button raiseShooterButton = new JoystickButton(leftStick, 6);
+
+
   Button helloArcButton = new JoystickButton(rightStick, 7);
 
   Button climberExtendButton  = new JoystickButton(rightStick, 8);

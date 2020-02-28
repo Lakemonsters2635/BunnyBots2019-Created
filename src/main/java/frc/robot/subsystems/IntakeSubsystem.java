@@ -35,6 +35,7 @@ public class IntakeSubsystem extends Subsystem {
 
 
     extender = new DoubleSolenoid(6,7);
+    //extender = new DoubleSolenoid(4,5);
 
   }
 

@@ -9,7 +9,6 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
-import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
@@ -29,7 +28,7 @@ public class ShooterSubsystem extends Subsystem {
   TalonFX motor1;
   TalonFX motor2;
   CANSparkMax topKickerMotor;
-  // DoubleSolenoid leftSolenoid;
+  DoubleSolenoid shootorSolenoid;
   // DoubleSolenoid rightSolenoid;
   public ShooterSubsystem(){
     motor1 = new TalonFX(RobotMap.SHOOTER_TOP_CAN);
@@ -38,16 +37,27 @@ public class ShooterSubsystem extends Subsystem {
     topKickerMotor = new CANSparkMax(RobotMap.UPPER_KICKER_MOTOR, MotorType.kBrushless);
     //topKickerMotor = new CANSparkMax(10, MotorType.kBrushless);
 
-    // leftSolenoid = new DoubleSolenoid(4,5);
+    shootorSolenoid = new DoubleSolenoid(4,5);
+    //shootorSolenoid = new DoubleSolenoid(5,4);
+    //shootorSolenoid = new DoubleSolenoid(3,4);
+    //shootorSolenoid = new DoubleSolenoid(2,3);
+    //shootorSolenoid = new DoubleSolenoid(3,2);
+    //shootorSolenoid = new DoubleSolenoid(1,2);
+    //shootorSolenoid = new DoubleSolenoid(0,1);
 
     configureMotors();  
   }
 
-  public void on(){
-    // leftSolenoid.set(Value.kForward);
+  public void aimHigh(){
+    shootorSolenoid.set(Value.kForward);
+    DoubleSolenoid.Value val = shootorSolenoid.get();
+    System.out.println("shootorSolenoid.Value:" + val);
   }
-  public void off(){
-    // leftSolenoid.set(Value.kReverse);
+
+  public void aimLow(){
+    shootorSolenoid.set(Value.kReverse);
+    DoubleSolenoid.Value val = shootorSolenoid.get();
+    System.out.println("shootorSolenoid.Value:" + val);
   }
   
 
