@@ -12,7 +12,8 @@ import frc.robot.Robot;
 
 public class IntakeActuateCommand extends Command {
   private boolean m_raiseIntake = false;
-  public IntakeActuateCommand(boolean raiseIntake) {
+  public IntakeActuateCommand(boolean raiseIntake, double timeOut) {
+    super(timeOut);
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     m_raiseIntake = raiseIntake;
@@ -37,7 +38,8 @@ public class IntakeActuateCommand extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return true;
+    return super.isTimedOut();
+  
   }
 
   // Called once after isFinished returns true

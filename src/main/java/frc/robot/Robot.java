@@ -128,8 +128,8 @@ public class Robot extends TimedRobot {
     intakeInCommand = new IntakeCommand(false);
     intakeOutCommand = new IntakeCommand(true);
 
-    lowerIntakeCommand = new IntakeActuateCommand(false);
-    raiseIntakeCommand = new IntakeActuateCommand(true);
+    lowerIntakeCommand = new IntakeActuateCommand(false, 3);
+    raiseIntakeCommand = new IntakeActuateCommand(true, 3);
 
     colorSpinCommand = new ColorSpinCommand(colorSpinnerSubsystem);
 
@@ -148,8 +148,8 @@ public class Robot extends TimedRobot {
 
      oi.intakeInButton.whileHeld(intakeInCommand);
      oi.intakeOutButton.whileHeld(intakeOutCommand);
-     oi.extendIntakeButton.whenPressed(lowerIntakeCommand);
-     oi.retractIntakeButton.whenPressed(raiseIntakeCommand);
+     oi.lowerIntakeButton.whenPressed(lowerIntakeCommand);
+     oi.raiseIntakeButton.whenPressed(raiseIntakeCommand);
 
     // oi.climberExtendButton.whenPressed(extendClimberCommand);
     // oi.climbButton.whileHeld(climbCommand);
