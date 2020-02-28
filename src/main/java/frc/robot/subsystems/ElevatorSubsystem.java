@@ -11,12 +11,14 @@ import com.revrobotics.CANEncoder;
 import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.ControlType;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.controller.PIDController;
+import frc.robot.Robot;
 import frc.robot.RobotMap;
 
 /**
@@ -32,16 +34,17 @@ public class ElevatorSubsystem extends Subsystem {
   
   DigitalInput bottomSensor;
 
-  double rotationsForBall;
   double setpoint;
   public ElevatorSubsystem() {
     beltMotor = new CANSparkMax(RobotMap.ELEVATOR_MOTOR_CHANNEL, MotorType.kBrushless);
+    beltMotor.setIdleMode(IdleMode.kBrake);
+
     //bottomKickerMotor = new CANSparkMax(0, MotorType.kBrushless);
     beltEncoder = beltMotor.getEncoder();
     //bottomSensor = new DigitalInput(0);
     beltController = beltMotor.getPIDController();
-    
-    beltController.setP(0);
+
+    beltController.setP(0.1);
     beltController.setI(0);
     beltController.setD(0);
   }
@@ -55,14 +58,21 @@ public class ElevatorSubsystem extends Subsystem {
     return beltEncoder.getPosition();
   }
 
-  public void setForIndex() {
-    setpoint = beltEncoder.getPosition() + rotationsForBall;
+  public void setForIndex(boolean up, double index) {
+    if(up) {
+    setpoint = beltEncoder.getPosition() - index;
+    } else {
+      setpoint = beltEncoder.getPosition() + index;
+    }
   }
 
   public void PIDDrive() {
     beltController.setReference(setpoint, ControlType.kPosition);
   }
 
+  public double getSetpoint() {
+    return setpoint;
+  }
   
 
 

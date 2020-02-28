@@ -52,14 +52,16 @@ public class OI {
   Button shooterVisionButton = new JoystickButton(leftStick, RobotMap.SHOOTER_WITHVISION_BUTTON);
   Button shooterNoVisionButton = new JoystickButton(rightStick, RobotMap.SHOOTER_NOVISION_BUTTON);
 
-  Button intakeButton = new JoystickButton(leftStick, 1);
-  Button reverseIntakeButton = new JoystickButton(leftStick, 2);
+  Button intakeDetectButton = new JoystickButton(leftStick, 2);
 
   Button visionButton = new JoystickButton(leftStick, RobotMap.VISION_BUTTON_BUTTON);
   
 
   Button elevatorUpButton = new JoystickButton(rightStick, 5);
   Button elevatorDownButton = new JoystickButton(rightStick, 4);
+
+  Button elevatorIndexUpButton = new JoystickButton(rightStick, 3);
+  Button elevatorIndexDownButton = new JoystickButton(rightStick, 2);
 
   Button intakeInButton = new JoystickButton(rightStick, 10);
   Button intakeOutButton = new JoystickButton(rightStick, 11);

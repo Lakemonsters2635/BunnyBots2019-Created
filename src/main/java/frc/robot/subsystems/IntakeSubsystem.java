@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
+import frc.robot.commands.IntakeCommand;
 
 /**
  * Add your docs here.
@@ -48,6 +49,10 @@ public class IntakeSubsystem extends Subsystem {
     extender.set(Value.kForward);
   }
 
+  public double getKickerCurrent() {
+    return Math.abs(intakeKickerMotor.getOutputCurrent());
+  }
+  
   public void setIntakeMotors(double input) {
     intakeSweeperMotor.set(input);
   }

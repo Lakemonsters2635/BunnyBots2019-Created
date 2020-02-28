@@ -8,36 +8,49 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 
-public class IntakeCommand extends Command {
-  private boolean m_reverse = false;
-  public IntakeCommand(boolean reverse) {
+public class IntakeDetectCommand extends Command {
+  int counter;
+  int detectCounter;
+  boolean current;
+  public IntakeDetectCommand() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    m_reverse = reverse;
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    detectCounter = 0;
+    counter = 0;
+    current = false;
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if (m_reverse) {
-      Robot.intakeSubsystem.setIntakeMotors(0.5);
-    } else {
-      Robot.intakeSubsystem.setIntakeMotors(-0.8);
+    Robot.intakeSubsystem.setIntakeMotors(-0.8);
+    if(!current) Robot.intakeSubsystem.setKickerMotor(1);
+    SmartDashboard.putNumber("Kicker Current", Robot.intakeSubsystem.getKickerCurrent());
+    counter++;
+
+    if(Robot.intakeSubsystem.getKickerCurrent() > 3 && counter > 10) current = true;
+
+    if(current) {
+      Robot.elevatorSubsystem.setBeltMotor(-1);
+      Robot.intakeSubsystem.setKickerMotor(0.5);
+      detectCounter++;
     }
-   
-    //Robot.elevatorSubsystem.setBottomKickerMotor(1);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
+    if(current && detectCounter > 20) {
+      return true;
+    }
     return false;
   }
 
@@ -45,8 +58,9 @@ public class IntakeCommand extends Command {
   @Override
   protected void end() {
     Robot.intakeSubsystem.setIntakeMotors(0);
+    Robot.intakeSubsystem.setKickerMotor(0);
+    Robot.elevatorSubsystem.setBeltMotor(0);
   }
-
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run

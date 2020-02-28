@@ -68,12 +68,19 @@ public class Robot extends TimedRobot {
   ElevatorUpCommand elevatorUpCommand;
   ElevatorDownCommand elevatorDownCommand;
 
+  ElevatorIndexCommand elevatorIndexUpCommand;
+  ElevatorIndexCommand elevatorIndexDownCommand;
+
   ShooterCommand shooterWithVisionCommand;
   ShooterCommand shooterNoVisionCommand;
   
 
   IntakeCommand  intakeInCommand;
   IntakeCommand intakeOutCommand;
+
+  IntakeDetectCommand intakeDetectCommand;
+
+  IntakeDetectToElevatorIndexCommand intakeDetectToElevatorIndexCommand;
 
 
   IntakeActuateCommand lowerIntakeCommand;
@@ -125,11 +132,19 @@ public class Robot extends TimedRobot {
     shooterNoVisionCommand = new ShooterCommand(false);
     elevatorUpCommand = new ElevatorUpCommand();
     elevatorDownCommand = new ElevatorDownCommand();
+
+    elevatorIndexUpCommand = new ElevatorIndexCommand(true, 70);
+    elevatorIndexDownCommand = new ElevatorIndexCommand(false, 70);
+
     colorCommand = new ColorCommand(colorSpinnerSubsystem);
     
 
     intakeInCommand = new IntakeCommand(false);
     intakeOutCommand = new IntakeCommand(true);
+
+    intakeDetectCommand = new IntakeDetectCommand();
+
+    intakeDetectToElevatorIndexCommand = new IntakeDetectToElevatorIndexCommand();
 
     lowerIntakeCommand = new IntakeActuateCommand(false, 3);
     raiseIntakeCommand = new IntakeActuateCommand(true, 3);
@@ -152,8 +167,13 @@ public class Robot extends TimedRobot {
      oi.elevatorUpButton.whileHeld(elevatorUpCommand);
     oi.elevatorDownButton.whileHeld(elevatorDownCommand);
 
+    oi.elevatorIndexUpButton.whenPressed(elevatorIndexUpCommand);
+    oi.elevatorIndexDownButton.whenPressed(elevatorIndexDownCommand);
+
      oi.intakeInButton.whileHeld(intakeInCommand);
      oi.intakeOutButton.whileHeld(intakeOutCommand);
+     oi.intakeDetectButton.whileHeld(intakeDetectToElevatorIndexCommand);
+
      oi.lowerIntakeButton.whenPressed(lowerIntakeCommand);
      oi.raiseIntakeButton.whenPressed(raiseIntakeCommand);
      

@@ -9,49 +9,52 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
-
-public class IntakeCommand extends Command {
-  private boolean m_reverse = false;
-  public IntakeCommand(boolean reverse) {
+public class ElevatorIndexCommand extends Command {
+  boolean up = true;
+  double index = 0;
+  public ElevatorIndexCommand(boolean up, double index) {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    m_reverse = reverse;
+    this.up = up;
+    this.index = index;
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    Robot.elevatorSubsystem.setForIndex(up, index);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if (m_reverse) {
-      Robot.intakeSubsystem.setIntakeMotors(0.5);
+    Robot.elevatorSubsystem.PIDDrive();
+    if(up) {
+      Robot.intakeSubsystem.setKickerMotor(1);
     } else {
-      Robot.intakeSubsystem.setIntakeMotors(-0.8);
+      Robot.intakeSubsystem.setKickerMotor(-1);
     }
-   
-    //Robot.elevatorSubsystem.setBottomKickerMotor(1);
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
+    if(Robot.elevatorSubsystem.getBeltEncoderValue() > (Robot.elevatorSubsystem.getSetpoint() - 1) && Robot.elevatorSubsystem.getBeltEncoderValue() < (Robot.elevatorSubsystem.getSetpoint() + 1)) {
+      return true;
+    }
     return false;
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.intakeSubsystem.setIntakeMotors(0);
-  }
+    Robot.intakeSubsystem.setKickerMotor(0);
 
+  }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    end();
   }
 }
