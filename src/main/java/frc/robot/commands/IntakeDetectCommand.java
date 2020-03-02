@@ -31,12 +31,17 @@ public class IntakeDetectCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.intakeSubsystem.setIntakeMotors(-0.8);
-    if(!current) Robot.intakeSubsystem.setKickerMotor(1);
+    Robot.intakeSubsystem.setIntakeMotor(0.8);
+    if(!current) {
+      Robot.intakeSubsystem.setKickerMotor(1);
+    } 
     SmartDashboard.putNumber("Kicker Current", Robot.intakeSubsystem.getKickerCurrent());
     counter++;
 
-    if(Robot.intakeSubsystem.getKickerCurrent() > 3 && counter > 10) current = true;
+    if(Robot.intakeSubsystem.getKickerCurrent() > 3 && counter > 10) {
+      current = true;
+    }
+      
 
     if(current) {
       Robot.elevatorSubsystem.setBeltMotor(-1);
@@ -57,7 +62,7 @@ public class IntakeDetectCommand extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.intakeSubsystem.setIntakeMotors(0);
+    Robot.intakeSubsystem.setIntakeMotor(0);
     Robot.intakeSubsystem.setKickerMotor(0);
     Robot.elevatorSubsystem.setBeltMotor(0);
   }

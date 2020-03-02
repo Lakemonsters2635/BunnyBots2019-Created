@@ -10,8 +10,7 @@ package frc.robot.commands.AutonomousCommandGroups;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import frc.robot.Robot;
 import frc.robot.commands.AutonomousTrajectoryCommand;
-import frc.robot.commands.ElevatorAdvanceCommand;
-import frc.robot.commands.ElevatorUpCommand;
+import frc.robot.commands.ElevatorCommand;
 import frc.robot.commands.ShooterCommand;
 import frc.robot.models.AutonomousTrajectories;
 
@@ -39,7 +38,7 @@ public class AutonomousShooterToTrenchSequence extends CommandGroup {
     AutonomousTrajectories autonomousTrajectories = new AutonomousTrajectories(Robot.drivetrainSubsystem.CONSTRAINTS);
 
     ShooterCommand shooterCommand = new ShooterCommand(false);
-    ElevatorUpCommand elevatorUpCommand = new ElevatorUpCommand();
+    ElevatorCommand elevatorUpCommand = new ElevatorCommand(false);
     AutonomousTrajectoryCommand shootingToTrenchPickupCommand = new AutonomousTrajectoryCommand(autonomousTrajectories.getShootingToTrenchPickupTrajectory());
     
     addParallel(elevatorUpCommand, 5);

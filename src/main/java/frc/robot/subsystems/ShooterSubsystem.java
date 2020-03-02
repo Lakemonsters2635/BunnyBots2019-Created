@@ -114,13 +114,13 @@ public class ShooterSubsystem extends Subsystem {
   public void Init() {
   }
 
-  public void SpinShooter(double motor1Speed, double motor2Speed) {
+  public void SpinShooter(double upperMotorSpeed) {
       //DON'T GO OVER 3,000;
-      motor1Speed = Math.min(5000, Math.abs(motor1Speed));
-      motor2Speed = Math.min(5000, Math.abs(motor2Speed));
-
-      motor1.set(ControlMode.Velocity, motor1Speed*2048/600);
-      motor2.set(ControlMode.Velocity, -motor2Speed*2048/600);
+      upperMotorSpeed = Math.min(5000, Math.abs(upperMotorSpeed));
+      double lowerMotorSpeed = upperMotorSpeed * .75;
+   
+      motor1.set(ControlMode.Velocity, upperMotorSpeed*2048/600);
+      motor2.set(ControlMode.Velocity, -lowerMotorSpeed*2048/600);
 
       topKickerMotor.set(-1);
   }

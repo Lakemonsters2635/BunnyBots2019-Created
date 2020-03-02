@@ -406,7 +406,7 @@ public static ArrayList<HolonomicDriveSignal> readDriveRecording(String fileName
  
   @Override
   public void outputToSmartDashboard() {
-      super.outputToSmartDashboard();
+     // super.outputToSmartDashboard();
 
       // HolonomicDriveSignal localSignal;
       // Trajectory.Segment localSegment;

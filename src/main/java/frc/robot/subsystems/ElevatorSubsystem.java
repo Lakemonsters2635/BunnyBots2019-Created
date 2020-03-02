@@ -50,7 +50,6 @@ public class ElevatorSubsystem extends Subsystem {
   }
 
   public void setBeltMotor(double input) {
-    System.out.println("setBeltMotor");
     beltMotor.set(input);
   }
   

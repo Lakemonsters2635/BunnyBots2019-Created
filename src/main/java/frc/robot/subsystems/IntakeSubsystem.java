@@ -53,7 +53,7 @@ public class IntakeSubsystem extends Subsystem {
     return Math.abs(intakeKickerMotor.getOutputCurrent());
   }
   
-  public void setIntakeMotors(double input) {
+  public void setIntakeMotor(double input) {
     intakeSweeperMotor.set(input);
   }
 

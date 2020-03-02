@@ -13,8 +13,11 @@ import frc.robot.Robot;
 public class IntakeCommand extends Command {
   private boolean m_reverse = false;
   public IntakeCommand(boolean reverse) {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
+    m_reverse = reverse;
+  }
+
+  public IntakeCommand(boolean reverse, double timeout) {
+    super(timeout);
     m_reverse = reverse;
   }
 
@@ -27,9 +30,9 @@ public class IntakeCommand extends Command {
   @Override
   protected void execute() {
     if (m_reverse) {
-      Robot.intakeSubsystem.setIntakeMotors(0.5);
+      Robot.intakeSubsystem.setIntakeMotor(0.5);
     } else {
-      Robot.intakeSubsystem.setIntakeMotors(-0.8);
+      Robot.intakeSubsystem.setIntakeMotor(-0.8);
     }
    
     //Robot.elevatorSubsystem.setBottomKickerMotor(1);
@@ -38,13 +41,13 @@ public class IntakeCommand extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    return super.isTimedOut();
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    Robot.intakeSubsystem.setIntakeMotors(0);
+    Robot.intakeSubsystem.setIntakeMotor(0);
   }
 
 

@@ -98,7 +98,8 @@ public class RobotMap {
 	 public final static Gains kGains_Velocit = new Gains(kP, 0.0, 0.0, kF,  0,  1.00);
 
 	 public final static double SHOOTER_MOTOR_1_DEFAULT_SPEED = 1500;
-	 public final static double SHOOTER_MOTOR_2_DEFAULT_SPEED = 1500;
+   public final static double SHOOTER_INTITIATION_LINE_UPPER_MOTOR_SPEED = 3500;
+
 
     //MOTORS
     public static final int COLOR_SPINNER_MOTOR = 9;

@@ -65,8 +65,8 @@ public class Robot extends TimedRobot {
 
   public ColorSpinCommand colorSpinCommand;
 
-  ElevatorUpCommand elevatorUpCommand;
-  ElevatorDownCommand elevatorDownCommand;
+  ElevatorCommand elevatorUpCommand;
+  ElevatorCommand elevatorDownCommand;
 
   ElevatorIndexCommand elevatorIndexUpCommand;
   ElevatorIndexCommand elevatorIndexDownCommand;
@@ -130,8 +130,8 @@ public class Robot extends TimedRobot {
     robotRotateCommand = new RobotRotateCommand(90);
     shooterWithVisionCommand = new ShooterCommand(true);
     shooterNoVisionCommand = new ShooterCommand(false);
-    elevatorUpCommand = new ElevatorUpCommand();
-    elevatorDownCommand = new ElevatorDownCommand();
+    elevatorUpCommand = new ElevatorCommand(false);
+    elevatorDownCommand = new ElevatorCommand(true);
 
     elevatorIndexUpCommand = new ElevatorIndexCommand(true, 70);
     elevatorIndexDownCommand = new ElevatorIndexCommand(false, 70);
@@ -185,7 +185,7 @@ public class Robot extends TimedRobot {
     // oi.climbButton.whileHeld(climbCommand);
 
 
-    oi.helloArcButton.whileHeld(robotRotateCommand);
+    //oi.helloArcButton.whileHeld(robotRotateCommand);
     oi.referenceResetButton.whenPressed(zeroCommand);
     oi.shooterNoVisionButton.whileHeld(shooterNoVisionCommand);
     oi.shooterVisionButton.whileHeld(shooterWithVisionCommand);
@@ -303,6 +303,9 @@ public class Robot extends TimedRobot {
     
     Robot.drivetrainSubsystem.getFollower().cancel();
 
+    SmartDashboard.putNumber("ShooterMotor1", RobotMap.SHOOTER_MOTOR_1_DEFAULT_SPEED);
+    
+
     subsystemManager.enableKinematicLoop(UPDATE_DT);
     zeroCommand.start();
   }
@@ -315,7 +318,7 @@ public class Robot extends TimedRobot {
 
     Scheduler.getInstance().run();
     
-    Vector2 vec = drivetrainSubsystem.getKinematicPosition();
+    //Vector2 vec = drivetrainSubsystem.getKinematicPosition();
     //SmartDashboard.putNumber("Current Pose X", vec.x);
     //SmartDashboard.putNumber("Current Pose Y", vec.y);
    
@@ -334,7 +337,7 @@ public void testInit(){
   @Override
   public void testPeriodic() {
     //drivetrainSubsystem.updateKinematics(UPDATE_DT);
-    drivetrainSubsystem.outputToSmartDashboard();
+    //drivetrainSubsystem.outputToSmartDashboard();
     
   }
 }

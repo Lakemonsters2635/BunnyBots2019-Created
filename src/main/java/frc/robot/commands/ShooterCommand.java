@@ -8,25 +8,33 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.subsystems.ShooterSubsystem;
 
 public class ShooterCommand extends Command {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  private final ShooterSubsystem m_Shooter;
+
   private boolean useCamera = false;
   private double targetDistance = 0;
+  private double m_upperMotorSpeed = 0;
+
   /**
    * Creates a new ExampleCommand.
    *
    * @param subsystem The subsystem used by this command.
    */
   public ShooterCommand(boolean useCamera) {
-    m_Shooter = Robot.shooterSubsystem;
     this.useCamera = useCamera;
     // Use addRequirements() here to declare subsystem dependencies.
     //addRequirements(subsystem);
+  }
+
+  //Constructor for Autonomous, contains a timeout and motorspeed.
+  public ShooterCommand(boolean useCamera, double timeout, double upperMotorSpeed) {
+    super(timeout);
+    this.useCamera = useCamera;
   }
 
   // Called when the command is initially scheduled.
@@ -41,7 +49,6 @@ public class ShooterCommand extends Command {
   public void execute() {
 
     double motor1Speed = RobotMap.SHOOTER_MOTOR_1_DEFAULT_SPEED;
-    double motor2Speed = RobotMap.SHOOTER_MOTOR_2_DEFAULT_SPEED;
 
     if (useCamera) {
 
@@ -51,7 +58,6 @@ public class ShooterCommand extends Command {
           targetDistance = Robot.vision.getXDistance();
           //System.out.println("target distance: " + targetDistance);
           motor1Speed = computeShooterSpeedFromTargetDistance(targetDistance);
-          motor2Speed = motor1Speed/2; //FOR TOP SPIN
           //System.out.println("Adjusted motor1 speed: " + motor1Speed);
       } else {
           //System.out.println("target not found");
@@ -68,12 +74,8 @@ public class ShooterCommand extends Command {
     // motor1Speed = motor1Speed + (1000 * motor1Adjust);
     // motor2Speed = motor1Speed + (1000 * motor2Adjust);
 
-    //double motor1Speed =  SmartDashboard.getNumber("ShooterMotor1", 0);
-    //double motor2Speed =  SmartDashboard.getNumber("ShooterMotor2", 0);
-
-    //System.out.println("Motor1 Speed: " + motor1Speed);
-    //System.out.println("Motor2 Speed: " + motor2Speed);
-    m_Shooter.SpinShooter(motor1Speed, motor2Speed);
+     motor1Speed =  SmartDashboard.getNumber("ShooterMotor1", RobotMap.SHOOTER_MOTOR_1_DEFAULT_SPEED);
+     Robot.shooterSubsystem.SpinShooter(motor1Speed);
   }
 
   public double computeShooterSpeedFromTargetDistance(double targetDistance) {
@@ -94,7 +96,7 @@ public class ShooterCommand extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end() {
-    m_Shooter.stop();
+    Robot.shooterSubsystem.stop();
     
     if (useCamera) {
       Robot.vision.ledOff();
@@ -104,17 +106,6 @@ public class ShooterCommand extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    // if (m_CommandInitializationFailed) {
-    //   System.out.println("Command initalization failed. Finished immediately.");
-    //   return true;
-    // }
-
-    //return m_colorSpinner.spinFinished();
-    // boolean colorFound =  m_colorSpinner.isFinished(m_targetColor);
-    // if (colorFound) {
-    //   System.out.println("Color '" +  m_fmsInfo.controlPanelTargetColor + "' found.");
-    // }
-    // return colorFound;
-    return false;
+    return super.isTimedOut();
   }
 }

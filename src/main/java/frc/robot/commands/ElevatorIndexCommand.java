@@ -49,6 +49,7 @@ public class ElevatorIndexCommand extends Command {
   @Override
   protected void end() {
     Robot.intakeSubsystem.setKickerMotor(0);
+    Robot.elevatorSubsystem.setBeltMotor(0);
 
   }
 

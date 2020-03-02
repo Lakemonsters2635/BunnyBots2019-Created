@@ -10,36 +10,46 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class ElevatorUpCommand extends Command {
-  public ElevatorUpCommand() {
-    // Use requires() here to declare subsystem dependencies
-    // eg. requires(chassis);
+public class ElevatorCommand extends Command {
+  private boolean m_reverse = false;
+  public ElevatorCommand(boolean reverse) {
+    m_reverse = reverse;
+  }
+
+  public ElevatorCommand(boolean reverse, double timeout) {
+    super(timeout);
+    m_reverse = reverse;
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    //System.out.println("Elevator Up command init");
+    //System.out.println("Elevator Down command init");
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.elevatorSubsystem.setBeltMotor(-1);
-    Robot.intakeSubsystem.setKickerMotor(1);
-  }
+    if (m_reverse) {
+      Robot.elevatorSubsystem.setBeltMotor(0.7);
+      Robot.intakeSubsystem.setKickerMotor(-0.7);
+    } else {
+      Robot.elevatorSubsystem.setBeltMotor(-1);
+      Robot.intakeSubsystem.setKickerMotor(1);
+    }
 
+  }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return false;
+    return super.isTimedOut();
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
-    //System.out.println("Elevator Up command end");
+    //System.out.println("Elevator Down command end");
     Robot.elevatorSubsystem.setBeltMotor(0);
     Robot.intakeSubsystem.setKickerMotor(0);
   }

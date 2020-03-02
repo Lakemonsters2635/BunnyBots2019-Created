@@ -136,7 +136,7 @@ public abstract class SwerveDrivetrain extends HolonomicDrivetrain {
 
     @Override
     public void outputToSmartDashboard() {
-        super.outputToSmartDashboard();
+        //super.outputToSmartDashboard();
         for (SwerveModule module : getSwerveModules()) {
             SmartDashboard.putNumber(String.format("%s module angle", module.getName()), Math.toDegrees(module.getCurrentAngle()));
             SmartDashboard.putNumber(String.format("%s module drive distance", module.getName()), module.getCurrentDistance());
