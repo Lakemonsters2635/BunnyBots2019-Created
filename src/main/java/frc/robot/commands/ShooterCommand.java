@@ -74,7 +74,7 @@ public class ShooterCommand extends Command {
     // motor1Speed = motor1Speed + (1000 * motor1Adjust);
     // motor2Speed = motor1Speed + (1000 * motor2Adjust);
 
-     motor1Speed =  SmartDashboard.getNumber("ShooterMotor1", RobotMap.SHOOTER_MOTOR_1_DEFAULT_SPEED);
+     //motor1Speed =  SmartDashboard.getNumber("ShooterMotor1", RobotMap.SHOOTER_MOTOR_1_DEFAULT_SPEED);
      Robot.shooterSubsystem.SpinShooter(motor1Speed);
   }
 

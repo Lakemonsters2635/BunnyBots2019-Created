@@ -33,7 +33,7 @@ public class ElevatorSubsystem extends Subsystem {
   CANPIDController beltController;
   
   DigitalInput bottomSensor;
-
+  public int powerCellCount = 0;
   double setpoint;
   public ElevatorSubsystem() {
     beltMotor = new CANSparkMax(RobotMap.ELEVATOR_MOTOR_CHANNEL, MotorType.kBrushless);
@@ -78,7 +78,8 @@ public class ElevatorSubsystem extends Subsystem {
   
   
   public boolean isBlocked() {
-    return bottomSensor.get();
+    //return bottomSensor.get();
+    return false;
   }
   
   public void shooterLoad() {

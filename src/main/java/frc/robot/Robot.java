@@ -120,7 +120,7 @@ public class Robot extends TimedRobot {
     colorSpinnerSubsystem = new ColorSpinnerSubsystem();
 
 
-    // climberSubsystem = new ClimberSubsystem();
+    climberSubsystem = new ClimberSubsystem();
 
     // recordCommand = new ToggleDriveRecordCommand();
     zeroCommand = new ZeroFieldOrientedCommand(drivetrainSubsystem);
@@ -156,8 +156,8 @@ public class Robot extends TimedRobot {
 
     // intakeCommandGroup = new IntakeCommandGroup();
 
-    // climbCommand = new ClimbCommand();
-    // extendClimberCommand = new ExtendClimberCommand();
+    climbCommand = new ClimbCommand();
+    extendClimberCommand = new ExtendClimberCommand();
     
     //oi.bedForwardButton.toggleWhenPressed(bedForwardCommand);
     // oi.toggleDriveRecordButton.toggleWhenPressed(recordCommand);
@@ -181,8 +181,8 @@ public class Robot extends TimedRobot {
      oi.raiseShooterButton.whenPressed(raiseShooterCommand);
      
 
-    // oi.climberExtendButton.whenPressed(extendClimberCommand);
-    // oi.climbButton.whileHeld(climbCommand);
+    oi.climberExtendButton.whenPressed(extendClimberCommand);
+    oi.climbButton.whileHeld(climbCommand);
 
 
     //oi.helloArcButton.whileHeld(robotRotateCommand);
@@ -338,6 +338,5 @@ public void testInit(){
   public void testPeriodic() {
     //drivetrainSubsystem.updateKinematics(UPDATE_DT);
     //drivetrainSubsystem.outputToSmartDashboard();
-    
   }
 }

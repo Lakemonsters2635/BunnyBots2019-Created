@@ -66,21 +66,22 @@ protected void execute() {
 
   // if (reverseRobotOriented) {
   //     robotOriented = true;
-  //     translation = translation.rotateBy(Rotation2.fromDegrees(180.0));
   // }
-  //System.out.println("HoloDriveCommand.execute" + translation + " " + rotation);
+  //     translation = translation.rotateBy(Rotation2.fromDegrees(180.0));
   Robot.drivetrainSubsystem.holonomicDrive(translation, rotation,  !robotOriented);
+  //System.out.println("HoloDriveCommand.execute" + translation + " " + rotation);
+  
 }
 
 public double deadZoneAdjust(double input, double deadzone) {
-    if(input > deadzone) {
-        input = ((input - deadzone)/(1.0 - deadzone));
-      } else if(input < -deadzone) {
-        input = ((input + deadzone)/(1.0 - deadzone));
-      } else {
-        input = 0;
-      }    
-    return input;
+  if(input > deadzone) {
+    input = ((input - deadzone)/(1.0 - deadzone));
+  } else if(input < -deadzone) {
+    input = ((input + deadzone)/(1.0 - deadzone));
+  } else {
+    input = 0;
+  }    
+  return input;
 }
 
 @Override

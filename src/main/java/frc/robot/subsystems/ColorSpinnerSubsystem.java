@@ -10,6 +10,7 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -29,16 +30,25 @@ import frc.robot.models.FMSInfo;
 public class ColorSpinnerSubsystem extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
+
+  CANSparkMax colorSpinnerMotor;
+  State state = State.DISABLED;
+  Color expectedColor = ColorMatcher.kRedTarget;
+  double target_rotation = 0;
+  
+  private Color m_targetColor; 
+  public String targetColorName;
+  private DigitalInput contactSwitch;
+
   public ColorSpinnerSubsystem() {
     colorSpinnerMotor = new CANSparkMax(RobotMap.COLOR_SPINNER_MOTOR, MotorType.kBrushless);
     colorSpinnerMotor.setIdleMode(IdleMode.kBrake);
+    contactSwitch = new DigitalInput(1);
   }
 
   ColorMatcher matcher = new ColorMatcher();
 
-  private Color m_targetColor; 
-  public String targetColorName;
-
+  
 
   enum State {
       DISABLED,
@@ -47,10 +57,7 @@ public class ColorSpinnerSubsystem extends Subsystem {
       COLOR_ROTATE_FINAL,
   };
 
-  CANSparkMax colorSpinnerMotor;
-  State state = State.DISABLED;
-  Color expectedColor = ColorMatcher.kRedTarget;
-  double target_rotation = 0;
+  
 
   public void update() {
     // FireLog.log("colorwheelpos", drive.getEncoder().getPosition());
@@ -58,6 +65,9 @@ public class ColorSpinnerSubsystem extends Subsystem {
 
   public void stop() {
       state = State.DISABLED;
+  }
+  public boolean isContactDetected() {
+    return contactSwitch.get();
   }
 
   public void find_color() {

@@ -53,7 +53,13 @@ public class IntakeDetectCommand extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
+
+    if (Robot.elevatorSubsystem.powerCellCount>=4) {
+      return true;
+    }
+    
     if(current && detectCounter > 20) {
+      Robot.elevatorSubsystem.powerCellCount++;
       return true;
     }
     return false;

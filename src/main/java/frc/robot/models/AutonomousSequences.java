@@ -11,8 +11,10 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
 import frc.robot.commands.AutonomousTrajectoryCommand;
+import frc.robot.commands.AutonomousTrajectoryLimitSwitchCommand;
 import frc.robot.commands.ElevatorCommand;
 import frc.robot.commands.IntakeCommand;
+import frc.robot.commands.RotateControlPanelCommand;
 import frc.robot.commands.ShooterCommand;
 
 public class AutonomousSequences {
@@ -43,12 +45,62 @@ public class AutonomousSequences {
                 output.addSequential(driveToTrenchCommand);
                 
                 //We've reached the trench. Now collect power cell. 
+                Path driveThroughTrenchPath = new Path(Rotation2.ZERO);
+                driveThroughTrenchPath.addSegment(
+                        new PathLineSegment(
+                                new Vector2(0.0, 0.0),
+                                new Vector2(130.271-21.007, 0) //FHE:TODO Confirm positive/negative
+                        )
+                );
+
+
+                Trajectory driveThroughTrenchTrajectory = new Trajectory(driveThroughTrenchPath, Robot.drivetrainSubsystem.CONSTRAINTS);
+
+                AutonomousTrajectoryCommand driveThroughTrenchCommand = new AutonomousTrajectoryCommand(driveThroughTrenchTrajectory);
+
+                //drive 130.271-21.007
+
                 IntakeCommand intakeCommand = new IntakeCommand(false, 2);
+                output.addParallel(driveThroughTrenchCommand);
                 output.addParallel(intakeCommand);
                 output.addParallel(elevatorCommand);
                 return output;
-    }
+        }
+        public static CommandGroup PositionForCPMAndRotateFourTimes(){
+                CommandGroup output = new CommandGroup();
+                Path driveOffWallPath = new Path(Rotation2.ZERO);
+                driveOffWallPath.addSegment(
+                        new PathLineSegment(
+                                new Vector2(0.0, 0.0),
+                                new Vector2(0, 27.5) //FHE:TODO Confirm positive/negative
+                        )
+                );
 
+
+                Trajectory driveOffWallTrajectory = new Trajectory(driveOffWallPath, Robot.drivetrainSubsystem.CONSTRAINTS);
+
+                AutonomousTrajectoryCommand driveOffWallCommand = new AutonomousTrajectoryCommand(driveOffWallTrajectory);
+
+                output.addSequential(driveOffWallCommand);
+
+                Path driveTowardsCPPath = new Path(Rotation2.ZERO);
+                driveTowardsCPPath.addSegment(
+                        new PathLineSegment(
+                                new Vector2(0.0, 0.0),
+                                new Vector2(200, 0) //FHE:TODO Confirm positive/negative
+                        )
+                );
+
+                
+                Trajectory driveTowardsCPTrajectory = new Trajectory(driveTowardsCPPath, Robot.drivetrainSubsystem.CONSTRAINTS);//TODO add slow constrains
+
+                AutonomousTrajectoryLimitSwitchCommand driveTowardsCPCommand = new AutonomousTrajectoryLimitSwitchCommand(driveTowardsCPTrajectory);
+                output.addSequential(driveTowardsCPCommand);
+
+                RotateControlPanelCommand rotateControlPanelCommand = new RotateControlPanelCommand(Robot.colorSpinnerSubsystem, 4);
+                output.addSequential(rotateControlPanelCommand);
+                return output;
+        }
     //Lifts intake
     //Drives forward 5 inches
     //Spins intake

@@ -72,11 +72,9 @@ public class OI {
   Button lowerShooterButton = new JoystickButton(leftStick, 7);
   Button raiseShooterButton = new JoystickButton(leftStick, 6);
 
+  Button climberExtendButton  = new JoystickButton(rightStick, 7);
+  Button climbButton = new JoystickButton(rightStick, 6);
 
-  Button helloArcButton = new JoystickButton(rightStick, 7);
-
-  Button climberExtendButton  = new JoystickButton(rightStick, 8);
-  Button climbButton = new JoystickButton(rightStick, 9);
 
   Button colorSpinnerButton = new JoystickButton(leftStick, 9);
 
