@@ -13,7 +13,9 @@ import frc.robot.RobotMap;
 import frc.robot.commands.AutonomousTrajectoryCommand;
 import frc.robot.commands.AutonomousTrajectoryLimitSwitchCommand;
 import frc.robot.commands.ElevatorCommand;
+import frc.robot.commands.IntakeActuateCommand;
 import frc.robot.commands.IntakeCommand;
+import frc.robot.commands.IntakeDetectToElevatorIndexCommand;
 import frc.robot.commands.RotateControlPanelCommand;
 import frc.robot.commands.ShooterCommand;
 
@@ -38,18 +40,20 @@ public class AutonomousSequences {
 
                 AutonomousTrajectoryCommand driveToTrenchCommand = new AutonomousTrajectoryCommand(driveToTrenchTrajectory);
 
-
+                IntakeActuateCommand lowerIntake = new IntakeActuateCommand(false,1);
+                IntakeActuateCommand raiseIntake = new IntakeActuateCommand(true,1);
 
                 output.addParallel(elevatorCommand);
                 output.addParallel(shooterCommand);
                 output.addSequential(driveToTrenchCommand);
+                output.addParallel(lowerIntake);
                 
                 //We've reached the trench. Now collect power cell. 
                 Path driveThroughTrenchPath = new Path(Rotation2.ZERO);
                 driveThroughTrenchPath.addSegment(
                         new PathLineSegment(
                                 new Vector2(0.0, 0.0),
-                                new Vector2(130.271-21.007, 0) //FHE:TODO Confirm positive/negative
+                                new Vector2(151.278, 0) //FHE:TODO Confirm positive/negative
                         )
                 );
 
@@ -58,14 +62,62 @@ public class AutonomousSequences {
 
                 AutonomousTrajectoryCommand driveThroughTrenchCommand = new AutonomousTrajectoryCommand(driveThroughTrenchTrajectory);
 
-                //drive 130.271-21.007
+                IntakeDetectToElevatorIndexCommand indexedIntakeCommand = new IntakeDetectToElevatorIndexCommand();
 
-                IntakeCommand intakeCommand = new IntakeCommand(false, 2);
+        
                 output.addParallel(driveThroughTrenchCommand);
-                output.addParallel(intakeCommand);
-                output.addParallel(elevatorCommand);
+                output.addSequential(indexedIntakeCommand);
+                output.addSequential(indexedIntakeCommand);
+                output.addSequential(indexedIntakeCommand);
+                output.addSequential(raiseIntake);
                 return output;
         }
+
+
+        public static CommandGroup ShootThenCollectRight_ThenShootAgain(){
+                CommandGroup output =  ShootThenCollectRight();
+                Path driveBackToShoot = new Path(Rotation2.ZERO);
+                driveBackToShoot.addSegment(
+                        new PathLineSegment(
+                                new Vector2(0.0, 0.0),
+                                new Vector2(-84.63, 66.905) //FHE:TODO Confirm positive/negative
+                        )
+                );
+
+
+                Trajectory driveBackToShootTrajectory = new Trajectory(driveBackToShoot, Robot.drivetrainSubsystem.CONSTRAINTS);
+
+                AutonomousTrajectoryCommand driveBackToShootCommand= new AutonomousTrajectoryCommand(driveBackToShootTrajectory);
+                output.addSequential(driveBackToShootCommand,3);
+
+                ElevatorCommand elevatorCommand = new ElevatorCommand(false, 3);
+                ShooterCommand shooterCommand = new ShooterCommand(false, 4, RobotMap.SHOOTER_INTITIATION_LINE_UPPER_MOTOR_SPEED );
+                output.addParallel(elevatorCommand);
+                output.addParallel(shooterCommand);
+                return output;
+        }
+
+
+	public static CommandGroup backAwayFromInitiationLine(){
+                CommandGroup output = new CommandGroup();
+                Path backAwayPath = new Path(Rotation2.ZERO);
+                backAwayPath.addSegment(
+                        new PathLineSegment(
+                                new Vector2(0.0, 0.0),
+                                new Vector2(0, 48) //FHE:TODO Confirm positive/negative
+                        )
+                );
+
+
+                Trajectory backawayTrajectory = new Trajectory(backAwayPath, Robot.drivetrainSubsystem.CONSTRAINTS);
+                AutonomousTrajectoryCommand backAwayCommand = new AutonomousTrajectoryCommand(backawayTrajectory);
+                output.addSequential(backAwayCommand, 2);
+
+                return output;
+
+        }
+
+
         public static CommandGroup PositionForCPMAndRotateFourTimes(){
                 CommandGroup output = new CommandGroup();
                 Path driveOffWallPath = new Path(Rotation2.ZERO);

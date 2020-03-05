@@ -24,6 +24,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.*;
 import frc.robot.commands.AutonomousCommandGroups.AutonomousShooterToTrenchSequence;
+import frc.robot.models.AutonomousSequences;
 import frc.robot.models.AutonomousTrajectories;
 import frc.robot.subsystems.*;
 
@@ -56,7 +57,7 @@ public class Robot extends TimedRobot {
   public static ClimberSubsystem climberSubsystem;
   public static ColorSpinnerSubsystem colorSpinnerSubsystem;
 
-  SendableChooser<CommandGroup> m_chooser = new SendableChooser<>();
+  SendableChooser<CommandGroup> m_chooser;
 
   private SubsystemManager subsystemManager;
 
@@ -107,21 +108,29 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     oi = new OI();
     //m_chooser.setDefaultOption("Default Auto", new AutonomousCommand());
-    
-    
+    initSubsystems();
+    initCommands();
+    initButtons();
+    initChooser();
+    vision.ledOff();
 
 
-    vision = new Vision();
-    drivetrainSubsystem = new DrivetrainSubsystem();
-     elevatorSubsystem = new ElevatorSubsystem();
-    shooterSubsystem = new ShooterSubsystem();
-    subsystemManager = new SubsystemManager(drivetrainSubsystem);
-    intakeSubsystem = new IntakeSubsystem();
-    colorSpinnerSubsystem = new ColorSpinnerSubsystem();
 
 
-    climberSubsystem = new ClimberSubsystem();
+  }
 
+private void initSubsystems() {
+  vision = new Vision();
+  drivetrainSubsystem = new DrivetrainSubsystem();
+  elevatorSubsystem = new ElevatorSubsystem();
+  shooterSubsystem = new ShooterSubsystem();
+  subsystemManager = new SubsystemManager(drivetrainSubsystem);
+  intakeSubsystem = new IntakeSubsystem();
+  colorSpinnerSubsystem = new ColorSpinnerSubsystem();
+  climberSubsystem = new ClimberSubsystem();
+}
+
+private void initCommands() {
     // recordCommand = new ToggleDriveRecordCommand();
     zeroCommand = new ZeroFieldOrientedCommand(drivetrainSubsystem);
     driveCommand = new HolonomicDriveCommand(DrivetrainSubsystem.ControlMode.DualStick);
@@ -158,7 +167,9 @@ public class Robot extends TimedRobot {
 
     climbCommand = new ClimbCommand();
     extendClimberCommand = new ExtendClimberCommand();
-    
+}
+
+private void initButtons() {
     //oi.bedForwardButton.toggleWhenPressed(bedForwardCommand);
     // oi.toggleDriveRecordButton.toggleWhenPressed(recordCommand);
     oi.visionButton.whileHeld(visionRotationDriveCommand);
@@ -190,21 +201,16 @@ public class Robot extends TimedRobot {
     oi.shooterNoVisionButton.whileHeld(shooterNoVisionCommand);
     oi.shooterVisionButton.whileHeld(shooterWithVisionCommand);
     oi.colorSpinnerButton.whenPressed(colorCommand);
+}
 
-
-    vision.ledOff();
-
-
-
-
-
-    AutonomousTrajectories autonomousTrajectories = new AutonomousTrajectories(Robot.drivetrainSubsystem.CONSTRAINTS);
-
-    m_chooser.addOption("Back and Turn", new AutonomousCommand(autonomousTrajectories.getHelloTrajectory(), 0));
-    m_chooser.addOption("Shooting To Trench Pickup", new AutonomousShooterToTrenchSequence());
-
-    SmartDashboard.putData("Auto mode", m_chooser);
-  }
+private void initChooser() {
+  
+ m_chooser = new SendableChooser<>();
+ m_chooser.addOption("Shoot, Collect Right", AutonomousSequences.ShootThenCollectRight());
+ m_chooser.addOption("Shoot, Collect Right, Shoot Again ", AutonomousSequences.ShootThenCollectRight_ThenShootAgain());
+ m_chooser.addOption("Leave Initiation Line", AutonomousSequences.backAwayFromInitiationLine());
+  SmartDashboard.putData("Auto mode", m_chooser);
+}
 
   /**
    * This function is called every robot packet, no matter the mode. Use
@@ -264,11 +270,7 @@ public class Robot extends TimedRobot {
     zeroCommand.start();
 
     autonomousCommand = m_chooser.getSelected();
-    
-    AutonomousTrajectories autonomousTrajectories = new AutonomousTrajectories(Robot.drivetrainSubsystem.CONSTRAINTS);
-    
-    lowerIntakeCommand.start();
-
+   
     /*
      * String autoSelected = SmartDashboard.getString("Auto Selector",
      * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand

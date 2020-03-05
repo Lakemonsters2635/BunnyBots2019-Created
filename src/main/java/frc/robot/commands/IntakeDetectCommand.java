@@ -31,7 +31,7 @@ public class IntakeDetectCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.intakeSubsystem.setIntakeMotor(0.8);
+    Robot.intakeSubsystem.setIntakeMotor(-0.8);
     if(!current) {
       Robot.intakeSubsystem.setKickerMotor(1);
     } 
@@ -54,9 +54,9 @@ public class IntakeDetectCommand extends Command {
   @Override
   protected boolean isFinished() {
 
-    if (Robot.elevatorSubsystem.powerCellCount>=4) {
-      return true;
-    }
+    // if (Robot.elevatorSubsystem.powerCellCount>=4) {
+    //   return true;
+    // }
     
     if(current && detectCounter > 20) {
       Robot.elevatorSubsystem.powerCellCount++;
