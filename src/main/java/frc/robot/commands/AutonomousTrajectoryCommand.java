@@ -26,6 +26,7 @@ public class AutonomousTrajectoryCommand extends Command {
     PIDController angleController;
     
     public AutonomousTrajectoryCommand(Trajectory trajectory) {
+        super(trajectory.getDuration());
         requires(Robot.drivetrainSubsystem);
        
         autonomousTrajectory = trajectory;
@@ -49,7 +50,8 @@ public class AutonomousTrajectoryCommand extends Command {
 
 
         Robot.drivetrainSubsystem.getFollower().follow(autonomousTrajectory);
- 
+
+        System.out.println(autonomousTrajectory.getDuration());
         
 
     	

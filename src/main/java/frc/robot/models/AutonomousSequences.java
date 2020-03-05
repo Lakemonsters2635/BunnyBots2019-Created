@@ -31,7 +31,7 @@ public class AutonomousSequences {
                 driveToTrenchPath.addSegment(
                         new PathLineSegment(
                                 new Vector2(0.0, 0.0),
-                                new Vector2(84.63, -66.905) //FHE:TODO Confirm positive/negative
+                                new Vector2(-82.63, -67.905) //FHE:TODO Confirm positive/negative
                         )
                 );
 
@@ -44,21 +44,22 @@ public class AutonomousSequences {
                 IntakeActuateCommand raiseIntake = new IntakeActuateCommand(true,1);
 
                 output.addParallel(elevatorCommand);
-                output.addParallel(shooterCommand);
-                output.addSequential(driveToTrenchCommand);
+                output.addSequential(shooterCommand);
                 output.addParallel(lowerIntake);
+                output.addSequential(driveToTrenchCommand);
+                
                 
                 //We've reached the trench. Now collect power cell. 
                 Path driveThroughTrenchPath = new Path(Rotation2.ZERO);
                 driveThroughTrenchPath.addSegment(
                         new PathLineSegment(
                                 new Vector2(0.0, 0.0),
-                                new Vector2(151.278, 0) //FHE:TODO Confirm positive/negative
+                                new Vector2(-106, 0) //FHE:TODO Confirm positive/negative
                         )
                 );
 
 
-                Trajectory driveThroughTrenchTrajectory = new Trajectory(driveThroughTrenchPath, Robot.drivetrainSubsystem.CONSTRAINTS);
+                Trajectory driveThroughTrenchTrajectory = new Trajectory(driveThroughTrenchPath, Robot.drivetrainSubsystem.INTAKE_CONSTRAINTS);
 
                 AutonomousTrajectoryCommand driveThroughTrenchCommand = new AutonomousTrajectoryCommand(driveThroughTrenchTrajectory);
 
@@ -66,9 +67,9 @@ public class AutonomousSequences {
 
         
                 output.addParallel(driveThroughTrenchCommand);
-                output.addSequential(indexedIntakeCommand);
-                output.addSequential(indexedIntakeCommand);
-                output.addSequential(indexedIntakeCommand);
+                output.addSequential(new IntakeDetectToElevatorIndexCommand());
+                output.addSequential(new IntakeDetectToElevatorIndexCommand());
+                output.addSequential(new IntakeDetectToElevatorIndexCommand());
                 output.addSequential(raiseIntake);
                 return output;
         }

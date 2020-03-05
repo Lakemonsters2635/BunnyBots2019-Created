@@ -31,7 +31,7 @@ public class IntakeDetectCommand extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.intakeSubsystem.setIntakeMotor(-0.8);
+    Robot.intakeSubsystem.setIntakeMotor(0.8);
     if(!current) {
       Robot.intakeSubsystem.setKickerMotor(1);
     } 
