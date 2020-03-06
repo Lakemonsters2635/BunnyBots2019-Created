@@ -7,6 +7,9 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -23,7 +26,7 @@ public class ClimberSubsystem extends Subsystem {
   // here. Call these from Commands.
 
   DoubleSolenoid climberSolenoid;
-  CANSparkMax winchMotor;
+  TalonFX winchMotor;
 
 
   @Override
@@ -31,7 +34,9 @@ public class ClimberSubsystem extends Subsystem {
     // Set the default command for a subsystem here.
     // setDefaultCommand(new MySpecialCommand());
     climberSolenoid = new DoubleSolenoid(2, 3);
-    winchMotor = new CANSparkMax(RobotMap.CLIMBER_WINCH_MOTOR,MotorType.kBrushless);
+    winchMotor = new TalonFX(RobotMap.CLIMBER_WINCH_MOTOR);
+    configureMotor();
+    
   }
 
   public void extendPistons() {
@@ -41,10 +46,30 @@ public class ClimberSubsystem extends Subsystem {
     climberSolenoid.set(Value.kReverse);
   }
   public void climb() {
-    winchMotor.setVoltage(1);
+    winchMotor.set(TalonFXControlMode.Velocity, 1500*2048/600);
   }
 
   public void stopClimbing() {
-    winchMotor.setVoltage(0);
+    winchMotor.set(TalonFXControlMode.PercentOutput, 0);
   }
+  public void configureMotor(){
+    winchMotor.setSensorPhase(true);
+
+    winchMotor.configNominalOutputForward(0, RobotMap.kTimeoutMs);
+    winchMotor.configNominalOutputReverse(0, RobotMap.kTimeoutMs);
+    winchMotor.configPeakOutputForward(0.8, RobotMap.kTimeoutMs);
+    winchMotor.configPeakOutputReverse(-0.8, RobotMap.kTimeoutMs);
+
+
+    winchMotor.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor,
+                                            RobotMap.kPIDLoopIdx, 
+                                            RobotMap.kTimeoutMs);
+
+
+    winchMotor.config_kF(RobotMap.kPIDLoopIdx, 0.0, RobotMap.kTimeoutMs);
+    winchMotor.config_kP(RobotMap.kPIDLoopIdx, 0.1, RobotMap.kTimeoutMs);
+    winchMotor.config_kI(RobotMap.kPIDLoopIdx, 0.0, RobotMap.kTimeoutMs);
+    winchMotor.config_kD(RobotMap.kPIDLoopIdx, 0.0, RobotMap.kTimeoutMs);
+
+}
 }

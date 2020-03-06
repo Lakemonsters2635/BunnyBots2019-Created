@@ -310,6 +310,7 @@ private void initChooser() {
 
     subsystemManager.enableKinematicLoop(UPDATE_DT);
     zeroCommand.start();
+    climberSubsystem.extendPistons();
   }
 
   /**
@@ -325,7 +326,7 @@ private void initChooser() {
     //SmartDashboard.putNumber("Current Pose Y", vec.y);
    
 
-    drivetrainSubsystem.outputToSmartDashboard();
+    //drivetrainSubsystem.outputToSmartDashboard();
   }
 @Override
 public void testInit(){
