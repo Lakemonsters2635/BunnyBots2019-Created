@@ -29,11 +29,6 @@ public class RobotMap {
   public static final int LEFT_JOYSTICK_CHANNEL = 0;
   public static final int RIGHT_JOYSTICK_CHANNEL = 1;
 
-  public static final int VISION_BUTTON_BUTTON = 7;
-  public static final int REFERENCE_RESET_BUTTON = 8;
-  public static final int SHOOTER_NOVISION_BUTTON = 1;
-  public static final int SHOOTER_WITHVISION_BUTTON = 1;
-
   public static final int DRIVETRAIN_FRONT_LEFT_ANGLE_MOTOR = 8; 
   public static final int DRIVETRAIN_FRONT_LEFT_ANGLE_ENCODER = 3; 
   public static final int DRIVETRAIN_FRONT_LEFT_DRIVE_MOTOR = 7; 
@@ -59,11 +54,35 @@ public class RobotMap {
   public static final int UPPER_KICKER_MOTOR = 11;
   public static final int ELEVATOR_MOTOR_CHANNEL = 10;
   public static final int CLIMBER_WINCH_MOTOR = 15;
+//----------------------------------------------------------------------
+
+  public static final int L_SHOOTER_WITHVISION_BUTTON = 1;
+  public static final int L_INTAKE_DETECT_BUTTON = 2;
+  public static final int L_VISION_BUTTON = 3;
+  public static final int L_RAISE_SHOOTER_BUTTON = 6;
+  public static final int L_LOWER_SHOOTER_BUTTON = 7;
+  public static final int L_REFERENCE_RESET_BUTTON = 8;
+  public static final int L_COLOR_SPINNER_BUTTON = 9;
+  public static final int L_RAISE_INTAKE_BUTTON = 10;
+  public static final int L_LOWER_INTAKE_BUTTON = 11;
+  
+  public static final int R_SHOOTER_NOVISION_BUTTON = 1;
+  public static final int R_ELEVATOR_INDEX_DOWN_BUTTON = 2;
+  public static final int R_ELEVATOR_INDEX_UP_BUTTON = 3;
+  public static final int R_CLIMB_BUTTON = 6;
+  public static final int R_CLIMBER_EXTEND_BUTTON = 7;
+  public static final int R_ELEVATOR_DOWN_BUTTON = 8;
+  public static final int R_ELEVATOR_UP_BUTTON = 9;
+  public static final int R_INTAKE_IN_BUTTON = 10;
+  public static final int R_INTAKE_OUT_BUTTON = 11;
+  
+  
+
 
 //90.7
   public static final double TARGET_HEIGHT =81.25-15.2; //height to center target - camera height
   //public static final double CAMERA_ANGLE = -1*Math.atan(TARGET_HEIGHT/183);
-  public static final double CAMERA_ANGLE = Math.toRadians(21.2);
+  public static final double CAMERA_ANGLE = Math.toRadians(26);
 
   /**
 	 * Which PID slot to pull gains from. Starting 2018, you can choose from
@@ -97,7 +116,7 @@ public class RobotMap {
 	 //public final static Gains kGains_Velocit = new Gains( kP, kI, kD, kF,  0,  1.00);
 	 public final static Gains kGains_Velocit = new Gains(kP, 0.0, 0.0, kF,  0,  1.00);
 
-	 public final static double SHOOTER_MOTOR_1_DEFAULT_SPEED = 1500;
+	 public final static double SHOOTER_MOTOR_1_DEFAULT_SPEED = 2000;
    public final static double SHOOTER_INTITIATION_LINE_UPPER_MOTOR_SPEED = 3500;
 
 

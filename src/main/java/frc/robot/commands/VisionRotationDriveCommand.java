@@ -40,8 +40,6 @@ public class VisionRotationDriveCommand extends Command {
     final double deadzone = 0.1;
 
     double angle = Robot.vision.getXAngle();
-    // boolean ignoreScalars =
-    // Robot.oi.primaryController.getforwardBumperButton().get();
     
     forward = Robot.oi.leftStick.getRawAxis(1);
     strafe = Robot.oi.leftStick.getRawAxis(0);
@@ -49,23 +47,17 @@ public class VisionRotationDriveCommand extends Command {
 
       angleController.setSetpoint(angle);
 
-      //System.out.println("Found target  Angle: " + angle);
       Robot.vision.printArea();
-      //SmartDashboard.putNumber("Gyro angle", Robot.drivetrainSubsystem.getGyroscope().getAngle().toDegrees());
-      //SmartDashboard.putNumber("Y offset", Robot.vision.getYAngle());
       rotation = angleController.calculate(0);
     }
     else {
-      //System.out.println("No target");
       rotation = Robot.oi.rightStick.getRawAxis(0);
       rotation = deadZoneAdjust(rotation, deadzone);
     }
 
-    
-
     forward = deadZoneAdjust(forward, deadzone);
     strafe = deadZoneAdjust(strafe, deadzone);
-    //
+    
     if(rotation > 1){
       rotation = 1;
     }else if(rotation < -1){
@@ -73,18 +65,9 @@ public class VisionRotationDriveCommand extends Command {
     }
 
     final boolean robotOriented = false;
-    final boolean reverseRobotOriented = false;
-
-    //SmartDashboard.putNumber("Distance to Target", Robot.vision.getXDistance());
 
     final Vector2 translation = new Vector2(forward, strafe);
 
-    // if (reverseRobotOriented) {
-    // robotOriented = true;
-    // translation = translation.rotateBy(Rotation2.fromDegrees(180.0));
-    // }
-    // System.out.println("HoloDriveCommand.execute" + translation + " " +
-    // rotation);
     Robot.drivetrainSubsystem.holonomicDrive(translation, rotation, !robotOriented);
   }
 

@@ -19,6 +19,7 @@ public class ShooterCommand extends Command {
   private boolean useCamera = false;
   private double targetDistance = 0;
   private double m_upperMotorSpeed = 0;
+  private boolean shootHigh = true;
 
   /**
    * Creates a new ExampleCommand.
@@ -57,7 +58,7 @@ public class ShooterCommand extends Command {
       if (visionTargetFound) {
           targetDistance = Robot.vision.getXDistance();
           //System.out.println("target distance: " + targetDistance);
-          motor1Speed = computeShooterSpeedFromTargetDistance(targetDistance);
+          motor1Speed = computeShooterSpeedFromTargetDistance(targetDistance, shootHigh);
           //System.out.println("Adjusted motor1 speed: " + motor1Speed);
       } else {
           //System.out.println("target not found");
@@ -78,7 +79,7 @@ public class ShooterCommand extends Command {
      Robot.shooterSubsystem.SpinShooter(motor1Speed);
   }
 
-  public double computeShooterSpeedFromTargetDistance(double targetDistance) {
+  public double computeShooterSpeedFromTargetDistance(double targetDistance, boolean isShooterHigh) {
     //FHE: TODO See google sheet with data.
     //https://docs.google.com/spreadsheets/d/1hFAy2s6HSixSz0b9KfWV3SxeLQ4VlyDaA7yp4tblp4I/edit#gid=0
     // Distance	motor 1 	motor 2
@@ -89,7 +90,14 @@ public class ShooterCommand extends Command {
     // 146 9/16	2100    	1050
     // 186	    2250    	1125
     // 211.25	  2300    	1150
-    double adjustedMotorSpeed = 1.441875 * targetDistance + 1943.063021;
+    double adjustedMotorSpeed;
+    if(isShooterHigh) {
+      adjustedMotorSpeed = 2.1693 * targetDistance + 1418.6;
+    }
+    else {
+      adjustedMotorSpeed = 4000;
+    }
+    
     return adjustedMotorSpeed;
   }
 

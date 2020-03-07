@@ -39,9 +39,8 @@ public class ElevatorSubsystem extends Subsystem {
     beltMotor = new CANSparkMax(RobotMap.ELEVATOR_MOTOR_CHANNEL, MotorType.kBrushless);
     beltMotor.setIdleMode(IdleMode.kBrake);
 
-    //bottomKickerMotor = new CANSparkMax(0, MotorType.kBrushless);
     beltEncoder = beltMotor.getEncoder();
-    //bottomSensor = new DigitalInput(0);
+    
     beltController = beltMotor.getPIDController();
 
     beltController.setP(0.1);
@@ -71,15 +70,6 @@ public class ElevatorSubsystem extends Subsystem {
 
   public double getSetpoint() {
     return setpoint;
-  }
-  
-
-
-  
-  
-  public boolean isBlocked() {
-    //return bottomSensor.get();
-    return false;
   }
   
   public void shooterLoad() {

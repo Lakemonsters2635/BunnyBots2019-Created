@@ -47,35 +47,36 @@ public class OI {
   public Joystick rightStick = new Joystick(RobotMap.RIGHT_JOYSTICK_CHANNEL);
   public Joystick leftStick = new Joystick(RobotMap.LEFT_JOYSTICK_CHANNEL);
 
-  public Button referenceResetButton = new JoystickButton(leftStick, 8);
+  public Button referenceResetButton = new JoystickButton(leftStick, RobotMap.L_REFERENCE_RESET_BUTTON);
 
-  Button shooterVisionButton = new JoystickButton(leftStick, RobotMap.SHOOTER_WITHVISION_BUTTON);
-  Button shooterNoVisionButton = new JoystickButton(rightStick, RobotMap.SHOOTER_NOVISION_BUTTON);
+  Button shooterVisionButton = new JoystickButton(leftStick, RobotMap.L_SHOOTER_WITHVISION_BUTTON);
+  Button shooterNoVisionButton = new JoystickButton(rightStick, RobotMap.R_SHOOTER_NOVISION_BUTTON);
 
  
-  Button visionButton = new JoystickButton(leftStick, RobotMap.VISION_BUTTON_BUTTON);
+  Button visionButton = new JoystickButton(leftStick, RobotMap.L_VISION_BUTTON);
   
 
-  Button elevatorUpButton = new JoystickButton(rightStick, 5);
-  Button elevatorDownButton = new JoystickButton(rightStick, 4);
+  Button elevatorUpButton = new JoystickButton(rightStick, RobotMap.R_ELEVATOR_UP_BUTTON);
+  Button elevatorDownButton = new JoystickButton(rightStick, RobotMap.R_ELEVATOR_DOWN_BUTTON);
 
-  Button elevatorIndexUpButton = new JoystickButton(rightStick, 3);
-  Button elevatorIndexDownButton = new JoystickButton(rightStick, 2);
+  Button elevatorIndexUpButton = new JoystickButton(rightStick, RobotMap.R_ELEVATOR_INDEX_UP_BUTTON);
+  Button elevatorIndexDownButton = new JoystickButton(rightStick, RobotMap.R_ELEVATOR_INDEX_DOWN_BUTTON);
 
-  Button intakeDetectButton = new JoystickButton(leftStick, 2);
-  Button intakeInButton = new JoystickButton(rightStick, 10);
-  Button intakeOutButton = new JoystickButton(rightStick, 11);
+  Button intakeDetectButton = new JoystickButton(leftStick, RobotMap.L_INTAKE_DETECT_BUTTON);
+  Button intakeInButton = new JoystickButton(rightStick, RobotMap.R_INTAKE_IN_BUTTON);
+  Button intakeOutButton = new JoystickButton(rightStick, RobotMap.R_INTAKE_OUT_BUTTON);
 
-  Button lowerIntakeButton = new JoystickButton(leftStick, 11);
-  Button raiseIntakeButton = new JoystickButton(leftStick, 10);
+  Button lowerIntakeButton = new JoystickButton(leftStick, RobotMap.L_LOWER_INTAKE_BUTTON);
+  Button raiseIntakeButton = new JoystickButton(leftStick, RobotMap.L_RAISE_INTAKE_BUTTON);
 
-  Button lowerShooterButton = new JoystickButton(leftStick, 7);
-  Button raiseShooterButton = new JoystickButton(leftStick, 6);
-
-  Button climberExtendButton  = new JoystickButton(rightStick, 7);
-  Button climbButton = new JoystickButton(rightStick, 6);
+  Button raiseShooterButton = new JoystickButton(leftStick, RobotMap.L_RAISE_SHOOTER_BUTTON);
+  Button lowerShooterButton = new JoystickButton(leftStick, RobotMap.L_LOWER_SHOOTER_BUTTON);
 
 
-  Button colorSpinnerButton = new JoystickButton(leftStick, 9);
+  Button climberExtendButton  = new JoystickButton(rightStick, RobotMap.R_CLIMBER_EXTEND_BUTTON);
+  Button climbButton = new JoystickButton(rightStick, RobotMap.R_CLIMB_BUTTON);
+
+
+  Button colorSpinnerButton = new JoystickButton(leftStick, RobotMap.L_COLOR_SPINNER_BUTTON);
 
 }
