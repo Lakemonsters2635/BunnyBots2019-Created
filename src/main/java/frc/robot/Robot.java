@@ -86,9 +86,11 @@ public class Robot extends TimedRobot {
 
   IntakeActuateCommand lowerIntakeCommand;
   IntakeActuateCommand raiseIntakeCommand;
+  IntakeToggleCommand intakeToggleCommand;
 
   ShooterActuateCommand raiseShooterCommand;
   ShooterActuateCommand lowerShooterCommand;
+  ShooterToggleCommand shooterToggleCommand;
 
 
   VisionLightCommand visionLightCommand;
@@ -157,9 +159,11 @@ private void initCommands() {
 
     lowerIntakeCommand = new IntakeActuateCommand(false, 3);
     raiseIntakeCommand = new IntakeActuateCommand(true, 3);
+    intakeToggleCommand = new IntakeToggleCommand();
 
     raiseShooterCommand = new ShooterActuateCommand(false, 3);
     lowerShooterCommand = new ShooterActuateCommand(true, 3);
+    shooterToggleCommand = new ShooterToggleCommand();
 
     colorSpinCommand = new ColorSpinCommand(colorSpinnerSubsystem);
 
@@ -185,11 +189,9 @@ private void initButtons() {
      oi.intakeOutButton.whileHeld(intakeOutCommand);
      oi.intakeDetectButton.whileHeld(intakeDetectToElevatorIndexCommand);
 
-     oi.lowerIntakeButton.whenPressed(lowerIntakeCommand);
-     oi.raiseIntakeButton.whenPressed(raiseIntakeCommand);
+     oi.intakeElevationButton.toggleWhenPressed(intakeToggleCommand);
      
-     oi.lowerShooterButton.whenPressed(lowerShooterCommand);
-     oi.raiseShooterButton.whenPressed(raiseShooterCommand);
+     oi.shooterElevationButton.toggleWhenPressed(shooterToggleCommand);
      
 
     oi.climberExtendButton.whenPressed(extendClimberCommand);
