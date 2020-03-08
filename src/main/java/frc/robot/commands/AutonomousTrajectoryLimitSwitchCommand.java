@@ -40,6 +40,7 @@ public class AutonomousTrajectoryLimitSwitchCommand extends AutonomousTrajectory
 
     // Called once after timeout
     protected void end() {
+        Robot.colorSpinnerSubsystem.stopTargetSpinner();
         super.end();
     }
 
@@ -51,12 +52,12 @@ public class AutonomousTrajectoryLimitSwitchCommand extends AutonomousTrajectory
     
     @Override protected boolean isFinished() {       
 
-
+        boolean isFinished = Robot.colorSpinnerSubsystem.isContactDetected();
         
-        boolean isFinished = super.isFinished();
-        if (!isFinished()) {
-            isFinished = Robot.colorSpinnerSubsystem.isContactDetected();
-        }
+        //boolean isFinished = super.isFinished();
+        // if (!isFinished()) {
+        //     isFinished = Robot.colorSpinnerSubsystem.isContactDetected();
+        // }
 
     	return isFinished;
     }

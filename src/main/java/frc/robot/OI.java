@@ -76,5 +76,6 @@ public class OI {
 
 
   Button colorSpinnerButton = new JoystickButton(leftStick, RobotMap.L_COLOR_SPINNER_BUTTON);
+  Button controlPanelRotationButton = new JoystickButton(leftStick, RobotMap.L_COLOR_SPINNER_BUTTON);
 
 }

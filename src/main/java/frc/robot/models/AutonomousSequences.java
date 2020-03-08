@@ -125,7 +125,7 @@ public class AutonomousSequences {
                 driveOffWallPath.addSegment(
                         new PathLineSegment(
                                 new Vector2(0.0, 0.0),
-                                new Vector2(0, 27.5) //FHE:TODO Confirm positive/negative
+                                new Vector2(-27.5, 0.0) //FHE:TODO Confirm positive/negative
                         )
                 );
 
@@ -140,7 +140,7 @@ public class AutonomousSequences {
                 driveTowardsCPPath.addSegment(
                         new PathLineSegment(
                                 new Vector2(0.0, 0.0),
-                                new Vector2(200, 0) //FHE:TODO Confirm positive/negative
+                                new Vector2(0, -200) //FHE:TODO Confirm positive/negative
                         )
                 );
 

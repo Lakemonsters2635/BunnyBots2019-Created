@@ -58,12 +58,15 @@ public class RobotMap {
 
   public static final int L_SHOOTER_WITHVISION_BUTTON = 1;
   public static final int L_INTAKE_DETECT_BUTTON = 2;
-  public static final int L_VISION_BUTTON = 3;
+  public static final int L_VISION_BUTTON = 4;
   public static final int L_SHOOTER_ELEVATION_BUTTON = 6;
+  public static final int L_CONTROL_PANEL_ROTATION_BUTTON = 7;
   public static final int L_REFERENCE_RESET_BUTTON = 8;
   public static final int L_COLOR_SPINNER_BUTTON = 9;
-  public static final int L_INTAKE_ELEVATION_BUTTON = 10;
+  public static final int L_INTAKE_ELEVATION_BUTTON = 3;
   
+
+
   public static final int R_SHOOTER_NOVISION_BUTTON = 1;
   public static final int R_ELEVATOR_INDEX_DOWN_BUTTON = 2;
   public static final int R_ELEVATOR_INDEX_UP_BUTTON = 3;
@@ -114,7 +117,7 @@ public class RobotMap {
 	 //public final static Gains kGains_Velocit = new Gains( kP, kI, kD, kF,  0,  1.00);
 	 public final static Gains kGains_Velocit = new Gains(kP, 0.0, 0.0, kF,  0,  1.00);
 
-	 public final static double SHOOTER_MOTOR_1_DEFAULT_SPEED = 2000;
+	 public final static double SHOOTER_MOTOR_1_DEFAULT_SPEED = 3500;
    public final static double SHOOTER_INTITIATION_LINE_UPPER_MOTOR_SPEED = 3500;
 
 

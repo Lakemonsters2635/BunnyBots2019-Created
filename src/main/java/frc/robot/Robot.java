@@ -100,6 +100,8 @@ public class Robot extends TimedRobot {
   ClimbCommand climbCommand;
   ColorCommand colorCommand;
 
+  CommandGroup controlPanelRotationSequence;
+  LimitSwitchCommand limitSwitchCommand;
 
   // IntakeCommandGroup intakeCommandGroup;
   /**
@@ -171,6 +173,10 @@ private void initCommands() {
 
     climbCommand = new ClimbCommand();
     extendClimberCommand = new ExtendClimberCommand();
+
+    //controlPanelRotationSequence = AutonomousSequences.PositionForCPMAndRotateFourTimes();
+    limitSwitchCommand = new LimitSwitchCommand(10);
+
 }
 
 private void initButtons() {
@@ -203,6 +209,8 @@ private void initButtons() {
     oi.shooterNoVisionButton.whileHeld(shooterNoVisionCommand);
     oi.shooterVisionButton.whileHeld(shooterWithVisionCommand);
     oi.colorSpinnerButton.whenPressed(colorCommand);
+
+    oi.controlPanelRotationButton.whileHeld(limitSwitchCommand);
 }
 
 private void initChooser() {

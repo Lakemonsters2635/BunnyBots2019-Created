@@ -32,7 +32,7 @@ public class IntakeCommand extends Command {
     if (m_reverse) {
       Robot.intakeSubsystem.setIntakeMotor(0.5);
     } else {
-      Robot.intakeSubsystem.setIntakeMotor(-0.8);
+      Robot.intakeSubsystem.setIntakeMotor(-0.5);
     }
    
     //Robot.elevatorSubsystem.setBottomKickerMotor(1);
