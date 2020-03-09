@@ -28,6 +28,7 @@ public class ShooterCommand extends Command {
    */
   public ShooterCommand(boolean useCamera) {
     this.useCamera = useCamera;
+    m_upperMotorSpeed = RobotMap.SHOOTER_MOTOR_LOW_DEFAULT_SPEED;
     // Use addRequirements() here to declare subsystem dependencies.
     //addRequirements(subsystem);
   }
@@ -36,33 +37,31 @@ public class ShooterCommand extends Command {
   public ShooterCommand(boolean useCamera, double timeout, double upperMotorSpeed) {
     super(timeout);
     this.useCamera = useCamera;
+    m_upperMotorSpeed = upperMotorSpeed;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {    
-   // m_colorSpinner.determineTargetColor();
-      System.out.println("shooter command initalized. Use-Vision:" + useCamera);
+  
+    
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-
-    double motor1Speed = RobotMap.SHOOTER_MOTOR_1_DEFAULT_SPEED;
+    
+    double motor1Speed = m_upperMotorSpeed;
 
     if (useCamera) {
 
       Robot.vision.data();
       boolean visionTargetFound = Robot.vision.targetExists();
       if (visionTargetFound) {
+
           targetDistance = Robot.vision.getXDistance();
-          //System.out.println("target distance: " + targetDistance);
           motor1Speed = computeShooterSpeedFromTargetDistance(targetDistance, shootHigh);
-          //System.out.println("Adjusted motor1 speed: " + motor1Speed);
-      } else {
-          //System.out.println("target not found");
-      }
+      } 
     }
 
 
@@ -75,24 +74,15 @@ public class ShooterCommand extends Command {
     // motor1Speed = motor1Speed + (1000 * motor1Adjust);
     // motor2Speed = motor1Speed + (1000 * motor2Adjust);
 
-     //motor1Speed =  SmartDashboard.getNumber("ShooterMotor1", RobotMap.SHOOTER_MOTOR_1_DEFAULT_SPEED);
+    //SmartDashboard.putNumber("ShooterMotor1", motor1Speed);
+     //motor1Speed =  SmartDashboard.getNumber("ShooterMotor1", RobotMap.SHOOTER_MOTOR_LOW_DEFAULT_SPEED);
      Robot.shooterSubsystem.SpinShooter(motor1Speed);
   }
 
   public double computeShooterSpeedFromTargetDistance(double targetDistance, boolean isShooterHigh) {
-    //FHE: TODO See google sheet with data.
-    //https://docs.google.com/spreadsheets/d/1hFAy2s6HSixSz0b9KfWV3SxeLQ4VlyDaA7yp4tblp4I/edit#gid=0
-    // Distance	motor 1 	motor 2
-    // 301.75	  2,350	    1,225
-    // 280	    2,350	    1,225
-    // 250	    2,250	    1,125
-    // 277	    2,400	    1200
-    // 146 9/16	2100    	1050
-    // 186	    2250    	1125
-    // 211.25	  2300    	1150
     double adjustedMotorSpeed;
     if(isShooterHigh) {
-      adjustedMotorSpeed = 2.1693 * targetDistance + 1418.6;
+      adjustedMotorSpeed = 2.0693 * targetDistance + 1418.6;
     }
     else {
       adjustedMotorSpeed = 4000;

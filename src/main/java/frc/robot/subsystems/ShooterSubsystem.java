@@ -17,6 +17,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
 
 /**
@@ -51,13 +52,13 @@ public class ShooterSubsystem extends Subsystem {
   public void aimHigh(){
     shootorSolenoid.set(Value.kForward);
     DoubleSolenoid.Value val = shootorSolenoid.get();
-    System.out.println("shootorSolenoid.Value:" + val);
+    //System.out.println("shootorSolenoid.Value:" + val);
   }
 
   public void aimLow(){
     shootorSolenoid.set(Value.kReverse);
     DoubleSolenoid.Value val = shootorSolenoid.get();
-    System.out.println("shootorSolenoid.Value:" + val);
+    //System.out.println("shootorSolenoid.Value:" + val);
   }
   
 
@@ -116,9 +117,12 @@ public class ShooterSubsystem extends Subsystem {
 
   public void SpinShooter(double upperMotorSpeed) {
       //DON'T GO OVER 3,000;
-      upperMotorSpeed = Math.min(5000, Math.abs(upperMotorSpeed));
+      upperMotorSpeed = Math.min(6000, Math.abs(upperMotorSpeed));
       double lowerMotorSpeed = upperMotorSpeed * .75;
-   
+     // double lowerMotorSpeed = upperMotorSpeed * 3;
+
+      SmartDashboard.putNumber("upper", upperMotorSpeed);
+      SmartDashboard.putNumber("lower", lowerMotorSpeed);
       motor1.set(ControlMode.Velocity, upperMotorSpeed*2048/600);
       motor2.set(ControlMode.Velocity, -lowerMotorSpeed*2048/600);
 

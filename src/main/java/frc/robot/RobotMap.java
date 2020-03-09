@@ -81,7 +81,7 @@ public class RobotMap {
 
 
 //90.7
-  public static final double TARGET_HEIGHT =81.25-15.2; //height to center target - camera height
+  public static final double TARGET_HEIGHT =81.25-38.2; //height to center target - camera height
   //public static final double CAMERA_ANGLE = -1*Math.atan(TARGET_HEIGHT/183);
   public static final double CAMERA_ANGLE = Math.toRadians(26);
 
@@ -117,8 +117,9 @@ public class RobotMap {
 	 //public final static Gains kGains_Velocit = new Gains( kP, kI, kD, kF,  0,  1.00);
 	 public final static Gains kGains_Velocit = new Gains(kP, 0.0, 0.0, kF,  0,  1.00);
 
-	 public final static double SHOOTER_MOTOR_1_DEFAULT_SPEED = 3500;
-   public final static double SHOOTER_INTITIATION_LINE_UPPER_MOTOR_SPEED = 3500;
+   public final static double SHOOTER_MOTOR_HIGH_DEFAULT_SPEED = 2100;
+   public final static double SHOOTER_MOTOR_LOW_DEFAULT_SPEED = 3000;
+   public final static double SHOOTER_INTITIATION_LINE_UPPER_MOTOR_SPEED = 2100;
 
 
     //MOTORS

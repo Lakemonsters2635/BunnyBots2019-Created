@@ -17,6 +17,7 @@ import frc.robot.commands.IntakeActuateCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.IntakeDetectToElevatorIndexCommand;
 import frc.robot.commands.RotateControlPanelCommand;
+import frc.robot.commands.ShooterActuateCommand;
 import frc.robot.commands.ShooterCommand;
 
 public class AutonomousSequences {
@@ -25,13 +26,14 @@ public class AutonomousSequences {
 
 	public static CommandGroup ShootThenCollectRight(){
                 CommandGroup output = new CommandGroup();
+                ShooterActuateCommand shooterAcuateCommand = new ShooterActuateCommand(true, 1);
                 ElevatorCommand elevatorCommand = new ElevatorCommand(false, 3);
                 ShooterCommand shooterCommand = new ShooterCommand(false, 4, RobotMap.SHOOTER_INTITIATION_LINE_UPPER_MOTOR_SPEED );
                 Path driveToTrenchPath = new Path(Rotation2.ZERO);
                 driveToTrenchPath.addSegment(
                         new PathLineSegment(
                                 new Vector2(0.0, 0.0),
-                                new Vector2(-82.63, -67.905) //FHE:TODO Confirm positive/negative
+                                new Vector2(-44.63, -67.905) //FHE:TODO Confirm positive/negative
                         )
                 );
 
@@ -43,6 +45,8 @@ public class AutonomousSequences {
                 IntakeActuateCommand lowerIntake = new IntakeActuateCommand(false,1);
                 IntakeActuateCommand raiseIntake = new IntakeActuateCommand(true,1);
 
+                
+                output.addSequential(shooterAcuateCommand);
                 output.addParallel(elevatorCommand);
                 output.addSequential(shooterCommand);
                 output.addParallel(lowerIntake);
@@ -54,7 +58,7 @@ public class AutonomousSequences {
                 driveThroughTrenchPath.addSegment(
                         new PathLineSegment(
                                 new Vector2(0.0, 0.0),
-                                new Vector2(-106, 0) //FHE:TODO Confirm positive/negative
+                                new Vector2(-106, 0.0) //FHE:TODO Confirm positive/negative
                         )
                 );
 
@@ -63,8 +67,7 @@ public class AutonomousSequences {
 
                 AutonomousTrajectoryCommand driveThroughTrenchCommand = new AutonomousTrajectoryCommand(driveThroughTrenchTrajectory);
 
-                IntakeDetectToElevatorIndexCommand indexedIntakeCommand = new IntakeDetectToElevatorIndexCommand();
-
+           
         
                 output.addParallel(driveThroughTrenchCommand);
                 output.addSequential(new IntakeDetectToElevatorIndexCommand());
@@ -105,7 +108,7 @@ public class AutonomousSequences {
                 backAwayPath.addSegment(
                         new PathLineSegment(
                                 new Vector2(0.0, 0.0),
-                                new Vector2(0, 48) //FHE:TODO Confirm positive/negative
+                                new Vector2(-48, 0) //FHE:TODO Confirm positive/negative
                         )
                 );
 

@@ -85,13 +85,18 @@ public class Vision extends Subsystem {
 	}
 	
 	public boolean targetExists() {
-		if(v == 1.0){
+		if(v == 1.0)
+		{
+
+			double targetDistance = getXDistance();
+			SmartDashboard.putNumber("targetDistance", targetDistance);
 			return true;
 		}
 		return false;
 	}
 	
 	public double getXAngle() {
+		SmartDashboard.putNumber("xAngle", x);
 		return x;
 	}
 	
@@ -101,8 +106,11 @@ public class Vision extends Subsystem {
 	
 	public double getXDistance() {
 		double angle = getYAngle();
-		//SmartDashboard.putNumber("y angle", angle);
-		return RobotMap.TARGET_HEIGHT/Math.tan(Math.toRadians(angle)+RobotMap.CAMERA_ANGLE);
+		SmartDashboard.putNumber("y angle", angle);
+		//double xDistance = -30.6 * angle - 254;
+		double xDistance = -18.7 * angle - 80.7;
+		return xDistance;
+		//return RobotMap.TARGET_HEIGHT/Math.tan(Math.toRadians(angle)+RobotMap.CAMERA_ANGLE);
 	}
 
 	public double getArea() {

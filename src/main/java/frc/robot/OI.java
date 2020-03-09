@@ -53,7 +53,7 @@ public class OI {
   Button shooterNoVisionButton = new JoystickButton(rightStick, RobotMap.R_SHOOTER_NOVISION_BUTTON);
 
  
-  Button visionButton = new JoystickButton(leftStick, RobotMap.L_VISION_BUTTON);
+  Button visionDriveButton = new JoystickButton(leftStick, RobotMap.L_VISION_BUTTON);
   
 
   Button elevatorUpButton = new JoystickButton(rightStick, RobotMap.R_ELEVATOR_UP_BUTTON);
@@ -75,7 +75,7 @@ public class OI {
   Button climbButton = new JoystickButton(rightStick, RobotMap.R_CLIMB_BUTTON);
 
 
-  Button colorSpinnerButton = new JoystickButton(leftStick, RobotMap.L_COLOR_SPINNER_BUTTON);
+  //Button colorSpinnerButton = new JoystickButton(leftStick, RobotMap.L_COLOR_SPINNER_BUTTON);
   Button controlPanelRotationButton = new JoystickButton(leftStick, RobotMap.L_COLOR_SPINNER_BUTTON);
 
 }

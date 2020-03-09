@@ -39,13 +39,13 @@ public class RotateControlPanelCommand extends Command {
     m_colorFoundCount = 0;
     m_startColor = m_colorSpinner.getColorSensorColor();
     m_currentColor = m_startColor;
-    if (m_startColor == Color.kBlack ){
-      System.out.println("Could not determine current color from Color Sensor.");
-      end();      
+    // if (m_startColor == Color.kBlack ){
+    //   System.out.println("Could not determine current color from Color Sensor.");
+    //   end();      
 
-    } else {
-      System.out.println("RotateControlPanelCommand initalized");
-    }
+    // } else {
+    //   System.out.println("RotateControlPanelCommand initalized");
+    // }
      
   }
 
@@ -53,6 +53,7 @@ public class RotateControlPanelCommand extends Command {
   @Override
   public void execute() {
 
+    m_colorSpinner.spinToTargetColor();
     boolean colorHasChanged = false;
     Color color = m_colorSpinner.getColorSensorColor();
     if (color != m_currentColor) {
@@ -69,6 +70,7 @@ public class RotateControlPanelCommand extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end() {
+    System.out.println("stop CPM Motor");
     m_colorSpinner.stopTargetSpinner();
   }
 
@@ -78,6 +80,10 @@ public class RotateControlPanelCommand extends Command {
     return (m_colorFoundCount > m_numberOfRotations*2) ;
   }
 
+  @Override
+  public void interrupted() {
+    end();
+  }
 
   
 }

@@ -102,6 +102,7 @@ public class Robot extends TimedRobot {
 
   CommandGroup controlPanelRotationSequence;
   LimitSwitchCommand limitSwitchCommand;
+  RotateControlPanelCommand rotateControlPanelCommand;
 
   // IntakeCommandGroup intakeCommandGroup;
   /**
@@ -176,13 +177,14 @@ private void initCommands() {
 
     //controlPanelRotationSequence = AutonomousSequences.PositionForCPMAndRotateFourTimes();
     limitSwitchCommand = new LimitSwitchCommand(10);
+    rotateControlPanelCommand = new RotateControlPanelCommand(colorSpinnerSubsystem, 10);
 
 }
 
 private void initButtons() {
     //oi.bedForwardButton.toggleWhenPressed(bedForwardCommand);
     // oi.toggleDriveRecordButton.toggleWhenPressed(recordCommand);
-    oi.visionButton.whileHeld(visionRotationDriveCommand);
+    oi.visionDriveButton.whileHeld(visionRotationDriveCommand);
     
     //oi.intakeButton.whileHeld(intakeCommandGroup);
      oi.elevatorUpButton.whileHeld(elevatorUpCommand);
@@ -208,9 +210,9 @@ private void initButtons() {
     oi.referenceResetButton.whenPressed(zeroCommand);
     oi.shooterNoVisionButton.whileHeld(shooterNoVisionCommand);
     oi.shooterVisionButton.whileHeld(shooterWithVisionCommand);
-    oi.colorSpinnerButton.whenPressed(colorCommand);
+    //oi.colorSpinnerButton.whenPressed(colorCommand);
 
-    oi.controlPanelRotationButton.whileHeld(limitSwitchCommand);
+    oi.controlPanelRotationButton.whileHeld(rotateControlPanelCommand);
 }
 
 private void initChooser() {
@@ -315,7 +317,7 @@ private void initChooser() {
     
     Robot.drivetrainSubsystem.getFollower().cancel();
 
-    SmartDashboard.putNumber("ShooterMotor1", RobotMap.SHOOTER_MOTOR_1_DEFAULT_SPEED);
+    SmartDashboard.putNumber("ShooterMotor1", RobotMap.SHOOTER_MOTOR_HIGH_DEFAULT_SPEED);
     
 
     subsystemManager.enableKinematicLoop(UPDATE_DT);

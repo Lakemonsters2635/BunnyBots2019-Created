@@ -20,4 +20,12 @@ public class IntakeDetectToElevatorIndexCommand extends CommandGroup {
     addSequential(intakeDetectCommand);
     addSequential(elevatorIndexCommand);
   }
+
+  public IntakeDetectToElevatorIndexCommand(int timeout) {
+    IntakeDetectCommand intakeDetectCommand = new IntakeDetectCommand();
+    ElevatorIndexCommand elevatorIndexCommand = new ElevatorIndexCommand(true, 30);
+
+    addSequential(intakeDetectCommand, timeout);
+    addSequential(elevatorIndexCommand, timeout);
+  }
 }

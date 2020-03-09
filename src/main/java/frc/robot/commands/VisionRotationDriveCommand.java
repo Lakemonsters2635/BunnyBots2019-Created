@@ -23,7 +23,7 @@ public class VisionRotationDriveCommand extends Command {
   public VisionRotationDriveCommand() {
     requires(Robot.drivetrainSubsystem);
     //PidConstants PID_CONSTANTS = new PidConstants(0.3, 0.01, 0.0);
-    angleController = new PIDController(0.01, 0.01, 0);
+    angleController = new PIDController(0.01, 0.015, 0);
   }
 
   @Override
@@ -43,7 +43,10 @@ public class VisionRotationDriveCommand extends Command {
     
     forward = Robot.oi.leftStick.getRawAxis(1);
     strafe = Robot.oi.leftStick.getRawAxis(0);
-    if (Robot.vision.targetExists()) {
+    boolean visionTargetFound = Robot.vision.targetExists();
+    SmartDashboard.putBoolean("Target Found",visionTargetFound );
+
+    if (visionTargetFound) {
 
       angleController.setSetpoint(angle);
 

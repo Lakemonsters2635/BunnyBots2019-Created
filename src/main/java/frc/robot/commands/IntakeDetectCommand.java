@@ -33,9 +33,9 @@ public class IntakeDetectCommand extends Command {
   protected void execute() {
     Robot.intakeSubsystem.setIntakeMotor(0.5);
     if(!current) {
-      Robot.intakeSubsystem.setKickerMotor(1);
+      Robot.intakeSubsystem.setKickerMotor(0.5);
     } 
-    SmartDashboard.putNumber("Kicker Current", Robot.intakeSubsystem.getKickerCurrent());
+    //SmartDashboard.putNumber("Kicker Current", Robot.intakeSubsystem.getKickerCurrent());
     counter++;
 
     if(Robot.intakeSubsystem.getKickerCurrent() > 4 && counter > 10) {
