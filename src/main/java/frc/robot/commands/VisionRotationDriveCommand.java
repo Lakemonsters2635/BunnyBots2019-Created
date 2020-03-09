@@ -13,14 +13,20 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Robot;
-import frc.robot.subsystems.DrivetrainSubsystem;
-import frc.robot.subsystems.DrivetrainSubsystem.ControlMode;
+
 
 public class VisionRotationDriveCommand extends Command {
 
   PIDController angleController;
-
+  public double totalRotation = 0;
   public VisionRotationDriveCommand() {
+    requires(Robot.drivetrainSubsystem);
+    //PidConstants PID_CONSTANTS = new PidConstants(0.3, 0.01, 0.0);
+    angleController = new PIDController(0.01, 0.015, 0);
+  }
+
+  public VisionRotationDriveCommand(double timeout) {
+    super(timeout);
     requires(Robot.drivetrainSubsystem);
     //PidConstants PID_CONSTANTS = new PidConstants(0.3, 0.01, 0.0);
     angleController = new PIDController(0.01, 0.015, 0);
@@ -44,7 +50,7 @@ public class VisionRotationDriveCommand extends Command {
     forward = Robot.oi.leftStick.getRawAxis(1);
     strafe = Robot.oi.leftStick.getRawAxis(0);
     boolean visionTargetFound = Robot.vision.targetExists();
-    SmartDashboard.putBoolean("Target Found",visionTargetFound );
+
 
     if (visionTargetFound) {
 
@@ -67,6 +73,9 @@ public class VisionRotationDriveCommand extends Command {
       rotation = -1;
     }
 
+    totalRotation += rotation;
+    SmartDashboard.putNumber("driveRotation", rotation);
+
     final boolean robotOriented = false;
 
     final Vector2 translation = new Vector2(forward, strafe);
@@ -87,7 +96,11 @@ public class VisionRotationDriveCommand extends Command {
 
 @Override
 protected boolean isFinished() {
-    return false;
+  boolean isFinished = super.isTimedOut();
+  if (isFinished) {
+    SmartDashboard.putNumber("totalRotation", totalRotation);
+  }
+   return isFinished;
 }
 
 @Override

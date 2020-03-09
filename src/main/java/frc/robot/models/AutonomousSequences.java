@@ -16,9 +16,11 @@ import frc.robot.commands.ElevatorCommand;
 import frc.robot.commands.IntakeActuateCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.IntakeDetectToElevatorIndexCommand;
+import frc.robot.commands.RobotRotateCommand;
 import frc.robot.commands.RotateControlPanelCommand;
 import frc.robot.commands.ShooterActuateCommand;
 import frc.robot.commands.ShooterCommand;
+import frc.robot.commands.VisionRotationDriveCommand;
 
 public class AutonomousSequences {
 
@@ -81,10 +83,12 @@ public class AutonomousSequences {
         public static CommandGroup ShootThenCollectRight_ThenShootAgain(){
                 CommandGroup output =  ShootThenCollectRight();
                 Path driveBackToShoot = new Path(Rotation2.ZERO);
+
+
                 driveBackToShoot.addSegment(
                         new PathLineSegment(
                                 new Vector2(0.0, 0.0),
-                                new Vector2(-84.63, 66.905) //FHE:TODO Confirm positive/negative
+                                new Vector2(106, 0.0) //FHE:TODO Confirm positive/negative
                         )
                 );
 
@@ -93,12 +97,49 @@ public class AutonomousSequences {
 
                 AutonomousTrajectoryCommand driveBackToShootCommand= new AutonomousTrajectoryCommand(driveBackToShootTrajectory);
                 output.addSequential(driveBackToShootCommand,3);
+                VisionRotationDriveCommand rotateCommand = new VisionRotationDriveCommand(2);
+             
 
                 ElevatorCommand elevatorCommand = new ElevatorCommand(false, 3);
                 ShooterCommand shooterCommand = new ShooterCommand(false, 4, RobotMap.SHOOTER_INTITIATION_LINE_UPPER_MOTOR_SPEED );
+                output.addSequential(rotateCommand);
                 output.addParallel(elevatorCommand);
-                output.addParallel(shooterCommand);
+                output.addSequential(shooterCommand);;
                 return output;
+        }
+
+        public static CommandGroup ShootFromRight_Of_Optimal_Then_Collect(){
+                CommandGroup output =  new CommandGroup();
+                IntakeActuateCommand raiseIntake = new IntakeActuateCommand(true,2);
+                VisionRotationDriveCommand visionRotateCommand = new VisionRotationDriveCommand(2);
+                RobotRotateCommand rotateCommand = new RobotRotateCommand(5.746);
+                ShooterActuateCommand shooterAcuateCommand = new ShooterActuateCommand(true, 1);
+                ElevatorCommand elevatorCommand = new ElevatorCommand(false, 3);
+                ShooterCommand shooterCommand = new ShooterCommand(false, 4, RobotMap.SHOOTER_INTITIATION_LINE_UPPER_MOTOR_SPEED );
+
+                output.addParallel(raiseIntake);
+                output.addSequential(visionRotateCommand);
+                
+     
+                output.addSequential(shooterAcuateCommand);
+                output.addParallel(elevatorCommand);
+                output.addSequential(shooterCommand);
+
+                //output.addSequential(rotateCommand);
+               
+                Path driveToTrenchPath = new Path(Rotation2.ZERO);
+                driveToTrenchPath.addSegment(
+                        new PathLineSegment(
+                                new Vector2(0.0, 0.0),
+                                new Vector2(-44.63, 0.0) //FHE:TODO Confirm positive/negative
+                        )
+                );
+
+
+                Trajectory driveToTrenchTrajectory = new Trajectory(driveToTrenchPath, Robot.drivetrainSubsystem.CONSTRAINTS);
+
+                return output;
+
         }
 
 
