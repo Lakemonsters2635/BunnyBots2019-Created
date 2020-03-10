@@ -112,7 +112,7 @@ public class AutonomousSequences {
                 CommandGroup output =  new CommandGroup();
                 IntakeActuateCommand raiseIntake = new IntakeActuateCommand(true,2);
                 VisionRotationDriveCommand visionRotateCommand = new VisionRotationDriveCommand(2);
-                RobotRotateCommand rotateCommand = new RobotRotateCommand(5.746);
+                RobotRotateCommand rotateCommand = new RobotRotateCommand(0);
                 ShooterActuateCommand shooterAcuateCommand = new ShooterActuateCommand(true, 1);
                 ElevatorCommand elevatorCommand = new ElevatorCommand(false, 3);
                 ShooterCommand shooterCommand = new ShooterCommand(false, 4, RobotMap.SHOOTER_INTITIATION_LINE_UPPER_MOTOR_SPEED );
@@ -140,6 +140,42 @@ public class AutonomousSequences {
 
                 return output;
 
+        }
+
+        public static CommandGroup shootThenBackAwayFromInitiationLine(){
+                CommandGroup output =  new CommandGroup();
+                IntakeActuateCommand raiseIntake = new IntakeActuateCommand(true,2);
+                VisionRotationDriveCommand visionRotateCommand = new VisionRotationDriveCommand(2);
+                RobotRotateCommand rotateCommand = new RobotRotateCommand(0);
+                ShooterActuateCommand shooterAcuateCommand = new ShooterActuateCommand(true, 1);
+                ElevatorCommand elevatorCommand = new ElevatorCommand(false, 3);
+                ShooterCommand shooterCommand = new ShooterCommand(false, 4, RobotMap.SHOOTER_INTITIATION_LINE_UPPER_MOTOR_SPEED );
+
+                output.addParallel(raiseIntake);
+                output.addSequential(visionRotateCommand);
+                
+     
+                output.addSequential(shooterAcuateCommand);
+                output.addParallel(elevatorCommand);
+                output.addSequential(shooterCommand);
+
+                //output.addSequential(rotateCommand);
+               
+                Path driveAwayPath = new Path(Rotation2.ZERO);
+                driveAwayPath.addSegment(
+                        new PathLineSegment(
+                                new Vector2(0.0, 0.0),
+                                new Vector2(-20, 0.0) //FHE:TODO Confirm positive/negative
+                        )
+                );
+
+
+                Trajectory driveAwayTrajectory = new Trajectory(driveAwayPath, Robot.drivetrainSubsystem.CONSTRAINTS);
+
+                AutonomousTrajectoryCommand driveAwayCommand= new AutonomousTrajectoryCommand(driveAwayTrajectory);
+                output.addSequential(driveAwayCommand);
+
+                return output;
         }
 
 

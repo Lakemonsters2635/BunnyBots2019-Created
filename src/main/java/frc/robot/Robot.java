@@ -63,6 +63,7 @@ public class Robot extends TimedRobot {
 
   public HolonomicDriveCommand driveCommand;
   ZeroFieldOrientedCommand zeroCommand;
+  ZeroFieldOrientedCommand reverseZeroCommand;
 
   public ColorSpinCommand colorSpinCommand;
 
@@ -104,6 +105,8 @@ public class Robot extends TimedRobot {
   LimitSwitchCommand limitSwitchCommand;
   RotateControlPanelCommand rotateControlPanelCommand;
 
+  boolean autoHappened;
+
   // IntakeCommandGroup intakeCommandGroup;
   /**
    * This function is run when the robot is first started up and should be
@@ -111,6 +114,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
+    autoHappened = false;
     oi = new OI();
     //m_chooser.setDefaultOption("Default Auto", new AutonomousCommand());
     initSubsystems();
@@ -138,6 +142,7 @@ private void initSubsystems() {
 private void initCommands() {
     // recordCommand = new ToggleDriveRecordCommand();
     zeroCommand = new ZeroFieldOrientedCommand(drivetrainSubsystem);
+    reverseZeroCommand = new ZeroFieldOrientedCommand(drivetrainSubsystem, 180);
     driveCommand = new HolonomicDriveCommand(DrivetrainSubsystem.ControlMode.DualStick);
     visionLightCommand = new VisionLightCommand();
     visionRotationDriveCommand = new VisionRotationDriveCommand();
@@ -222,6 +227,7 @@ private void initChooser() {
  m_chooser.addOption("Shoot, Collect Right, Shoot Again ", AutonomousSequences.ShootThenCollectRight_ThenShootAgain());
  m_chooser.addOption("Leave Initiation Line", AutonomousSequences.backAwayFromInitiationLine());
  m_chooser.addOption("Shoot from Right, Collect Right, Shoot Again", AutonomousSequences.ShootFromRight_Of_Optimal_Then_Collect());
+ m_chooser.addOption("Shoot Then Leave Initiation Line", AutonomousSequences.shootThenBackAwayFromInitiationLine());
  
   SmartDashboard.putData("Auto mode", m_chooser);
 }
@@ -252,7 +258,7 @@ private void initChooser() {
 
     subsystemManager.disableKinematicLoop();
     vision.ledOff();
-    
+    autoHappened = false;
 
     
   }
@@ -279,7 +285,7 @@ private void initChooser() {
    */
   @Override
   public void autonomousInit() {
-    
+    autoHappened = true;
     subsystemManager.enableKinematicLoop(UPDATE_DT);
     zeroCommand.start();
 
@@ -316,7 +322,9 @@ private void initChooser() {
     if (autonomousCommand != null) {
       autonomousCommand.cancel();
     }
-    
+    if(autoHappened){
+      reverseZeroCommand.start();
+    }
     Robot.drivetrainSubsystem.getFollower().cancel();
 
     SmartDashboard.putNumber("ShooterMotor1", RobotMap.SHOOTER_MOTOR_HIGH_DEFAULT_SPEED);
