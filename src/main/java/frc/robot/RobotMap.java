@@ -117,7 +117,7 @@ public class RobotMap {
 	 //public final static Gains kGains_Velocit = new Gains( kP, kI, kD, kF,  0,  1.00);
 	 public final static Gains kGains_Velocit = new Gains(kP, 0.0, 0.0, kF,  0,  1.00);
 
-   public final static double SHOOTER_MOTOR_HIGH_DEFAULT_SPEED = 2100;
+   public final static double SHOOTER_MOTOR_HIGH_DEFAULT_SPEED = 1865;
    public final static double SHOOTER_MOTOR_LOW_DEFAULT_SPEED = 3000;
    public final static double SHOOTER_INTITIATION_LINE_UPPER_MOTOR_SPEED = 1742;
 

@@ -79,6 +79,83 @@ public class AutonomousSequences {
                 return output;
         }
 
+	public static CommandGroup ShootThenCollectLeft(){
+                CommandGroup output = new CommandGroup();
+                ShooterActuateCommand shooterAcuateCommand = new ShooterActuateCommand(true, 1);
+                ElevatorCommand elevatorCommand = new ElevatorCommand(false, 3);
+                ShooterCommand shooterCommand = new ShooterCommand(false, 4, RobotMap.SHOOTER_INTITIATION_LINE_UPPER_MOTOR_SPEED );
+                Path driveToLeftTrenchPath = new Path(Rotation2.ZERO);
+                driveToLeftTrenchPath.addSegment(
+                        new PathLineSegment(
+                                new Vector2(0.0, 0.0),
+                                new Vector2(-86.5, 191.8) //FHE:TODO Confirm positive/negative
+                        )
+                );
+
+
+                Trajectory driveToLeftTrenchTrajectory = new Trajectory(driveToLeftTrenchPath, Robot.drivetrainSubsystem.CONSTRAINTS);
+
+                AutonomousTrajectoryCommand driveToTrenchCommand = new AutonomousTrajectoryCommand(driveToLeftTrenchTrajectory);
+
+                IntakeActuateCommand lowerIntake = new IntakeActuateCommand(false,1);
+                IntakeActuateCommand raiseIntake = new IntakeActuateCommand(true,1);
+
+                
+                output.addSequential(shooterAcuateCommand);
+                output.addParallel(elevatorCommand);
+                output.addSequential(shooterCommand);
+                output.addParallel(lowerIntake);
+                output.addSequential(driveToTrenchCommand);
+                
+                Path driveToBallPath = new Path(Rotation2.ZERO);
+                driveToBallPath.addSegment(
+                        new PathLineSegment(
+                                new Vector2(0.0, 0.0),
+                                new Vector2(0.0, -20) //FHE:TODO Confirm positive/negative
+                        )
+                );
+
+
+                Trajectory driveToBallTrajectory = new Trajectory(driveToBallPath, Robot.drivetrainSubsystem.INTAKE_CONSTRAINTS);
+
+                AutonomousTrajectoryCommand driveToBallCommand = new AutonomousTrajectoryCommand(driveToBallTrajectory);
+
+                
+                output.addParallel(driveToBallCommand);
+                output.addSequential(new IntakeDetectToElevatorIndexCommand());
+                
+                Path driveToNextBallPath = new Path(Rotation2.ZERO);
+                driveToNextBallPath.addSegment(
+                        new PathLineSegment(
+                                new Vector2(0.0, 0.0),
+                                new Vector2(0.0, 20) //FHE:TODO Confirm positive/negative
+                        )
+                );
+                driveToNextBallPath.addSegment(
+                        new PathLineSegment(
+                                new Vector2(0.0, 0.0),
+                                new Vector2(18.3, 0.0) //FHE:TODO Confirm positive/negative
+                        )
+                );
+                driveToNextBallPath.addSegment(
+                        new PathLineSegment(
+                                new Vector2(0.0, 0.0),
+                                new Vector2(0.0, -20) //FHE:TODO Confirm positive/negative
+                        )
+                );
+
+
+                Trajectory driveToNextBallTrajectory = new Trajectory(driveToNextBallPath, Robot.drivetrainSubsystem.INTAKE_CONSTRAINTS);
+
+                AutonomousTrajectoryCommand driveToNextBallCommand = new AutonomousTrajectoryCommand(driveToNextBallTrajectory);
+
+                output.addParallel(driveToNextBallCommand);
+                output.addSequential(new IntakeDetectToElevatorIndexCommand());
+
+                output.addSequential(raiseIntake);
+                return output;
+        }
+
 
         public static CommandGroup ShootThenCollectRight_ThenShootAgain(){
                 CommandGroup output =  ShootThenCollectRight();

@@ -62,16 +62,24 @@ public class ShooterCommand extends Command {
           targetDistance = Robot.vision.getXDistance();
           motor1Speed = computeShooterSpeedFromTargetDistance(targetDistance, shootHigh);
       } 
+    } else {
+
+        double motor1Adjust = Robot.oi.leftStick.getRawAxis(3);
+        SmartDashboard.putNumber("motor1Adjust", motor1Adjust);
+        if (motor1Adjust < 0) {
+          motor1Adjust = 1 + Math.abs(motor1Adjust);
+        }
+        motor1Adjust = 2 - motor1Adjust;
+        // double motor2Adjust = RobotContainer.oi.rightStick.getRawAxis(3);
+        //motor1Speed = motor1Speed + (1000 * motor1Adjust);
     }
 
 
 
-
+    
     
     //THE FOLLOWING COMMENTED OUT CODE USES THE JOYSTICK SLIDERS TO ADJUST MOTOR SPEED
-    // double motor1Adjust = RobotContainer.oi.leftStick.getRawAxis(3);
-    // double motor2Adjust = RobotContainer.oi.rightStick.getRawAxis(3);
-    // motor1Speed = motor1Speed + (1000 * motor1Adjust);
+
     // motor2Speed = motor1Speed + (1000 * motor2Adjust);
 
     //SmartDashboard.putNumber("ShooterMotor1", motor1Speed);
