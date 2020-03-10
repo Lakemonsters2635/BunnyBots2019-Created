@@ -54,6 +54,8 @@ public class RobotMap {
   public static final int UPPER_KICKER_MOTOR = 11;
   public static final int ELEVATOR_MOTOR_CHANNEL = 10;
   public static final int CLIMBER_WINCH_MOTOR = 15;
+   
+  public static final int CONTROL_PANEL_MOTOR = 9;
 //----------------------------------------------------------------------
 
   public static final int L_SHOOTER_WITHVISION_BUTTON = 1;
@@ -117,11 +119,10 @@ public class RobotMap {
 	 //public final static Gains kGains_Velocit = new Gains( kP, kI, kD, kF,  0,  1.00);
 	 public final static Gains kGains_Velocit = new Gains(kP, 0.0, 0.0, kF,  0,  1.00);
 
-   public final static double SHOOTER_MOTOR_HIGH_DEFAULT_SPEED = 1865;
+   public final static double SHOOTER_MOTOR_HIGH_DEFAULT_SPEED = 1885;
    public final static double SHOOTER_MOTOR_LOW_DEFAULT_SPEED = 3000;
    public final static double SHOOTER_INTITIATION_LINE_UPPER_MOTOR_SPEED = 1742;
 
 
-    //MOTORS
-    public static final int COLOR_SPINNER_MOTOR = 9;
+  
 }

@@ -28,7 +28,7 @@ public class ShooterCommand extends Command {
    */
   public ShooterCommand(boolean useCamera) {
     this.useCamera = useCamera;
-    m_upperMotorSpeed = RobotMap.SHOOTER_MOTOR_LOW_DEFAULT_SPEED;
+    m_upperMotorSpeed = RobotMap.SHOOTER_MOTOR_HIGH_DEFAULT_SPEED;
     // Use addRequirements() here to declare subsystem dependencies.
     //addRequirements(subsystem);
   }
@@ -64,27 +64,29 @@ public class ShooterCommand extends Command {
       } 
     } else {
 
-        // double motor1Adjust = Robot.oi.leftStick.getRawAxis(3);
-        // SmartDashboard.putNumber("motor1Adjust", motor1Adjust);
-        // if (motor1Adjust < 0) {
-        //   motor1Adjust = 1 + Math.abs(motor1Adjust);
-        // }
-        // motor1Adjust = 2 - motor1Adjust;
-        // 
-          // double motor2Adjust = RobotContainer.oi.rightStick.getRawAxis(3);
-          //motor1Speed = motor1Speed + (1000 * motor1Adjust);
+        //For now, Only use throttle adjustments in high position.
+        //If we want to use in low position we need to take measurements and calibrate.
+        if (Robot.shooterSubsystem.isAimedHigh()) {
+          double motor1Adjust = Robot.oi.leftStick.getRawAxis(3);
+          //Make no changes to motor speed unless the user has moved the throttle. 
+          if (motor1Adjust > -0.9) {
+              //Turn motor1Adjust into a range between 0 - 2.
+              if (motor1Adjust >= 0) {
+                motor1Adjust = 1 + motor1Adjust;
+              } else {
+                motor1Adjust = 1 - Math.abs(motor1Adjust);
+              }
+              SmartDashboard.putNumber("motor1Adjust", motor1Adjust);
+              motor1Speed = 1700 + (100 * motor1Adjust);
+              SmartDashboard.putNumber("motor1Speed", motor1Speed);
+              //motor1Speed now ranges between 1700 - 1900, depending on the throttle. 
+          }
+        }
+
+
     }
 
 
-
-    
-    
-    //THE FOLLOWING COMMENTED OUT CODE USES THE JOYSTICK SLIDERS TO ADJUST MOTOR SPEED
-
-    // motor2Speed = motor1Speed + (1000 * motor2Adjust);
-
-    //SmartDashboard.putNumber("ShooterMotor1", motor1Speed);
-     //motor1Speed =  SmartDashboard.getNumber("ShooterMotor1", RobotMap.SHOOTER_MOTOR_LOW_DEFAULT_SPEED);
      Robot.shooterSubsystem.SpinShooter(motor1Speed);
   }
 

@@ -41,7 +41,7 @@ public class ColorSpinnerSubsystem extends Subsystem {
   private DigitalInput contactSwitch;
 
   public ColorSpinnerSubsystem() {
-    colorSpinnerMotor = new CANSparkMax(RobotMap.COLOR_SPINNER_MOTOR, MotorType.kBrushless);
+    colorSpinnerMotor = new CANSparkMax(RobotMap.CONTROL_PANEL_MOTOR, MotorType.kBrushless);
     colorSpinnerMotor.setIdleMode(IdleMode.kBrake);
     contactSwitch = new DigitalInput(1);
   }

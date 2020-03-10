@@ -55,6 +55,10 @@ public class ShooterSubsystem extends Subsystem {
     //System.out.println("shootorSolenoid.Value:" + val);
   }
 
+  public boolean isAimedHigh() {
+    return (shootorSolenoid.get() == Value.kForward);
+  }
+
   public void aimLow(){
     shootorSolenoid.set(Value.kReverse);
     DoubleSolenoid.Value val = shootorSolenoid.get();
