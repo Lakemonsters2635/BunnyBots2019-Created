@@ -40,8 +40,12 @@ public class ShooterActuateCommand extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return super.isTimedOut();
-  
+    boolean isFinished = super.isTimedOut();
+    if (isFinished) {
+      System.out.println("ShooterActuateCommand finished");
+    }
+    //return super.isTimedOut();
+    return isFinished; 
   }
 
   // Called once after isFinished returns true

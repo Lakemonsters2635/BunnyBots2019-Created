@@ -7,6 +7,7 @@
 
 package frc.robot.commands;
 
+import org.frcteam2910.common.math.Rotation2;
 import org.frcteam2910.common.math.Vector2;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -106,6 +107,7 @@ protected boolean isFinished() {
 @Override
   protected void end() {
     Robot.vision.ledOff();
+    Robot.drivetrainSubsystem.holonomicDrive(Vector2.ZERO, 0);
   }
 
   // Called when another command which requires one or more of the same

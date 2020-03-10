@@ -64,14 +64,15 @@ public class ShooterCommand extends Command {
       } 
     } else {
 
-        double motor1Adjust = Robot.oi.leftStick.getRawAxis(3);
-        SmartDashboard.putNumber("motor1Adjust", motor1Adjust);
-        if (motor1Adjust < 0) {
-          motor1Adjust = 1 + Math.abs(motor1Adjust);
-        }
-        motor1Adjust = 2 - motor1Adjust;
-        // double motor2Adjust = RobotContainer.oi.rightStick.getRawAxis(3);
-        //motor1Speed = motor1Speed + (1000 * motor1Adjust);
+        // double motor1Adjust = Robot.oi.leftStick.getRawAxis(3);
+        // SmartDashboard.putNumber("motor1Adjust", motor1Adjust);
+        // if (motor1Adjust < 0) {
+        //   motor1Adjust = 1 + Math.abs(motor1Adjust);
+        // }
+        // motor1Adjust = 2 - motor1Adjust;
+        // 
+          // double motor2Adjust = RobotContainer.oi.rightStick.getRawAxis(3);
+          //motor1Speed = motor1Speed + (1000 * motor1Adjust);
     }
 
 
@@ -112,6 +113,11 @@ public class ShooterCommand extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return super.isTimedOut();
+    boolean isFinished = super.isTimedOut();
+    if (isFinished) {
+      System.out.println("ShooterCommand finished");
+    }
+    return isFinished;
+    //return super.isTimedOut();
   }
 }

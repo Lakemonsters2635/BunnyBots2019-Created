@@ -88,7 +88,7 @@ public class AutonomousSequences {
                 driveToLeftTrenchPath.addSegment(
                         new PathLineSegment(
                                 new Vector2(0.0, 0.0),
-                                new Vector2(-86.5, 191.8) //FHE:TODO Confirm positive/negative
+                                new Vector2(-75, 191.8) //FHE:TODO Confirm positive/negative
                         )
                 );
 
@@ -111,7 +111,7 @@ public class AutonomousSequences {
                 driveToBallPath.addSegment(
                         new PathLineSegment(
                                 new Vector2(0.0, 0.0),
-                                new Vector2(0.0, -20) //FHE:TODO Confirm positive/negative
+                                new Vector2(-20, 0.0) //FHE:TODO Confirm positive/negative
                         )
                 );
 
@@ -128,19 +128,19 @@ public class AutonomousSequences {
                 driveToNextBallPath.addSegment(
                         new PathLineSegment(
                                 new Vector2(0.0, 0.0),
-                                new Vector2(0.0, 20) //FHE:TODO Confirm positive/negative
+                                new Vector2(20, 0.0) //FHE:TODO Confirm positive/negative
                         )
                 );
                 driveToNextBallPath.addSegment(
                         new PathLineSegment(
                                 new Vector2(0.0, 0.0),
-                                new Vector2(18.3, 0.0) //FHE:TODO Confirm positive/negative
+                                new Vector2(0.0, 18.3) //FHE:TODO Confirm positive/negative
                         )
                 );
                 driveToNextBallPath.addSegment(
                         new PathLineSegment(
                                 new Vector2(0.0, 0.0),
-                                new Vector2(0.0, -20) //FHE:TODO Confirm positive/negative
+                                new Vector2(-20, 0.0) //FHE:TODO Confirm positive/negative
                         )
                 );
 
@@ -192,6 +192,7 @@ public class AutonomousSequences {
                 RobotRotateCommand rotateCommand = new RobotRotateCommand(0);
                 ShooterActuateCommand shooterAcuateCommand = new ShooterActuateCommand(true, 1);
                 ElevatorCommand elevatorCommand = new ElevatorCommand(false, 3);
+                IntakeActuateCommand lowerIntake = new IntakeActuateCommand(false, 2);
                 ShooterCommand shooterCommand = new ShooterCommand(false, 4, RobotMap.SHOOTER_INTITIATION_LINE_UPPER_MOTOR_SPEED );
 
                 output.addParallel(raiseIntake);
@@ -214,6 +215,33 @@ public class AutonomousSequences {
 
 
                 Trajectory driveToTrenchTrajectory = new Trajectory(driveToTrenchPath, Robot.drivetrainSubsystem.CONSTRAINTS);
+
+                AutonomousTrajectoryCommand driveToTrenchCommand= new AutonomousTrajectoryCommand(driveToTrenchTrajectory);
+                output.addSequential(driveToTrenchCommand);
+
+
+                output.addParallel(lowerIntake);
+
+                Path driveThroughTrenchPath = new Path(Rotation2.ZERO);
+                driveThroughTrenchPath.addSegment(
+                        new PathLineSegment(
+                                new Vector2(0.0, 0.0),
+                                new Vector2(-106, 0.0) //FHE:TODO Confirm positive/negative
+                        )
+                );
+
+
+                Trajectory driveThroughTrenchTrajectory = new Trajectory(driveThroughTrenchPath, Robot.drivetrainSubsystem.INTAKE_CONSTRAINTS);
+
+                AutonomousTrajectoryCommand driveThroughTrenchCommand = new AutonomousTrajectoryCommand(driveThroughTrenchTrajectory);
+
+           
+        
+                output.addParallel(driveThroughTrenchCommand);
+                output.addSequential(new IntakeDetectToElevatorIndexCommand());
+                output.addSequential(new IntakeDetectToElevatorIndexCommand());
+                output.addSequential(new IntakeDetectToElevatorIndexCommand());
+                output.addSequential(new IntakeActuateCommand(true,2));
 
                 return output;
 
