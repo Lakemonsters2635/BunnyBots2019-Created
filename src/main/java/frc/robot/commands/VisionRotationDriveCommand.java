@@ -47,11 +47,12 @@ public class VisionRotationDriveCommand extends Command {
     final double deadzone = 0.1;
 
     double angle = Robot.vision.getXAngle();
+
     
     forward = Robot.oi.leftStick.getRawAxis(1);
     strafe = Robot.oi.leftStick.getRawAxis(0);
     boolean visionTargetFound = Robot.vision.targetExists();
-
+    SmartDashboard.putBoolean("TargetFound", visionTargetFound);
 
     if (visionTargetFound) {
 

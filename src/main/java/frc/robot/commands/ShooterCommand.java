@@ -57,6 +57,7 @@ public class ShooterCommand extends Command {
 
       Robot.vision.data();
       boolean visionTargetFound = Robot.vision.targetExists();
+      SmartDashboard.putBoolean("TargetFound", visionTargetFound);
       if (visionTargetFound) {
 
           targetDistance = Robot.vision.getXDistance();
@@ -66,10 +67,10 @@ public class ShooterCommand extends Command {
 
         //For now, Only use throttle adjustments in high position.
         //If we want to use in low position we need to take measurements and calibrate.
-        if (Robot.shooterSubsystem.isAimedHigh()) {
-          double motor1Adjust = Robot.oi.leftStick.getRawAxis(3);
+        
+          double motor1Adjust = Robot.oi.rightStick.getRawAxis(2);
           //Make no changes to motor speed unless the user has moved the throttle. 
-          if (motor1Adjust > -0.9) {
+       
               //Turn motor1Adjust into a range between 0 - 2.
               if (motor1Adjust >= 0) {
                 motor1Adjust = 1 + motor1Adjust;
@@ -77,11 +78,11 @@ public class ShooterCommand extends Command {
                 motor1Adjust = 1 - Math.abs(motor1Adjust);
               }
               SmartDashboard.putNumber("motor1Adjust", motor1Adjust);
-              motor1Speed = 1700 + (100 * motor1Adjust);
+              motor1Speed = 2500 - (315 * motor1Adjust);
               SmartDashboard.putNumber("motor1Speed", motor1Speed);
               //motor1Speed now ranges between 1700 - 1900, depending on the throttle. 
-          }
-        }
+         
+
 
 
     }
@@ -94,6 +95,7 @@ public class ShooterCommand extends Command {
     double adjustedMotorSpeed;
     if(isShooterHigh) {
       adjustedMotorSpeed = 2.0693 * targetDistance + 1418.6;
+      //adjustedMotorSpeed = 2.0693 * targetDistance + 1400.6;
     }
     else {
       adjustedMotorSpeed = 4000;
